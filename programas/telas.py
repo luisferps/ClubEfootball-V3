@@ -1,0 +1,2356 @@
+# -*- coding: utf-8 -*-
+"""TELAS_1808 — as telas do arquivo da designer, montadas com o dado de verdade.
+
+  ⛔ ESTA CAMADA SUBSTITUI, NAO SOBREPOE. O que ela escreve (o painel do Inicio,
+     a aba de Boxes, o Como calculamos, o Ranking) e o molde da designer
+     preenchido; o desenho antigo daquele bloco deixa de ser montado.
+
+  ⛔ O MOLDE E O DELA, LETRA POR LETRA. Vem do ClubEfootball-Telas.dc.html pelo
+     extrai_design.py; aqui nao se reescreve marcacao, so se preenche
+     {{ campo }} e <sc-for>. Se a tela sair diferente da foto, o conserto e no
+     dado ou no extrator — nunca "na mao, parecido".
+
+  ⛔ COR SO POR VARIAVEL. As cores dela viraram --d1..--d131, com tabela para o
+     escuro e para o claro. Nenhum valor fica preso no elemento.
+"""
+# ⛔ 19/08 — ESTE MODULO ACHA O VIZINHO SOZINHO.
+#    Ele mora em ClubEfootball\programas junto com o moldes_design.py. Quando
+#    alguem importa o telas de outro lugar (ou quando a pasta vai sozinha para
+#    o GitHub, sem a raiz da v6), o `import moldes_design` so acha o vizinho
+#    se a propria pasta estiver no caminho de busca. Uma linha, e o modulo
+#    para de depender de quem o chamou.
+import os as _os, sys as _sys
+_AQUI = _os.path.dirname(_os.path.abspath(__file__))
+if _AQUI not in _sys.path:
+    _sys.path.insert(0, _AQUI)
+
+from moldes_design import MOLDES, TOK_ESCURO, TOK_CLARO
+
+
+def _vars(tab):
+    return '\n'.join(' %s:%s;' % (k, v) for k, v in tab.items())
+
+
+CSS_TELAS = ("""
+<style id=TELAS_1808>
+/* ⛔ 19/08 — OS TOKENS TAMBEM NO :root.
+   Se por qualquer motivo o `data-tema` nao estiver no <html> (o script do tema
+   estourar, o localStorage barrar no file://, um patch rodar antes), as cores
+   sumiam TODAS e a tela saia sem nada. O escuro passa a ser o piso. */
+:root{
+""" + _vars(TOK_ESCURO) + """
+}
+html[data-tema=escuro]{
+""" + _vars(TOK_ESCURO) + """
+}
+html[data-tema=claro]{
+""" + _vars(TOK_CLARO) + """
+}
+/* a tela da designer ocupa a largura do app; a fonte e a do sistema */
+.t6tela{width:100%;max-width:1280px;margin:0 auto;font-family:inherit}
+.t6tela *{box-sizing:border-box}
+.t6tela img{max-width:100%}
+
+/* ⛔ O CELULAR (fotos 14 a 17). O molde dela e de 1280; as grades dele sao
+   todas `repeat(N,minmax(0,1fr))`, entao da para dobra-las por seletor de
+   atributo, sem tocar numa virgula da marcacao. Nada de segunda versao da
+   tela: e a MESMA, dobrada. */
+@media(max-width:820px){
+ .t6tela [style*="grid-template-columns:repeat(2,minmax(0,1fr))"],
+ .t6tela [style*="grid-template-columns:repeat(3,minmax(0,1fr))"],
+ .t6tela [style*="grid-template-columns:repeat(4,minmax(0,1fr))"],
+ .t6tela [style*="grid-template-columns:1fr 1fr"],
+ .t6tela [style*="grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)"],
+ .t6tela [style*="grid-template-columns:404px minmax(0,1fr)"]{
+  grid-template-columns:1fr!important}
+ .t6tela [style*="grid-template-columns:repeat(6,minmax(0,1fr))"]{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .t6tela [style*="padding:22px"]{padding:14px!important}
+ .t6tela [style*="padding:30px 32px"]{padding:18px!important}
+ .t6tela [style*="padding:26px 22px"]{padding:16px 14px!important}
+ .t6tela [style*="padding:20px 22px 26px"]{padding:14px!important}
+ .t6tela [style*="padding:0 22px"]{padding:0 14px!important}
+ .t6tela [style*="padding:14px 22px"]{padding:12px 14px!important}
+ .t6tela [style*="padding:18px 22px"]{padding:14px!important}
+ .t6tela [style*="font-size:34px"]{font-size:26px!important}
+ .t6tela [style*="font-size:30px"]{font-size:23px!important}
+ .t6tela [style*="font-size:26px"]{font-size:20px!important}
+ .t6tela [style*="width:660px"]{width:100%!important;max-width:360px!important}
+ .t6tela [style*="flex-wrap:wrap"]{row-gap:8px}
+ .t6tela{overflow-x:hidden}
+}
+@media(max-width:520px){
+ .t6tela [style*="grid-template-columns:repeat(6,minmax(0,1fr))"]{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+</style>
+""")
+
+JS_TELAS = r"""
+<script id=TELAS_1808_JS>
+/* O MOTOR DO MOLDE — o minimo para dar vida ao HTML da designer.
+   Ela ja entregou o desenho como template: <sc-for list="{{ x }}" as="y"> e
+   {{ y.campo }}. Entao aqui nao ha marcacao escrita a mao: so preenchimento. */
+(function(){
+  var M = __MOLDES__;
+  window.T6M = M;
+
+  function pega(ctx, cam){
+    var p = String(cam).split('.'), v = ctx;
+    for (var i = 0; i < p.length; i++){
+      if (v === null || v === undefined) return undefined;
+      v = v[p[i]];
+    }
+    return v;
+  }
+  function bloco(h, tag){
+    var ini = h.indexOf('<' + tag);
+    if (ini < 0) return null;
+    var fim = h.indexOf('>', ini) + 1, n = 1, k = fim;
+    while (k < h.length && n > 0){
+      var a = h.indexOf('<' + tag, k), b = h.indexOf('</' + tag + '>', k);
+      if (b < 0) break;
+      if (a >= 0 && a < b){ n++; k = h.indexOf('>', a) + 1; }
+      else { n--; k = b + tag.length + 3; }
+    }
+    return {ini:ini, abre:h.slice(ini, fim), corpo:h.slice(fim, k - (tag.length + 3)), fim:k};
+  }
+  function tpl(h, ctx){
+    var b;
+    while ((b = bloco(h, 'sc-for'))){
+      var m = /list="\{\{\s*([^}]+?)\s*\}\}"\s+as="([^"]+)"/.exec(b.abre);
+      var lista = m ? pega(ctx, m[1].trim()) : [];
+      var alias = m ? m[2] : 'x', saida = '';
+      (lista || []).forEach(function(item, i){
+        var c = Object.create(ctx); c[alias] = item; c['_i'] = i;
+        saida += tpl(b.corpo, c);
+      });
+      h = h.slice(0, b.ini) + saida + h.slice(b.fim);
+    }
+    while ((b = bloco(h, 'sc-if'))){
+      var mv = /value="\{\{\s*([^}]+?)\s*\}\}"/.exec(b.abre);
+      var v = mv ? pega(ctx, mv[1].trim()) : false;
+      h = h.slice(0, b.ini) + (v ? tpl(b.corpo, ctx) : '') + h.slice(b.fim);
+    }
+    return h.replace(/\{\{\s*([a-zA-Z0-9_.]+)\s*\}\}/g, function(_, k){
+      var v = pega(ctx, k);
+      return (v === undefined || v === null) ? '' : String(v);
+    });
+  }
+  window.t6tpl = tpl;
+
+  /* ---------------- o dado ---------------- */
+  function esc(s){ return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+  function n2(v){ return (Math.round(v * 100) / 100).toFixed(2); }
+  function pct(c){
+    try{ var t = topoDoTipo(c.tipo); return t > 0 ? (100 * nota(c) / t) : 0; }
+    catch(e){ return 0; }
+  }
+  var FONTE_PCT = 'font-family:inherit;font-size:19px;font-weight:700;letter-spacing:-.4px;color:';
+  function estiloPct(p){
+    return FONTE_PCT + (p >= 99.5 ? 'var(--d8)' : (p >= 95 ? 'var(--d55)' : 'var(--d13)'));
+  }
+  window.t6card = function(c, i){
+    var p = pct(c);
+    return {r: (i + 1) + 'º', nome: esc(c.nome), est: esc(c.modelo || ''),
+            fn: esc(c.tipo), pos: esc(c.np || c.pos || ''),
+            pct: n2(p), pctSt: estiloPct(p), pts: n2(nota(c)),
+            k: esc(c.id + '|' + c.tipo)};
+  };
+  window.t6PorBox = function(){
+    var cx = {};
+    for (var i = 0; i < D.length; i++){
+      var c = D[i];
+      if (!c || c.id === 'MOLDE' || !c.pacote) continue;
+      (cx[c.pacote] = cx[c.pacote] || []).push(c);
+    }
+    return cx;
+  };
+  /* ---------------- quem manda no painel ----------------
+     ⛔ A CAMADA VELHA SAI DE CENA. Assim que este arquivo existe, o desenho
+        antigo do painel para de ser montado (ele testa window.T6TELAS). Duas
+        camadas montando o mesmo bloco foi o que fez a tela piscar. */
+  window.T6TELAS = true;
+  /* ⛔ 19/08 — A TRAVA TEM QUE SOLTAR SEMPRE.
+     Defeito medido na maquina do Luis: durante o carregamento progressivo a
+     primeira pintura estourou, `_t6pintando` ficou LIGADA para sempre e a
+     tela nunca mais foi desenhada — pagina em branco permanente, mesmo depois
+     das linhas todas chegarem. Duas regras nasceram daqui:
+       1. a trava solta no `finally`, aconteca o que acontecer;
+       2. se a tela nova falhar ou vier vazia, quem desenha e o DESENHO ANTIGO.
+          Tela feia e melhor que tela branca. */
+  window.t6Painel = function(qual){
+    var w = document.getElementById('homewrap');
+    if (!w) return;
+    window._t6aba = qual;
+    if (window._t6pintando) return;      /* nao se chama de dentro de si */
+    window._t6pintando = true;
+    var h = '';
+    try{
+      try{ homeToggle(1); }catch(e){}
+      if (qual === 'boxant')        h = window.t6TelaBoxes(true);
+      else if (qual === 'boxatual') h = window.t6TelaBoxes(false);
+      else if (qual === 'como')     h = window.t6TelaComo();
+      else if (qual === 'ranking')  h = window.t6TelaRanking();
+      else                          h = window.t6TelaInicio();
+    }catch(e){
+      h = '';
+      if (window.console) console.warn('TELAS_1808: ' + qual + ' falhou —', e);
+    }finally{
+      window._t6pintando = false;       /* SOLTA SEMPRE */
+    }
+    if (!h || String(h).replace(/<[^>]*>/g,'').trim().length < 3){
+      /* a tela nova nao tinha o que mostrar (ainda carregando, ou erro):
+         devolve o desenho antigo em vez de deixar o painel vazio */
+      if (typeof window._t6homeAntigo === 'function'){
+        try{ window._t6homeAntigo.call(window); return; }catch(e){}
+      }
+      return;                            /* nao apaga o que ja esta na tela */
+    }
+    w.innerHTML = '<div class="t6tela">' + h + '</div>';
+    try{ window.t6Cliques(w); }catch(e){}
+  };
+  /* os cliques entram DEPOIS, sem mexer na marcacao dela: as linhas de card
+     aparecem na mesma ordem em que foram montadas, entao basta caminhar. */
+  window.t6Cliques = function(raiz){
+    var alvos = raiz.querySelectorAll('[data-k]');
+    alvos.forEach(function(el){
+      el.style.cursor = 'pointer';
+      el.onclick = function(ev){ ev.stopPropagation();
+        try{ abrir(el.dataset.k); }catch(e){} };
+    });
+  };
+
+  /* ⛔ QUEM ESCREVE O PAINEL PASSA A SER ESTA CAMADA. O homeRender da casca
+     continua existindo (o Meu time e o modal ainda dependem dele), mas quando
+     uma aba nova esta aberta ele devolve a tela da designer em vez de remontar
+     o desenho velho. Sem isto, os dois escrevem no mesmo #homewrap e o ultimo
+     a rodar ganha — foi o que fez a tela piscar antes. */
+  if (typeof window.homeRender === 'function'){
+    var _hr = window.homeRender;
+    window._t6homeAntigo = _hr;          /* a rede de seguranca do t6Painel */
+    window.homeRender = function(){
+      if (window._t6aba && window.t6Painel){ window.t6Painel(window._t6aba); return; }
+      return _hr.apply(this, arguments);
+    };
+  }
+  /* ⛔ A TELA JA ABRE NO DESENHO NOVO. Sem esta linha o primeiro desenho era o
+     antigo e so trocava depois do primeiro clique numa aba — que foi
+     exatamente o "boa parte do site ta operando com design antigo". */
+  if (!window._t6aba) window._t6aba = 'inicio';
+
+  /* ⛔ 19/08 — O VIGIA DA TELA EM BRANCO.
+     Na maquina do Luis o painel ficou vazio e nunca mais voltou. A causa foi
+     a trava presa, mas a licao e outra: NENHUM defeito futuro pode deixar a
+     tela branca. Este relogio olha o painel; se ele esta a vista e vazio,
+     manda desenhar — primeiro a tela nova, e se ela nao der, a antiga. */
+  setInterval(function(){
+    try{
+      var w = document.getElementById('homewrap');
+      if (!w || !w.offsetParent) return;                 /* nao esta a vista */
+      if ((w.innerText || '').trim().length > 2) return; /* tem conteudo */
+      if (window._t6pintando){ window._t6pintando = false; }  /* destrava */
+      if (window.t6Painel) window.t6Painel(window._t6aba || 'inicio');
+      if ((w.innerText || '').trim().length > 2) return;
+      if (typeof window._t6homeAntigo === 'function') window._t6homeAntigo.call(window);
+    }catch(e){}
+  }, 1500);
+
+  /* ---------------- BOXES (atuais e anteriores) ---------------- */
+  /* O molde e o mesmo da foto 3; o que muda entre as duas abas e o titulo,
+     a linha de baixo e quais boxes entram. */
+  window.t6TelaBoxes = function(anteriores){
+    if (!M || !M['boxes'] || !M['boxes'].corpo) return '';
+    var cx = window.t6PorBox(), ativas = {};
+    try{ (BOXATIVA || []).forEach(function(n){ ativas[n] = 1; }); }catch(e){}
+    var nomes = Object.keys(cx).filter(function(n){
+      return anteriores ? !ativas[n] : !!ativas[n];
+    });
+    /* anteriores: da mais nova para a mais velha, pela data que o historico guarda */
+    function quando(n){
+      try{ return (BOXHIST[n] && BOXHIST[n].visto) || (BOXDT && BOXDT[n]) || ''; }
+      catch(e){ return ''; }
+    }
+    if (anteriores) nomes.sort(function(a, b){ return (quando(b) || '').localeCompare(quando(a) || ''); });
+    else nomes.sort(function(a, b){ return (cx[b] || []).length - (cx[a] || []).length; });
+    var quantas = window._t6todasBoxes ? nomes.length : (anteriores ? 6 : 4);
+    var dados = {boxesAnt: nomes.slice(0, quantas).map(function(n){
+      var cs = cx[n] || [];
+      return {n: esc(n), q: cs.length + ' card' + (cs.length === 1 ? '' : 's'),
+              cards: window.t6Melhores(cs, 3).map(window.t6card)};
+    })};
+    /* ⛔ o data-k entra no molde ANTES de preencher, na linha do card. E o
+       unico acrescimo a marcacao dela — sem ele nao da para abrir a ficha. */
+    var molde = M.boxes.corpo.replace(
+      '<div style="display:flex;align-items:center;gap:11px">',
+      '<div data-k="{{ c.k }}" style="display:flex;align-items:center;gap:11px">');
+    var h = tpl(molde, dados);
+    var sub = anteriores
+      ? (nomes.length + ' boxes encerradas · top 3 de cada uma · mostrando as '
+         + Math.min(quantas, nomes.length) + ' mais recentes')
+      : (nomes.length + ' boxes no ar · top 3 de cada uma · mostrando as '
+         + Math.min(quantas, nomes.length) + ' maiores');
+    h = h.replace('72 boxes encerradas · top 3 de cada uma · mostrando as 6 mais recentes', sub);
+    if (!anteriores) h = h.replace('>Boxes anteriores<', '>Boxes atuais<')
+                          .replace('voltar aos lançamentos', 'ver as anteriores');
+    return h;
+  };
+
+  /* ---------------- INICIO ---------------- */
+  var FOTO = 'https://efimg.com/efootballhub22/images/player_cards/';
+  function url(c){ return FOTO + String(c.id).split('@')[0] + '_l.png'; }
+  function medSt(c, w, h, r){
+    /* o quadrado da foto: o molde deixa o estilo por nossa conta, entao a foto
+       entra por aqui — sem mexer na marcacao dela. */
+    return 'width:' + w + 'px;height:' + h + 'px;border-radius:' + r + 'px;flex:none;'
+         + 'display:block;border:1px solid var(--d7);'
+         + 'background:url(' + url(c) + ') center/cover no-repeat,'
+         + 'linear-gradient(160deg,var(--d33),var(--d32))';
+  }
+  function veredicto(p){
+    var C = window.T6_CORTES || [99, 95];
+    if (p >= C[0]) return ['CONTRATAR A QUALQUER CUSTO', 'var(--d8)', 'var(--d94)', 'var(--d96)'];
+    if (p >= C[1]) return ['CONTRATAR SE FOR BARATO', 'var(--d55)', 'var(--d89)', 'var(--d90)'];
+    return ['CONTRATAR SE FOR GRÁTIS', 'var(--d13)', 'var(--d14)', 'var(--d29)'];
+  }
+  window.t6cardBox = function(c, i){
+    var d = window.t6card(c, i), p = parseFloat(d.pct), v = veredicto(p);
+    d.foto = 'url(' + url(c) + ')';
+    d.v = v[0];
+    d.vSt = 'font-style:normal;font-family:inherit;font-size:8.5px;font-weight:700;'
+          + 'letter-spacing:.7px;padding:3px 7px;border-radius:999px;white-space:nowrap;'
+          + 'color:' + v[1] + ';background:' + v[2] + ';border:1px solid ' + v[3];
+    return d;
+  };
+  window.t6TelaInicio = function(){
+    if (!M || !M.inicio || !M.inicio.corpo) return '';   /* sem molde, sem tela */
+    var cx = window.t6PorBox(), ativas = {};
+    try{ (BOXATIVA || []).forEach(function(n){ ativas[n] = 1; }); }catch(e){}
+    var nomes = Object.keys(cx).filter(function(n){ return !!ativas[n]; })
+      .sort(function(a, b){ return (cx[b] || []).length - (cx[a] || []).length; });
+
+    /* Top 3 do jogo — as tres maiores pontuacoes entre todas as funcoes */
+    var todos = [];
+    for (var i = 0; i < D.length; i++){
+      var c = D[i]; if (!c || c.id === 'MOLDE' || !c.tipo) continue;
+      var v; try{ v = nota(c); }catch(e){ continue; }
+      if (v > 0) todos.push([c, v]);
+    }
+    todos.sort(function(a, b){ return b[1] - a[1]; });
+    var vistos = {}, top3 = [];
+    for (var j = 0; j < todos.length && top3.length < 3; j++){
+      var k = todos[j][0].nome;
+      if (vistos[k]) continue;
+      vistos[k] = 1; top3.push(todos[j]);
+    }
+
+    /* Top 3 de cada funcao, por setor e na ordem que o Luis ditou */
+    var porFn = {};
+    for (var x = 0; x < D.length; x++){
+      var cc = D[x]; if (!cc || cc.id === 'MOLDE' || !cc.tipo) continue;
+      (porFn[cc.tipo] = porFn[cc.tipo] || []).push(cc);
+    }
+    var SET = {}; try{ SET = window.t6Setor ? window.t6Setor() : {}; }catch(e){}
+    var ORD = window.t6Ordem || Object.keys(porFn);
+    var pref = ['GOLEIRO', 'DEFESA', 'MEIO', 'ATAQUE'], grupos = {};
+    ORD.forEach(function(f){
+      if (!porFn[f]) return;
+      var s = SET[f] || 'OUTRAS';
+      (grupos[s] = grupos[s] || []).push(f);
+    });
+    var SIG = {};
+    try{
+      document.querySelectorAll('#fam .famg').forEach(function(g){
+        var i2 = g.querySelector('.famt i'), ts = g.querySelectorAll('.tab[data-t]');
+        ts.forEach(function(tb){ SIG[tb.dataset.t] = i2 ? i2.textContent.trim() : ''; });
+      });
+    }catch(e){}
+
+    var dados = {
+      boxes: nomes.slice(0, 3).map(function(n){
+        var cs = cx[n] || [];
+        return {n: esc(n), q: cs.length + ' card' + (cs.length === 1 ? '' : 's'),
+                cards: window.t6Melhores(cs, 3).map(window.t6cardBox)};
+      }),
+      top3Jogo: top3.map(function(par, i){
+        var c = par[0], s = n2(par[1]).split('.');
+        return {r: (i + 1) + 'º', rSt: 'font-style:normal;font-family:inherit;font-size:10px;'
+                  + 'letter-spacing:1.2px;font-weight:700;color:'
+                  + (i === 0 ? 'var(--d8)' : (i === 1 ? 'var(--d30)' : 'var(--d13)')),
+                medSt: medSt(c, 86, 114, 12),
+                nome: esc(c.nome), fn: esc((c.tipo || '').toUpperCase()),
+                est: esc(c.modelo || ''), ptsInt: s[0], ptsDec: '.' + s[1],
+                pos: esc(c.np || c.pos || ''), box: esc(c.pacote || ''),
+                k: esc(c.id + '|' + c.tipo)};
+      }),
+      topFns: pref.concat(Object.keys(grupos).filter(function(s){ return pref.indexOf(s) < 0; }))
+        .filter(function(s){ return grupos[s]; })
+        .map(function(s){
+          return {s: s, fns: grupos[s].map(function(f){
+            var lst = window.t6Melhores(porFn[f], 3);
+            return {n: esc(f), sig: esc(SIG[f] || ''), fn: esc(f),
+              podio: lst.map(function(c, i){
+                var p = pct(c);
+                return {r: (i + 1) + 'º',
+                  rSt: 'font-style:normal;font-family:inherit;font-size:9px;font-weight:700;'
+                     + 'padding:2px 6px;border-radius:999px;color:'
+                     + (i === 0 ? 'var(--d8)' : (i === 1 ? 'var(--d30)' : 'var(--d13)'))
+                     + ';background:' + (i === 0 ? 'var(--d94)' : 'var(--d14)')
+                     + ';border:1px solid ' + (i === 0 ? 'var(--d96)' : 'var(--d29)'),
+                  medSt: medSt(c, 44, 58, 8),
+                  nome: esc(c.nome),
+                  pts: n2(nota(c)),
+                  ptsSt: 'font-family:inherit;font-size:15px;font-weight:700;letter-spacing:-.4px;color:var(--d1)',
+                  pct: n2(p), pctSt: estiloPct(p),
+                  k: esc(c.id + '|' + c.tipo)};
+              })};
+          })};
+        })
+    };
+
+    var molde = M.inicio.corpo
+      .replace('<div style="display:flex;align-items:center;gap:11px">',
+               '<div data-k="{{ c.k }}" style="display:flex;align-items:center;gap:11px">')
+      .replace('<span style="{{ t.medSt }}"></span>',
+               '<span data-k="{{ t.k }}" style="{{ t.medSt }}"></span>');
+    var h = tpl(molde, dados);
+    var q = (typeof CONT !== 'undefined') ? CONT : {};
+    h = h.replace('2.785 cards medidos em 19 funções',
+                  (q.cards_total || 0).toLocaleString('pt-BR') + ' cards medidos em 19 funções');
+    h = h.replace('3 de 9 boxes atuais · top 3 de cada uma',
+                  Math.min(3, nomes.length) + ' de ' + nomes.length
+                  + ' boxes atuais · top 3 de cada uma');
+    return h;
+  };
+
+  /* o seletor de funcao da barra dela abre o mesmo menu que a casca ja tem */
+  window.t6FnMenu = function(raiz){
+    var m = document.getElementById('t6fnmenu');
+    var bf = raiz.querySelector('#t6rkFiltros');
+    if (bf){ bf.style.cursor = 'pointer';
+      bf.onclick = function(ev){ ev.stopPropagation(); try{ toggleFiltros(); }catch(e){} }; }
+    var bc = raiz.querySelector('#t6rkCond');
+    if (bc){ bc.style.cursor = 'pointer';
+      bc.onclick = function(ev){ ev.stopPropagation(); try{ toggleCond(); }catch(e){} }; }
+    ['t6rkFn', 't6rkTodas'].forEach(function(id){
+      var el = raiz.querySelector('#' + id);
+      if (!el) return;
+      el.style.cursor = 'pointer';
+      el.onclick = function(ev){
+        ev.stopPropagation();
+        if (!m) return;
+        m.classList.toggle('on');
+        if (m.classList.contains('on')){
+          var r = el.getBoundingClientRect();
+          m.style.position = 'fixed';
+          m.style.left = Math.max(8, r.left) + 'px';
+          m.style.top  = (r.bottom + 6) + 'px';
+          try{ if(window.t6EncheMenu) window.t6EncheMenu(m); }catch(e){}
+        }
+      };
+    });
+  };
+
+  /* ---------------- RANKING ----------------
+     A tela e a da foto 5: podio de 3 + grade de 6 por linha. O molde e o dela;
+     a casca continua dona do filtro e da ordem (lista()). */
+  window.t6TelaRanking = function(){
+    if (!M || !M['ranking'] || !M['ranking'].corpo) return '';
+    var L; try{ L = lista(); }catch(e){ L = []; }
+    if (!L || !L.length) return '';
+    var lim; try{ lim = VIS; }catch(e){ lim = 120; }
+    var mostra = L.slice(0, Math.max(3, lim || 120));
+    function g(c, i){
+      var v = nota(c), p = pct(c);
+      return {r: (i + 1), pos: esc(c.np || c.pos || ''), nome: esc(c.nome),
+              est: esc(c.modelo || ''), fn: esc(c.tipo),
+              pts: n2(v), pct: n2(p),
+              w: Math.max(2, Math.min(100, p)).toFixed(1) + '%',
+              medSt: medSt(c, 84, 84, 13), medSt2: medSt(c, 34, 34, 9),
+              k: esc(c.id + '|' + c.tipo)};
+    }
+    var dados = {podio: mostra.slice(0, 3).map(g),
+                 resto: mostra.slice(3).map(function(c, i){ return g(c, i + 3); })};
+    var molde = M.ranking.corpo
+      /* a foto entra no lugar do quadrado dela, sem mexer na marcacao */
+      .replace('<span style="width:84px;height:84px;border-radius:13px;background:linear-gradient(160deg,var(--d33),var(--d32));border:1px solid var(--d7);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--d16);flex:none">foto</span>',
+               '<span style="{{ g.medSt }}"></span>')
+      .replace('<span style="width:34px;height:34px;border-radius:9px;background:linear-gradient(160deg,var(--d33),var(--d32));border:1px solid var(--d10);flex:none;display:block"></span>',
+               '<span style="{{ g.medSt2 }}"></span>')
+      /* o data-k e o unico acrescimo: sem ele nao da para abrir a ficha */
+      .split('<div style="position:relative;border-radius:16px;padding:18px;')
+        .join('<div data-k="{{ g.k }}" style="position:relative;border-radius:16px;padding:18px;')
+      .split('<div style="position:relative;border-radius:14px;padding:13px;')
+        .join('<div data-k="{{ g.k }}" style="position:relative;border-radius:14px;padding:13px;')
+      /* os tres controles da barra de funcao ganham identidade para o clique */
+      .replace('>Ala finalizador<', ' id="t6rkFn">Ala finalizador<')
+      .replace('>19 funções ▾<', ' id="t6rkTodas">19 funções ▾<')
+      .replace('>MEIO<', ' id="t6rkSet">MEIO<');
+    var h = tpl(molde, dados);
+    var fn = '', st = '';
+    try{ fn = S.tipo || ''; }catch(e){}
+    try{ var mm = window.t6Setor ? window.t6Setor() : {}; st = mm[fn] || ''; }catch(e){}
+    h = h.replace('>Ala finalizador<', '>' + esc(fn) + '<').replace('>MEIO<', '>' + esc(st) + '<');
+    var qf = (window.t6Ordem || []).length || 19;
+    h = h.replace('>19 funções ▾<', '>' + qf + ' funções ▾<');
+    /* os dois chips da direita contam o que a casca esta filtrando de verdade */
+    h = h.replace('pontuação ≥ 100 <span style="color:var(--d16)">×</span>',
+                  esc(L.length.toLocaleString('pt-BR')) + ' cards nesta função');
+    /* ⛔ OS CONTROLES QUE MORAVAM NA SEGUNDA FILA VOLTAM AQUI, no lugar que ela
+       desenhou para eles. Nao e enfeite: sao os mesmos botoes da casca. */
+    var cond = '';
+    try{ cond = (typeof CTXT !== 'undefined') ? CTXT[CMODE] : ''; }catch(e){}
+    h = h.replace('filtros <b style="color:var(--d8)">2</b>',
+                  '<span id="t6rkCond">' + esc(cond || 'condicional') + '</span>'
+                  + ' &nbsp;·&nbsp; <span id="t6rkFiltros">filtros</span>');
+    return h;
+  };
+  /* ---------------- COMO CALCULAMOS ---------------- */
+  window.t6TelaComo = function(){
+    if (!M || !M['como'] || !M['como'].corpo) return '';
+    var h = tpl(M.como.corpo, {});
+    var q = (typeof CONT !== 'undefined') ? CONT : {};
+    function pt(v){ return (v || 0).toLocaleString('pt-BR'); }
+    /* os tres numeros do alto sao dado nosso, nao enfeite */
+    h = h.replace('2.785', pt(q.cards_total || 0));
+    var n = 0;
+    try{ n = window.t6Contas ? window.t6Contas() : 0; }catch(e){}
+    if (n > 0){
+      var txt = (n >= 1e9) ? ((n / 1e9).toFixed(1).replace('.', ',') + ' bi')
+                           : (Math.round(n / 1e6) + ' mi');
+      h = h.replace('1.4 bi', txt);
+    }
+    return h;
+  };
+
+  /* ================= FICHA DO CARD (fotos 6, 8 e 9) =================
+     O molde e o dela — estava escondido DENTRO do bloco 5a do arquivo, junto
+     com a grade do Elenco, e por isso ficou de fora do primeiro extrator.
+
+     ⛔ NENHUM BOTAO E REESCRITO. Os `-`/`+`, o Otimizar, o tecnico e as
+        habilidades continuam chamando as MESMAS funcoes da casca (editBar,
+        trocaTec, addHab, remHab, toggleCondCard, restaurarMotor). O molde so
+        ganha um `data-` em cada um, e o t6FichaCliques amarra. Se a ficha nova
+        falhar, a ficha antiga volta — a mesma rede do painel. */
+
+  /* a grade do campinho — a mesma da casca, aqui em cima porque la ela e local */
+  window.T6_CAMPO = [['PE','CA','PD'], ['','SA',''], ['MLE','MO','MLD'], ['','MC',''],
+                     ['','VOL',''], ['LE','ZC','LD'], ['','GK','']];
+  function _n1(v){ return (Math.round(v * 10) / 10).toFixed(1); }
+  function _sn(v, casas){
+    var x = (+v) || 0, s = x.toFixed(casas === undefined ? 0 : casas);
+    return (x > 0 ? '+' : '') + s;
+  }
+  var C_MAIS = 'var(--d8)', C_MENOS = 'var(--d72)', C_ZERO = 'var(--d17)';
+  function _stNum(v){
+    var x = (+v) || 0;
+    return 'font-family:inherit;font-size:11px;text-align:right;color:'
+         + (x > 0 ? C_MAIS : (x < 0 ? C_MENOS : C_ZERO));
+  }
+  /* ⛔ 19/08 — AS CLASSES SAO UMA ESCALA, ENTAO A COR TAMBEM E.
+     Ordem do Luis: *"faz indispensavel em verde forte, depois desejavel mais
+     fraca, util mais fraca que desejavel e acessorio mais fraca ainda"*.
+     Antes cada classe tinha uma cor propria — cinza, laranja, verde, azul.
+     Quatro cores diferentes nao dizem qual vale mais: o olho tinha que ler a
+     palavra. Agora e UM verde so, perdendo forca degrau a degrau, e a ordem
+     se le sem ler. O numero e o PESO do atributo naquela funcao. */
+  var CLS_F = {12: ['Indispensável', 1.00], 7: ['Desejável', 0.66],
+               6: ['Desejável', 0.66], 3: ['Útil', 0.40],
+               1: ['Acessório', 0.22], 0: ['—', 0.10]};
+  function _stCls(p){
+    var f = (CLS_F[p] || CLS_F[0])[1];
+    /* o mesmo verde, so mudando quanto dele entra */
+    var letra  = 'rgba(' + Math.round(214 - 74 * f) + ',' + Math.round(240 - 12 * f) + ','
+                         + Math.round(222 - 44 * f) + ',' + (0.45 + 0.55 * f).toFixed(2) + ')';
+    var fundo  = 'rgba(34,197,139,' + (0.05 + 0.24 * f).toFixed(3) + ')';
+    var borda  = 'rgba(34,197,139,' + (0.12 + 0.62 * f).toFixed(3) + ')';
+    /* ⛔ e o DESENHO muda junto, nao so o tom: contraste que depende so de cor
+       morre no primeiro tema novo. A escada se le ate em preto e branco.
+         cheio · fraco+contorno · so contorno · contorno tracejado */
+    var desenho;
+    if (f >= 0.9)      desenho = 'background:linear-gradient(180deg,#8df3ae,#22c58b);'
+                              + 'border:1px solid #22c58b;color:#06200f;font-weight:800;'
+                              + 'letter-spacing:.04em';
+    else if (f >= 0.6) desenho = 'background:' + fundo + ';border:1px solid ' + borda
+                              + ';color:' + letra + ';font-weight:700';
+    else if (f >= 0.35) desenho = 'background:transparent;border:1px solid ' + borda
+                              + ';color:' + letra + ';font-weight:600';
+    else if (f >= 0.15) desenho = 'background:transparent;border:1px dashed ' + borda
+                              + ';color:' + letra + ';font-weight:400';
+    else                desenho = 'background:transparent;border:1px solid transparent;'
+                              + 'color:rgba(255,255,255,.28);font-weight:400';
+    return 'font-family:inherit;font-size:9.5px;text-align:center;padding:2px 6px;'
+         + 'border-radius:5px;white-space:nowrap;' + desenho;
+  }
+  /* o fim do <div> que comeca em `i` — contando abre e fecha. */
+  function _fimDiv(h, i){
+    var n = 0, q = i;
+    while (q < h.length){
+      var a = h.indexOf('<div', q), b = h.indexOf('</div>', q);
+      if (b < 0) return h.length;
+      if (a >= 0 && a < b){ n++; q = a + 4; }
+      else { n--; q = b + 6; if (n <= 0) return q; }
+    }
+    return h.length;
+  }
+  /* apaga o pedaco de texto que comeca em `marca` e vai ate o fim do
+     elemento — sem mexer no resto da linha */
+  function _tiraTexto(h, marca){
+    var i = h.indexOf(marca);
+    while (i >= 0){
+      var ab = h.lastIndexOf('<', i);
+      var fecha = h.indexOf('</', i);
+      if (ab < 0 || fecha < 0){ break; }
+      var abreFim = h.indexOf('>', ab);
+      if (abreFim < 0 || abreFim > i){ break; }
+      h = h.slice(0, ab) + h.slice(h.indexOf('>', fecha) + 1);
+      i = h.indexOf(marca);
+    }
+    return h;
+  }
+
+  /* tira do HTML o <div> que contem `marca`, subindo `acima` niveis antes */
+  function _tiraBloco(h, marca, acima){
+    var i = h.indexOf(marca);
+    if (i < 0) return h;
+    var ab = h.lastIndexOf('<div', i);
+    for (var k = 0; k < (acima || 0) && ab > 0; k++) ab = h.lastIndexOf('<div', ab - 1);
+    if (ab < 0) return h;
+    return h.slice(0, ab) + h.slice(_fimDiv(h, ab));
+  }
+
+  /* troca o MIOLO de um bloco dela, achado por um pedaco unico do estilo.
+     Nao reescreve a casca do bloco: so o que esta dentro. */
+  function _miolo(h, marca, novo){
+    var i = h.indexOf(marca);
+    if (i < 0) return h;
+    var ab = h.lastIndexOf('<div', i), f = h.indexOf('>', i) + 1;
+    if (ab < 0 || f <= 0) return h;
+    var n = 1, q = f;
+    while (q < h.length && n > 0){
+      var a = h.indexOf('<div', q), b = h.indexOf('</div>', q);
+      if (b < 0) break;
+      if (a >= 0 && a < b){ n++; q = h.indexOf('>', a) + 1; }
+      else { n--; q = b + 6; }
+    }
+    return h.slice(0, f) + novo + h.slice(q - 6);
+  }
+
+  /* ⛔ 19/08 — O NOME DA FUNCAO MUDOU E O `FUNC_POS` DA CASCA NAO MUDOU JUNTO.
+     A casca guarda as posicoes de cada funcao pelos nomes ANTIGOS (19 chaves).
+     O dado de hoje usa os nomes novos. Resultado medido na ficha do Gullit:
+     `FUNC_POS['Meia ofensivo armador']` era `undefined`, o `estiloAtiva`
+     devolvia false por falta de dado, e TODA funcao renomeada saia marcada
+     como BÁSICO — inclusive as que o estilo ativa. A sigla da posicao sumia
+     pelo mesmo motivo (o `sigDe` procura na familia, que tambem usa o nome
+     velho).
+     A ponte mora aqui, num lugar so. Quando a casca for atualizada, apagar. */
+  /* ⛔ 19/08 — ORDEM DO LUIS: NUNCA, JAMAIS, ABREVIAR. EM LUGAR NENHUM.
+     A abreviacao vem da Konami e do efHub, entao ela chega no dado. Ela para
+     AQUI, num lugar so, e some de todas as telas de uma vez. Quem acrescentar
+     nome novo abreviado, acrescenta a linha aqui junto. */
+  var _POR_EXTENSO = {
+    'Jog. de infiltração'   : 'Jogador de infiltração',
+    'Especialista em cruz.' : 'Especialista em cruzamento',
+    'Finaliz. acrobática'   : 'Finalização acrobática',
+    'Arrem. lateral longo'  : 'Arremesso lateral longo',
+    'Arrem. longo do GO'    : 'Arremesso longo do goleiro',
+    'Repos. baixa do GO'    : 'Reposição baixa do goleiro',
+    'Defesa direta (GO)'    : 'Defesa direta do goleiro',
+    'Grito de garra (GO)'   : 'Grito de garra do goleiro',
+    'Clássica nº 10'        : 'Clássico número 10',
+    'Clássico nº 10'        : 'Clássico número 10'
+  };
+  /* ⛔ 19/08 — MAIUSCULA NO COMECO DE TODA PALAVRA COM MAIS DE DUAS LETRAS.
+     Ordem do Luis, e vale para o site inteiro. As de duas letras ou menos
+     ficam minusculas ("de", "do", "da", "e"), que e como se escreve nome
+     proprio em portugues. Sigla ja maiuscula nao e tocada: "GO" continua
+     "GO", nao vira "Go". */
+  function _maiusc(t){
+    if (!t) return t;
+    return String(t).split(' ').map(function(w, i){
+      if (!w) return w;
+      if (w.length > 1 && w === w.toUpperCase()) return w;      /* sigla */
+      var letras = w.replace(/[^0-9A-Za-zÀ-ÿ]/g, '');
+      if (i > 0 && letras.length <= 2) return w.toLowerCase();
+      var k = w.search(/[0-9A-Za-zÀ-ÿ]/);
+      if (k < 0) return w;
+      return w.slice(0, k) + w.charAt(k).toUpperCase() + w.slice(k + 1);
+    }).join(' ');
+  }
+  function _extenso(t){
+    if (!t) return t;
+    var v = _POR_EXTENSO[String(t).trim()];
+    return _maiusc(v || t);
+  }
+  window.t6Extenso = _extenso;
+  window.t6Maiusc = _maiusc;
+
+  /* ⛔ 19/08 — O NOME DA FUNCAO NA TELA vs A CHAVE DO BANCO.
+     Fechado pelo Luis em 15/08 e registrado na VERDADE-VIGENTE: o nome da
+     funcao NUNCA repete o nome de uma posicao, e diz o que o jogador FAZ.
+     O banco, o linhas.jsonl e a tabela `funcoes` continuam com a chave velha —
+     o motor nao sabe que o nome mudou, e nao precisa saber.
+       ⛔ A TRADUCAO E SO DE EXIBICAO. Nenhuma chave e reescrita: a `key`
+          continua sendo `id|chave-do-banco`, senao o clique nao acha a linha. */
+  var _NOME_NA_TELA = {
+    'Meia central armador'   : 'Meia armador',
+    'Meia central de chegada': 'Meia de arranque',
+    'Meia de ligação armador': 'Meia armador',
+    'Meia de ligação avançado':'Meia de arranque',
+    'Meia de lado por dentro': 'Ala finalizador',
+    'Meia de lado por fora'  : 'Ala cruzador',
+    'Meia lateral atacante'  : 'Ala finalizador',
+    'Meia lateral cruzador'  : 'Ala cruzador',
+    'Ala atacante'           : 'Ala finalizador',
+    'Meia ofensivo armador'  : 'Meia ofensivo',
+    'Segundo atacante'       : 'Atacante infiltrador',
+    'Ponta de lança'         : 'Atacante infiltrador',
+    'Ponta criadora'         : 'Atacante criador',
+    'Ponta finalizadora'     : 'Atacante finalizador'
+  };
+  function _nomeFn(t){ return _maiusc(_extenso(_NOME_NA_TELA[t] || t)); }
+
+  /* ⛔ 19/08 — DUAS GRAFIAS, A MESMA FUNCAO.
+     O `TJ_REGRA` e o `funcDaPos` da casca respondem com o nome NOVO
+     ("Ala cruzador", "Atacante infiltrador"); o `tipo` de cada linha vem com
+     a chave do banco ("Meia de lado por fora", "Segundo atacante").
+     Comparar as duas com `===` so acertava nas seis funcoes cujo nome nao
+     mudou — e era por isso que clicar no campinho so funcionava em CA, ZC,
+     GK, LD e VOL. Toda comparacao de nome de funcao passa por aqui. */
+  function _mesmaFn(a, b){
+    if (!a || !b) return false;
+    if (a === b) return true;
+    return (_NOME_NA_TELA[a] || a) === (_NOME_NA_TELA[b] || b);
+  }
+  window.t6NomeFuncao = _nomeFn;
+
+  var _FUNC_ALIAS = {
+    'Meia central armador'   : 'Meia armador',
+    'Meia central de chegada': 'Meia de arranque',
+    'Meia de lado por dentro': 'Ala finalizador',
+    'Meia de lado por fora'  : 'Ala cruzador',
+    'Meia ofensivo armador'  : 'Meia ofensivo',
+    'Segundo atacante'       : 'Atacante infiltrador',
+    'Ponta criadora'         : 'Atacante criador',
+    'Ponta finalizadora'     : 'Atacante finalizador'
+  };
+  /* a posicao guardada no dado e uma so; o par do outro lado entra aqui */
+  var _PARES = {MLD: ['MLD','MLE'], MLE: ['MLE','MLD'],
+                LD:  ['LD','LE'],   LE:  ['LE','LD'],
+                PD:  ['PD','PE'],   PE:  ['PE','PD']};
+
+  /* AS POSICOES DE UMA FUNCAO — pela casca quando ela conhece o nome,
+     pelo proprio dado (`x.pos`, que o gerador sempre preenche) quando nao. */
+  function _posFn(x){
+    var t = x && x.tipo, ps = null;
+    try{ ps = FUNC_POS[t] || FUNC_POS[_NOME_NA_TELA[t]] || FUNC_POS[_FUNC_ALIAS[t]]; }catch(e){}
+    if (ps && ps.length) return ps;
+    var p = x && x.pos;
+    if (!p) return [];
+    return _PARES[p] || [p];
+  }
+
+  /* O ESTILO LIGA NESTA FUNCAO?  true / false / null quando nao da pra saber.
+     ⛔ `null` NAO vira BÁSICO. Nao se afirma o que nao se mediu. */
+  function _estiloLiga(x){
+    var ps = _posFn(x), es = null, m = x && x.modelo;
+    try{ es = EST_POS[m] || (typeof ESTPT !== 'undefined' ? EST_POS[ESTPT[m]] : null); }catch(e){}
+    if (!ps.length || !es) return null;
+    for (var i = 0; i < ps.length; i++) if (es.indexOf(ps[i]) >= 0) return true;
+    return false;
+  }
+
+  function _sigla(p){
+    try{ if (typeof SIGJ !== 'undefined' && SIGJ[p]) return SIGJ[p]; }catch(e){}
+    return p;
+  }
+
+  /* AS POSICOES DE UM CARD — a nativa mais as compradas. */
+  function _minhasDe(c){
+    var np = c.np, out = [np];
+    try{ if (typeof npFixo === 'function') { np = npFixo(c) || np; out = [np]; } }catch(e){}
+    try{ (c.sp || []).forEach(function(x){
+      if (x && x[0] !== np && out.indexOf(x[0]) < 0) out.push(x[0]); }); }catch(e){}
+    return out.filter(Boolean);
+  }
+
+  /* ⛔ 19/08 — A SIGLA E A POSICAO QUE **ESTE CARD** EXERCE NESTA FUNCAO.
+     Ordem do Luis, repetida em 15/08 e de novo em 19/08: *"se ele pode comprar
+     so MLD, nao interessa que MLE tambem seja Ala — poe so o que ele pode"*.
+     Entao cruza-se `_minhas` (nativa + compradas) com a regra da funcao, em vez
+     de mostrar as duas pontas da familia. Mesma conta da `sigsDoCard` da casca
+     antiga; ela morreu junto com o desenho velho e voltou aqui. */
+  function _sigFn(x, dono){
+    var out = [], minhas = _minhasDe(dono || x);
+    minhas.forEach(function(p){
+      var f = null, r = null;
+      try{ f = (typeof funcDaPos === 'function') ? funcDaPos(p, (dono || x).modelo) : null; }catch(e){}
+      try{ r = (typeof TJ_REGRA !== 'undefined') ? TJ_REGRA[p] : null; }catch(e){}
+      if (_mesmaFn(f, x.tipo) || (r && (_mesmaFn(r[1], x.tipo) || _mesmaFn(r[2], x.tipo)))){
+        var g = _sigla(p);
+        if (out.indexOf(g) < 0) out.push(g);
+      }
+    });
+    if (out.length) return out.join('/');
+    /* nenhuma posicao dele bate: cai para as posicoes da propria funcao */
+    var ps = _posFn(x), i;
+    for (i = 0; i < ps.length && i < 2; i++){
+      var v = _sigla(ps[i]);
+      if (out.indexOf(v) < 0) out.push(v);
+    }
+    return out.join('/');
+  }
+
+  /* AS FUNCOES QUE UMA POSICAO PODE EXERCER, dentro das que ESTE card tem. */
+  function _funcsDaPos(pos, dono, irmaos){
+    var out = [], f = null, r = null;
+    try{ f = (typeof funcDaPos === 'function') ? funcDaPos(pos, dono.modelo) : null; }catch(e){}
+    try{ r = (typeof TJ_REGRA !== 'undefined') ? TJ_REGRA[pos] : null; }catch(e){}
+    (irmaos || []).forEach(function(y){
+      if (_mesmaFn(f, y.tipo) || (r && (_mesmaFn(r[1], y.tipo) || _mesmaFn(r[2], y.tipo)))){
+        if (out.indexOf(y.tipo) < 0) out.push(y.tipo);
+      }
+    });
+    return out;
+  }
+  /* AS POSICOES ONDE ESTA FUNCAO PODE SER EXERCIDA POR ESTE CARD */
+  function _posDaFuncao(tipo, dono){
+    var out = [];
+    _minhasDe(dono).forEach(function(p){
+      var f = null, r = null;
+      try{ f = (typeof funcDaPos === 'function') ? funcDaPos(p, dono.modelo) : null; }catch(e){}
+      try{ r = (typeof TJ_REGRA !== 'undefined') ? TJ_REGRA[p] : null; }catch(e){}
+      if (_mesmaFn(f, tipo) || (r && (_mesmaFn(r[1], tipo) || _mesmaFn(r[2], tipo)))) out.push(p);
+    });
+    return out;
+  }
+
+  /* ⛔ 19/08 — A NOTA DA LISTA DE FUNCOES E A DO MOTOR, E NAO SE MEXE.
+     Ordem do Luis: *"a pontuacao que tem aqui e fixa, ela e de acordo com o que
+     a gente tem no banco de dados; ela nao pode mudar quando a gente altera as
+     habilidades ou as barras"*.
+     E ela mudava: a lista chamava `nota(x)`, que le o estado VIVO da tela.
+     Mexer numa barra rebaixava a nota de funcoes que o cara nem abriu — o
+     Centroavante fixo caiu de 108,93 para 106,09 sem ninguem tocar nele.
+     Aqui a conta e refeita a partir da ANCORA (`anc`), que e o retrato do que
+     o motor gravou. O estado da tela e guardado e devolvido intacto: medir nao
+     pode alterar o que se mede. E o resultado fica no proprio card (`_nMot`),
+     entao a conta roda uma vez por funcao, nao a cada desenho. */
+  function _notaDoMotor(x){
+    if (x._nMot !== undefined) return x._nMot;
+    var v = null;
+    try{
+      var a = anc(x);
+      var h0 = x._habs, t0 = x._tec, tn0 = x._tecNome, im0 = x.imp;
+      x._habs = (a.habs || []).slice();
+      x.imp = a.imp;
+      delete x._tecNome;
+      v = notaCfg(x, a.lvl, (a.tecb || []).slice());
+      if (h0 === undefined) delete x._habs; else x._habs = h0;
+      if (t0 === undefined) delete x._tec; else x._tec = t0;
+      if (tn0 === undefined) delete x._tecNome; else x._tecNome = tn0;
+      x.imp = im0;
+      delete x._cp; delete x._n;
+    }catch(e){ v = null; }
+    if (v === null || isNaN(v)){
+      try{ v = nota(x); }catch(e2){ v = 0; }
+    }
+    x._nMot = v;
+    return v;
+  }
+  window.t6NotaDoMotor = _notaDoMotor;
+
+  /* QUAL ABA DO CARD ESTA ABERTA — 'motor' (maximo), 'insumos' ou 'livre' */
+  window.t6Modo = function(){
+    try{ return window.ENC_MODO || 'motor'; }catch(e){ return 'motor'; }
+  };
+
+  /* ⛔ 19/08 — O `style-hover` DA DESIGNER NAO EXISTE NO NAVEGADOR.
+     O arquivo dela usa `style-hover="..."` em 72 lugares — e a ferramenta
+     dela que traduz isso para `:hover`. O navegador ignora atributo que nao
+     conhece. Por isso NENHUM dos balõezinhos dos botoes `i` aparecia: o texto
+     ja estava escrito, preso em `opacity:0` para sempre.
+     Aqui o atributo vira comportamento de verdade, para a tela inteira —
+     nao so para os `i`. Um lugar so, e todo `style-hover` dela passa a valer. */
+  window.t6Hover = function(raiz){
+    if (!raiz) return;
+    var els = [].slice.call(raiz.querySelectorAll('[style-hover]'));
+    els.forEach(function(el){
+      if (el._t6hv) return;
+      el._t6hv = true;
+      var extra = el.getAttribute('style-hover') || '';
+      var antes = el.getAttribute('style') || '';
+      function entra(){ el.setAttribute('style', antes + ';' + extra); }
+      function sai(){ el.setAttribute('style', antes); }
+      el.addEventListener('mouseenter', entra);
+      el.addEventListener('mouseleave', sai);
+      /* ⛔ 19/08 — O CLIQUE E DO BOTAO, NUNCA DO BALAO.
+         A primeira versao amarrava um clique em TODO elemento com
+         `style-hover` — e os botoes das abas tem `style-hover`. O clique
+         era engolido pelo balao (com stopPropagation) e nao chegava no
+         botao: o Luis tinha que clicar duas, tres, trinta vezes.
+         Agora o toque so vale para o `i` de ajuda: elemento que TEM um
+         balao filho escondido e que NAO e clicavel por si. E sem
+         stopPropagation nunca mais. */
+      var balao = null;
+      try{ balao = el.querySelector('b[style*="opacity:0"]'); }catch(e){}
+      var proprio = (el.textContent || '').trim();
+      if (!balao || proprio.length > 3) return;
+      el.addEventListener('click', function(){
+        if (el._t6on){ sai(); el._t6on = false; }
+        else { entra(); el._t6on = true; }
+      });
+    });
+  };
+
+  window.t6TelaFicha = function(key){
+    if (!M || !M.ficha || !M.ficha.corpo) return '';
+    var c = null;
+    try{ c = _card(key); }catch(e){}
+    if (!c || !c.arows) return '';
+    var lvl = {}, ET = null, ETN = null, ST = null;
+    try{ lvl = _lvlDe(c) || {}; }catch(e){}
+    try{ ET  = c.base ? etapas(c, lvl) : null; }catch(e){}
+    try{ ETN = c.base ? _e4nat(c, lvl) : null; }catch(e){}
+    try{ ST  = c.base ? _startDe(c) : null; }catch(e){}
+
+    /* ---------- o campinho (3 por linha, como ela desenhou) ---------- */
+    var np = c.np || '', minhas = [];
+    try{ if (typeof npFixo === 'function') np = npFixo(c) || np; }catch(e){}
+    try{ (c.sp || []).forEach(function(x){ if (minhas.indexOf(x[0]) < 0) minhas.push(x[0]); }); }catch(e){}
+    if (np && minhas.indexOf(np) < 0) minhas.unshift(np);
+    /* ⛔ `sig`, `nomeP` e `CAMPO` moram dentro de um IIFE da casca — nao sao
+       globais. Entao o campinho sai das tabelas que SAO globais (SIGJ/POSN), e
+       a grade de posicoes fica aqui, escrita uma vez so. */
+    function _sig(p){
+      try{ if (typeof SIGJ !== 'undefined' && SIGJ[p]) return SIGJ[p]; }catch(e){}
+      return p;
+    }
+    function _nomeP(p){
+      try{ if (typeof POSN !== 'undefined' && POSN[p]) return POSN[p]; }catch(e){}
+      return p;
+    }
+    /* ⛔ 19/08 — OS QUATRO ESTADOS, COM CONTRASTE DE VERDADE.
+       A legenda do proprio `i` do bloco ja dizia tres coisas diferentes, mas o
+       desenho so distinguia duas — e mal. Ordem do Luis, 19/08: "o contraste
+       das posicoes que ele pode ocupar com as que nao pode esta muito pouco".
+         1. A POSICAO DESTA FICHA .. preenchida, verde forte, com brilho
+         2. POSICAO DE FABRICA .... contorno verde grosso, fundo apagado
+         3. SEGUNDA POSICAO ....... fundo azulado, contorno visivel
+         4. NAO PODE OCUPAR ....... quase apagada, sem contorno
+       Sao quatro degraus de brilho, nao dois de 1px. */
+    /* a posicao selecionada no campinho — o `_SELPOS` da casca antiga */
+    var _sel = null, _funcsSel = null;
+    try{
+      if (window._SELPOS && _minhasDe(c).indexOf(window._SELPOS) >= 0) _sel = window._SELPOS;
+    }catch(e){}
+
+    /* ⛔ 19/08 — OS ESTADOS DO CAMPINHO, E A LEITURA ANTES DA COR.
+       Ordem do Luis: as cores estavam certas mas o TEXTO ficou ilegivel —
+       claro sobre claro na acesa, apagado demais na que ele nao ocupa.
+       Cada estado agora tem cor de letra escolhida contra o proprio fundo.
+         ACESA ...... a posicao desta funcao (ou a que ele clicou)
+         NATIVA ..... de fabrica
+         COMPRADA ... segunda posicao
+         FORA ....... ele nao ocupa: legivel, so sem destaque */
+    var CX = (typeof CAMPO !== 'undefined') ? CAMPO : window.T6_CAMPO;
+    var _acesas = _sel ? [_sel] : _posDaFuncao(c.tipo, c);
+    var _segundas = [];
+    try{ (c.sp || []).forEach(function(x){ if (x && x[0] !== np) _segundas.push(x[0]); }); }catch(e){}
+    var campo = CX.map(function(linha){
+      return {cells: linha.map(function(p){
+        if (!p) return {n: '', p: '', st: 'display:block;height:32px'};
+        var acesa = (_acesas.indexOf(p) >= 0),
+            eNat  = (p === np),
+            eSeg  = (_segundas.indexOf(p) >= 0),
+            pode  = eNat || eSeg || (minhas.indexOf(p) >= 0);
+        var fundo, borda, cor, extra = '';
+        if (acesa){
+          fundo = 'linear-gradient(180deg,#8df3ae,#4fd98a)';
+          borda = '2px solid #ffffff';
+          cor   = '#06200f';
+          extra = ';box-shadow:0 0 0 3px rgba(255,255,255,.28),0 6px 14px rgba(0,0,0,.35);font-size:11.5px';
+        } else if (eNat){
+          fundo = 'rgba(255,255,255,.10)';
+          borda = '2px solid #ffd75e';
+          cor   = '#ffeaa8';
+        } else if (eSeg || pode){
+          fundo = 'rgba(255,255,255,.16)';
+          borda = '1px solid rgba(255,255,255,.42)';
+          cor   = '#ffffff';
+        } else {
+          fundo = 'rgba(0,0,0,.16)';
+          borda = '1px solid rgba(255,255,255,.13)';
+          cor   = '#b9cfc0';
+        }
+        if (pode) extra += ';cursor:pointer';
+        return {n: esc(_sig(p)), p: esc(pode ? p : ''),
+          st: 'display:flex;align-items:center;justify-content:center;height:32px;'
+            + 'font-family:inherit;font-size:10.5px;font-weight:800;letter-spacing:.3px;'
+            + 'border-radius:7px;background:' + fundo
+            + ';border:' + borda + ';color:' + cor + extra};
+      })};
+    });
+
+    /* ---------- as funcoes que ele exerce ---------- */
+    var base = String(c.id).split('@')[0], irm = [];
+    try{
+      irm = D.filter(function(x){ return x.id !== 'MOLDE' && String(x.id).split('@')[0] === base; });
+      irm.forEach(function(x){ _notaDoMotor(x); });
+      irm.sort(function(a, b){ return b._nMot - a._nMot; });
+    }catch(e){ irm = [c]; }
+    if (_sel) _funcsSel = _funcsDaPos(_sel, c, irm);
+
+    var fnsW = irm.map(function(x, i){
+      var g = (irm.length > 1) ? (1 - i / (irm.length - 1)) : 1;
+      var aqui = (x.tipo === c.tipo);
+      /* quando ha uma POSICAO selecionada no campinho, acendem as funcoes
+         daquela posicao — a regra simetrica que existia na casca antiga */
+      if (_funcsSel) aqui = (_funcsSel.indexOf(x.tipo) >= 0);
+      /* BÁSICO so quando se MEDIU que o estilo nao liga. `null` = nao sei,
+         e nao sei nao vira etiqueta. (Antes, todo nome renomeado caia aqui.) */
+      var bas = (_estiloLiga(x) === false);
+      /* a sigla e a posicao que ESTE card exerce nesta funcao */
+      var sg = _sigFn(x, c);
+      return {n: esc(_nomeFn(x.tipo)),
+        /* ⛔ 19/08 — QUATRO COLUNAS DE LARGURA FIXA.
+           Sem isso o nome comprido quebra em duas linhas e a lista inteira
+           desalinha — foi o que aconteceu com "Centroavante fixo". O nome
+           ocupa o que sobra e corta com reticencias; as outras tres nao
+           encolhem nunca. */
+        /* ⛔ 19/08 — O NOME NAO SE CORTA. Ordem do Luis: "voce escondeu a
+           informacao mais importante, que e o nome da funcao". Cortar com
+           reticencias resolvia o desalinho e criava um pior: "Zagueiro ..."
+           nao diz se e de saida ou de combate. Agora o nome quebra em duas
+           linhas quando precisar, e as outras tres colunas e que nao mexem. */
+        nSt: 'flex:1 1 auto;min-width:0;text-align:left;line-height:1.2;'
+           + 'white-space:normal;overflow-wrap:anywhere',
+        bas: bas ? 'BÁSICO' : '',
+        basSt: bas ? 'font-family:inherit;font-size:8px;font-weight:800;letter-spacing:.6px;padding:2px 6px;border-radius:4px;background:var(--d14);border:1px solid var(--d31);color:var(--d17);flex:0 0 auto' : 'display:none',
+        /* ⛔ a coluna da posicao fica NO MEIO da linha, centralizada — nao
+           colada na nota. Ordem do Luis, 19/08. */
+        /* ⛔ 19/08 — UMA SIGLA POR BOTAO, EMPILHADOS.
+           Ordem do Luis: "coloca CA/SA em dois botoes, um embaixo do outro".
+           O `pos` deixa de ser texto e vira marcacao — por isso o molde
+           precisa imprimir sem escapar (o `tpl` ja aceita, e o conteudo e
+           gerado aqui, nao vem de fora). */
+        pos: sg.split('/').map(function(g){
+          return '<b style="display:block;font-family:inherit;font-size:9.5px;'
+               + 'font-weight:800;letter-spacing:.4px;padding:3px 0;border-radius:5px;'
+               + 'text-align:center;background:'
+               + (aqui ? 'rgba(255,255,255,.14)' : 'var(--d14)')
+               + ';color:' + (aqui ? 'var(--d117)' : 'var(--d45)') + '">'
+               + esc(g) + '</b>';
+        }).join(''),
+        posSt: 'display:flex;flex-direction:column;gap:3px;flex:0 0 66px',
+        /* ⛔ TODA pontuacao do site tem DUAS casas. Ordem do Luis, 19/08. */
+        pts: n2(_notaDoMotor(x)),
+        num: 'font-family:inherit;font-size:14px;font-weight:800;flex:0 0 58px;text-align:right;color:'
+           + (aqui ? 'var(--d117)' : 'var(--d1)'),
+        /* ⛔ o contraste era 1px de borda e um fundo que so contava o ranking.
+           Agora a selecionada usa a MESMA cor da etiqueta do topo direito
+           (ordem do Luis, 19/08), e as outras escurecem pelo ranking. */
+        /* ⛔ a funcao ABERTA usa a MESMA ROUPA da etiqueta do topo direito —
+           o mesmo roxo, a mesma borda, a mesma letra. Ordem do Luis, 19/08:
+           "pra ela estar na cor roxa igual o outro". Os tokens sao os mesmos
+           que o molde da designer usa naquela etiqueta: d114/d115/d116/d117. */
+        row: 'display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;'
+           + 'padding:9px 11px;border-radius:9px;cursor:pointer;transition:all .16s ease;'
+           + (aqui
+              ? 'background:linear-gradient(180deg,var(--d114),var(--d115));'
+                + 'border:1px solid var(--d116);color:var(--d117)'
+              : 'background:rgba(125,242,168,' + (0.03 + 0.10 * g).toFixed(3) + ');'
+                + 'border:1px solid var(--d18);color:var(--d8)'),
+        k: esc(x.id + '|' + x.tipo)};
+    });
+
+    /* ---------- as barras ---------- */
+    function custo(n){ var t = 0; for (var k = 1; k <= n; k++) t += Math.ceil(k / 4); return t; }
+    var chaves = []; try{ chaves = MBK.slice(); }catch(e){}
+    var barsFull = chaves.map(function(b){
+      var v = lvl[b] || 0;
+      return {n: esc((typeof MBN !== 'undefined' && MBN[b]) || b), v: v,
+              pts: custo(v), w: Math.round(v * 100 / 25) + '%', b: esc(b)};
+    });
+    var gasto = 0; try{ gasto = gastoDe(lvl); }catch(e){}
+    var orc = c.orc || 0, niv = 0;
+    for (var kk in lvl) niv += (lvl[kk] || 0);
+
+    /* ---------- atributos ---------- */
+    var GRUPOS = [['ATAQUE', [0,1,2,3,4,5,6,7,8,9]], ['ATLETISMO', [10,11,12,13,14,15,16]],
+                  ['DEFESA', [17,18,19,20]], ['GOLEIRO', [21,22,23,24,25]]];
+    function linhaAttr(r){
+      var i = r[0], p = r[1], cl = CLS_F[p] || CLS_F[0];
+      var e = ET ? ET[i] : null, nv = ETN ? ETN[i] : null, jogo = r[3];
+      var pt = 0; try{ pt = ptsAttr(r); }catch(e2){}
+      return {n: esc(ATTRS[i]),
+        nSt: 'font-size:11.5px;color:' + (p ? 'var(--d1)' : 'var(--d16)') + (p >= 6 ? ';font-weight:700' : ''),
+        cls: cl[0], clsSt: _stCls(p),
+        base: e ? e[0] : (ST ? (ST[i] || 0) : jogo),
+        bar: e ? _sn(e[1] - e[0]) : '—', barSt: e ? _stNum(e[1] - e[0]) : _stNum(0),
+        imp: e ? _sn(e[2] - e[1]) : '—', impSt: e ? _stNum(e[2] - e[1]) : _stNum(0),
+        tec: e ? _sn(e[3] - e[2]) : '—', tecSt: e ? _stNum(e[3] - e[2]) : _stNum(0),
+        tela: e ? e[3] : jogo,
+        hn: (e && nv !== null && nv !== undefined) ? _sn(nv - e[3]) : '—',
+        hnSt: (e && nv !== null && nv !== undefined) ? _stNum(nv - e[3]) : _stNum(0),
+        ha: (e && nv !== null && nv !== undefined) ? _sn(e[4] - nv) : '—',
+        haSt: (e && nv !== null && nv !== undefined) ? _stNum(e[4] - nv) : _stNum(0),
+        total: jogo, alvo: r[2],
+        vs: _sn(r[4]), vsSt: _stNum(r[4]),
+        pts: p ? _sn(pt, 1) : '0.0',
+        ptsSt: 'font-family:inherit;font-size:11.5px;font-weight:700;text-align:right;color:'
+             + (p ? (pt >= 0 ? C_MAIS : C_MENOS) : 'var(--d16)')};
+    }
+    function secao(f){
+      return GRUPOS.map(function(g){
+        var rows = (c.arows || []).filter(function(r){
+          return g[1].indexOf(r[0]) >= 0 && f(r); }).map(linhaAttr);
+        return rows.length ? {g: g[0], rows: rows} : null;
+      }).filter(Boolean);
+    }
+    var atributos = secao(function(r){ return r[1] > 0; });
+    var indiferentes = secao(function(r){ return !r[1]; });
+    var nInd = (c.arows || []).filter(function(r){ return !r[1]; }).length;
+
+    /* ---------- medidas do corpo, em tres colunas ---------- */
+    /* ⛔ 19/08 — AS MEDIDAS DO CORPO VINHAM VAZIAS.
+       O gerador manda `frows: []` sempre — e por isso o bloco mostrava
+       `soma 0 · peso 0 · 0%`. Ordem do Luis: *"as medidas do corpo saem do
+       motor de bonus e sao gravadas no supabase"*. Estavam: o `CORPO_MOTOR`
+       traz os numeros medidos de cada carta e o `CORPO_MOLDE` (novo) traz o
+       molde de cada funcao. A conta e a MESMA do motor_bonus. Se por algum
+       motivo isso faltar, cai no `frows` e depois no `_pos_D` da casca —
+       nunca fica em branco sem dizer por que. */
+    var _fr0 = (c.frows && c.frows.length) ? c.frows : null;
+    if (!_fr0){ try{ _fr0 = corpoLinhas(c); }catch(e){ _fr0 = null; } }
+    if (!_fr0 || !_fr0.length){
+      try{ if (typeof _pos_D === 'function' && !window._t6posD){ window._t6posD = 1; _pos_D(); } }catch(e){}
+      _fr0 = c.frows || [];
+    }
+    var fr = _fr0.slice().sort(function(a, b){ return (a[6] || 0) - (b[6] || 0); });
+    var porCol = Math.ceil(fr.length / 3) || 1, medidas = [];
+    for (var q = 0; q < fr.length; q += porCol){
+      medidas.push(fr.slice(q, q + porCol).map(function(r){
+        var pts = r[6] || 0, nt = r[4] || 0;
+        return {n: esc(String(r[0]).replace(/ p\d+$/, '')), p: 'p' + r[1],
+          nota: nt ? _sn(nt) : '0',
+          notaSt: 'font-family:inherit;font-size:10.5px;text-align:center;color:'
+                + (nt > 0 ? C_MAIS : (nt < 0 ? C_MENOS : C_ZERO)),
+          card: r[3], ref: r[2], pontos: _sn(pts, 2),
+          pontosSt: 'font-family:inherit;font-size:10.5px;font-weight:700;text-align:right;color:'
+                  + (pts > 0 ? C_MAIS : (pts < 0 ? C_MENOS : C_ZERO))};
+      }));
+    }
+
+    var dados = {campo: campo, fnsW: fnsW, barsFull: barsFull, atributos: atributos,
+      indiferentes: indiferentes, medidas: medidas,
+      colsAttr: ['Atributo','Classe','Base','+barras','+ímpeto','+técnico','Na tela',
+                 '+hab. nativas','+hab. adicionadas','Total','Alvo','vs alvo','Pontos']};
+
+    /* os data- entram ANTES de preencher — unico acrescimo a marcacao dela */
+    var molde = M.ficha.corpo
+      .replace('<div style="{{ f.row }}"', '<div data-fn="{{ f.k }}" style="{{ f.row }}"')
+      .replace('<span>{{ f.n }}</span>', '<span style="{{ f.nSt }}">{{ f.n }}</span>')
+      .replace('<span style="{{ c.st }}">{{ c.n }}</span>',
+               '<span data-pos="{{ c.p }}" style="{{ c.st }}">{{ c.n }}</span>')
+      .replace('<span style="height:8px;border-radius:5px;background:var(--d10);display:block;overflow:hidden;position:relative">',
+               '<span data-trilha="{{ b.b }}" style="height:8px;border-radius:5px;background:var(--d10);display:block;overflow:hidden;position:relative">')
+      .replace('">−</i>', '" data-bar="{{ b.b }}" data-d="-1">−</i>')
+      .replace('">+</i>', '" data-bar="{{ b.b }}" data-d="1">+</i>');
+    var h = tpl(molde, dados);
+
+    /* ---------- os textos que sao dado nosso ---------- */
+    var nt = 0, tp = 0, pc = 0;
+    try{ nt = nota(c); tp = topoDoTipo(c.tipo); pc = tp > 0 ? 100 * nt / tp : 0; }catch(e){}
+    function sub(de, para){ h = h.split(de).join(para); }
+    sub('>Lionel Messi<', '>' + esc(c.nome) + '<');
+    sub('>PD<', '>' + esc(_sig(np) || '—') + '<');
+    sub('>Ponta direita<', '>' + esc(_nomeP(np) || '—') + '<');
+    sub('>Armador criativo<', '>' + esc(_extenso(c.modelo) || _nomeFn(c.tipo) || '') + '<');
+    /* ⛔ 19/08 — A DATA NAO E DE LANCAMENTO. Ela sai do `c.dt`, que o
+       unificar_base enche a partir do box_por_card.json: e a data da BOX em
+       que a carta apareceu. A coluna do banco se chama `data_lancamento`, o
+       que enganou por semanas. Enquanto nao houver a data real da Konami, a
+       tela diz o que o numero E, em vez de mentir o que ele nao e. */
+    sub('>24/06/2026<', '>' + (c.dt
+        ? 'box · ' + esc(c.dt.split('-').reverse().join('/'))
+        : 'sem data de box') + '<');
+    /* ⛔ o MAXIMO KONAMI vem do `max_ovr` do efHub. O `maxOvr` que estava aqui
+       e a pontuacao que a TELA ANTIGA mostrava (por isso saia quebrado, tipo
+       100.18, quando OVR da Konami e sempre inteiro). O gerador ja foi
+       corrigido para preferir o max_ovr; aqui fica a rede: numero quebrado
+       nao e OVR, entao nao se mostra como se fosse. */
+    sub('>92<', '>' + (c.ovr || '—') + '<');
+    var _mx = c.maxOvr || c.sisOvr || 0;
+    sub('>104.20<', '>' + ((_mx && Math.abs(_mx - Math.round(_mx)) < 0.001)
+        ? Math.round(_mx) : (c.ovr || '—')) + '<');
+    sub('>112.26<', '>' + n2(nt) + '<');
+    sub('>100.00%<', '>' + n2(pc) + '%<');
+    /* ⛔ 19/08 — o rotulo era o SETOR ("ATAQUE"), que a coluna da esquerda ja
+       diz. Ordem do Luis: aqui vai a posicao nativa, com o nome escrito. */
+    sub('ATACANTE <b', 'POSIÇÃO NATIVA: <b');
+    sub('FUNÇÕES QUE EXERCE · 8', 'FUNÇÕES QUE EXERCE · ' + irm.length);
+    sub('Ala finalizador <b', esc(_nomeFn(c.tipo)) + ' <b');
+    sub('>112.3<', '>' + n2(nt) + '<');
+    sub('>30</b>', '>' + niv + '</b>');
+    sub('>58/58<', '>' + gasto + '/' + orc + '<');
+    sub('>tudo gasto<', '>' + ((orc - gasto) > 0 ? (orc - gasto) + ' sobrando' : 'tudo gasto') + '<');
+    var mel = 0;
+    try{ if (c._notaMot !== undefined && nt > 0) mel = (c._notaMot - nt) / nt * 100; }catch(e){}
+    sub('>0%<', '>' + (mel > 0.05 ? '+' + mel.toFixed(1) : '0') + '%<');
+    sub('+ 9 atributos indiferentes nesta função', '+ ' + nInd + ' atributos indiferentes nesta função');
+    sub('>170 cm<', '>' + (c.h || '—') + ' cm<');
+    sub('>72 kg<', '>' + (c.w || '—') + ' kg<');
+    sub('>38 anos<', '>' + (c.age || '—') + ' anos<');
+    sub('tendência a lesão Baixa', 'tendência a lesão ' + esc(c.inj || '—'));
+    sub('>Esquerdo<', '>' + esc(c.foot || '—') + '<');
+    var pr = null; try{ pr = prPar(c); }catch(e){}
+    sub('>Raramente<', '>' + esc(pr ? ((typeof PR_ROT_F !== 'undefined' && PR_ROT_F[pr[0]]) || '—') : 'sem dado') + '<');
+    sub('>Média<', '>' + esc(pr ? ((typeof PR_ROT_Q !== 'undefined' && PR_ROT_Q[pr[1]]) || '—') : '—') + '<');
+    var pb = 0; try{ pb = prBonus(c); }catch(e){}
+    /* ⛔ 19/08 — OS DOIS "bônus na nota" SAIRAM. Ordem do Luis, e ele tem
+       razao: eles vinham de DOIS enderecos. A nota usa `bonusPronto(c,i,...)`
+       (o numero do banco) e a linha de texto chamava a funcao de calculo
+       direto (`iaBonus`, `fisBonus`). Medido pela sessao do encaixe: 1.567
+       linhas divergem no estilo da IA e 250 no corpo. Enquanto vierem de dois
+       lugares, mostrar e pior que nao mostrar. */
+    h = _tiraTexto(h, 'bônus');
+    sub('>+0.14<', '>' + _sn(pb, 2) + '<');
+    sub('>+305.9 pts<', '>' + _sn(c.b1 || 0, 1) + ' pts<');
+    sub('>-1%<', '>' + _sn(c.b4 || 0, 0) + '%<');
+    sub('>-3</b>', '>' + Math.round(c.b4r || 0) + '</b>');
+    sub('>15</b>', '>' + (c.frows || []).reduce(function(a, r){ return a + r[1]; }, 0) + '</b>');
+    sub('>-0.15</b>', '>' + _sn(c._fb !== undefined ? c._fb : 0, 2) + '</b>');
+
+    /* ⛔ 19/08 — A FOTO DA FICHA.
+       O molde da designer traz um quadrado com a palavra "foto" dentro, e a
+       ficha nunca o preenchia — por isso ela era o unico lugar do sistema sem
+       imagem. Nao existe campo de imagem no card: a URL sai do proprio `id`,
+       pela mesma `url()` que a lista e a home ja usam. Uma funcao so, tres
+       telas. E o quadrado cresceu (112x148 -> 152x201), ordem do Luis. */
+    (function(){
+      var alvo = '>foto</div>', i = h.indexOf(alvo);
+      if (i < 0) return;
+      var ab = h.lastIndexOf('<div', i);
+      if (ab < 0) return;
+      /* ⛔ 19/08 — A ORDEM DO CABECALHO E A DO LUIS:
+         foto grande · nome · posicao · estilo de jogo. Em coluna, centrado.
+         A moldura do card ja vem desenhada na propria imagem da Konami, entao
+         a foto entra inteira, sem borda nossa por cima. */
+      var novo =
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%">'
+        + '<div style="' + medSt(c, 208, 275, 14) + ';border:none"></div>'
+        + '<div style="font-size:25px;font-weight:800;letter-spacing:-.4px;color:var(--d1);text-align:center;line-height:1.15">'
+        + esc(c.nome || '') + '</div>'
+        + '<div style="display:flex;align-items:center;gap:8px">'
+        +   '<span style="font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.6px;'
+        +   'padding:4px 9px;border-radius:7px;background:var(--d112);color:var(--d8)">'
+        +   esc(_sig(np) || '—') + '</span>'
+        +   '<span style="font-size:13px;color:var(--d30)">' + esc(_nomeP(np) || '—') + '</span>'
+        + '</div>'
+        + '<div style="display:flex;align-items:center;gap:8px">'
+        +   '<span style="width:26px;height:26px;border-radius:50%;flex:none;display:flex;'
+        +   'align-items:center;justify-content:center;background:var(--d14);'
+        +   'border:1px solid var(--d31);font-size:13px;color:var(--d108)">◎</span>'
+        +   '<span style="font-size:17px;font-weight:700;letter-spacing:-.2px;color:var(--d108)">'
+        +   esc(_extenso(c.modelo) || '—') + '</span>'
+        + '</div>'
+        + '</div>';
+      /* sobe um nivel: sai a linha inteira (foto + coluna do nome), nao so a foto */
+      var linha = h.lastIndexOf('<div', ab - 1);
+      if (linha < 0) linha = ab;
+      h = h.slice(0, linha) + novo + h.slice(_fimDiv(h, linha));
+    })();
+
+    /* ⛔ 19/08 — OS BLOCOS QUE O LUIS MANDOU TIRAR.
+       `Base Konami` / `Máximo Konami`: o `max_ovr` vem vazio para parte das
+       cartas e o Maximo caia no mesmo numero da Base. Numero que nao se sabe
+       nao fica na tela.
+       A data: ela e do BOX, nunca foi de lancamento. Sai ate existir a de
+       verdade.
+       `POSIÇÃO NATIVA:`: a posicao ja esta escrita no cabecalho novo. */
+    h = _tiraBloco(h, '>Base Konami<', 1);
+    h = _tiraBloco(h, 'box · ', 0);
+    h = _tiraBloco(h, 'sem data de box', 0);
+    (function(){
+      var i = h.indexOf('POSIÇÃO NATIVA:');
+      if (i < 0) return;
+      var ab = h.lastIndexOf('<div', i);
+      if (ab < 0) return;
+      h = h.slice(0, ab) + h.slice(_fimDiv(h, ab));
+    })();
+
+    /* ⛔ 19/08 — O CAMPO E UM GRAMADO, E GRAMADO E VERDE.
+       Ordem do Luis: "onde voce ocupa o campo preto na sua vida?". Sai a
+       moldura de caixa que ele mandou tirar, entra o gramado: verde, listrado
+       como campo cortado, com a linha do meio e o circulo central. O desenho
+       nao e enfeite — e o que faz a leitura ser imediata. */
+    sub('padding:12px;background:linear-gradient(180deg,var(--d75),var(--d113));display:flex;flex-direction:column;gap:5px',
+        'position:relative;padding:12px 10px;border-radius:12px;display:flex;flex-direction:column;gap:5px;'
+      + 'max-width:210px;margin:0 auto;width:100%;'
+      + 'background:'
+      +   'repeating-linear-gradient(180deg,rgba(255,255,255,.045) 0 26px,transparent 26px 52px),'
+      +   'radial-gradient(120px 90px at 50% 50%,rgba(255,255,255,.10),transparent 70%),'
+      +   'linear-gradient(180deg,#1d6b41,#0f4a2c);'
+      + 'box-shadow:inset 0 0 0 2px rgba(255,255,255,.22)');
+
+    /* ---------- habilidades: os quatro blocos ---------- */
+    var hab = [], nat = (c.fab || []).concat(c.raras || []), pool = [];
+    try{ hab = habsAtual(c) || []; }catch(e){}
+    /* ⛔ 19/08 — SUGESTAO NAO E O POOL INTEIRO.
+       Ordem do Luis, e ele ja tinha dito antes: *"sugestoes sao aquelas
+       habilidades que o cara pode adicionar e que NAO vao alterar a nota dele.
+       As que ficavam de fora, mas que se trocasse alguma das adicionadas por
+       ela, a nota nao mudava. Sempre foi isso."*
+       O dado ja existe e vem do motor: o campo `NEU` de cada linha — o proprio
+       gerador escreve "NEU = da pra selecionar e a nota NAO muda". Eu estava
+       jogando na tela o `Object.keys(HABEF)` inteiro, 62 habilidades, e
+       chamando aquilo de sugestao. Nao era sugestao, era catalogo.
+       Sem `NEU` na linha, nao se inventa lista: mostra-se nada e diz-se por que. */
+    var poolEhNeutro = true;
+    try{
+      var _neu = c.NEU;
+      if (!_neu || !_neu.length){
+        poolEhNeutro = false;
+        _neu = [];
+      }
+      pool = _neu.filter(function(s){
+        return hab.indexOf(s) < 0 && nat.indexOf(s) < 0; })
+        .sort(function(x, y){ return x.localeCompare(y, 'pt'); });
+    }catch(e){ pool = []; poolEhNeutro = false; }
+    /* ⛔ 19/08 — AS ETIQUETAS DE HABILIDADE SE ATROPELAVAM.
+       Mesmo defeito do nome da funcao na lista: a etiqueta nao tinha largura
+       propria, entao um nome de duas palavras ("Chute de primeira", "Curva
+       para fora") quebrava DENTRO da etiqueta e a segunda linha subia por
+       cima da fileira de baixo. Duas coisas resolvem, e as duas ficam aqui:
+         1. a etiqueta nunca quebra por dentro (`white-space:nowrap`)
+         2. as etiquetas moram num flex meu, com quebra e respiro proprios —
+            nao no que sobrou do bloco do molde. */
+    var _NOQ = 'white-space:nowrap;display:inline-flex;align-items:center;flex:0 0 auto;';
+    /* ⛔ sem moldura nas especiais — ordem do Luis, 19/08 */
+    var E_ESP = _NOQ + 'font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:8px;background:var(--d118);border:none;color:var(--d117)';
+    var E_NAT = _NOQ + 'font-size:12px;padding:5px 10px;border-radius:8px;background:var(--d10);border:1px solid var(--d12);color:var(--d30)';
+    var E_ADD = _NOQ + 'gap:8px;font-size:12px;padding:5px 8px 5px 10px;border-radius:8px;background:var(--d10);border:1px solid var(--d18);color:var(--d30)';
+    var E_SUG = _NOQ + 'font-size:11.5px;padding:4px 9px;border-radius:7px;background:var(--d14);border:1px solid var(--d18);color:var(--d85);cursor:pointer';
+    /* a fileira: quebra onde tem que quebrar, com espaco entre linha e linha */
+    function fila(conteudo){
+      return '<div style="display:flex;flex-wrap:wrap;align-items:flex-start;'
+           + 'align-content:flex-start;gap:7px;width:100%">' + conteudo + '</div>';
+    }
+    function vazio(txt){ return '<span style="font-size:12px;color:var(--d17)">' + txt + '</span>'; }
+    h = _miolo(h, 'background:var(--d118);border:',
+      fila((c.raras || []).length
+        ? (c.raras || []).map(function(s){ return '<span style="' + E_ESP + '">' + esc(_extenso(s)) + '</span>'; }).join('')
+        : vazio('nenhuma')));
+    h = _miolo(h, '>Finta dupla<',
+      fila((c.fab || []).length
+        ? (c.fab || []).map(function(s){ return '<span style="' + E_NAT + '">' + esc(_extenso(s)) + '</span>'; }).join('')
+        : vazio('—')));
+    h = _miolo(h, 'border:1px dashed var(--d31)',
+      fila(hab.length
+        ? hab.map(function(s, i){
+            return '<span style="' + E_ADD + '">' + esc(_extenso(s))
+                 + '<b data-hx="' + i + '" style="font-size:13px;color:var(--d13);line-height:1;cursor:pointer">×</b></span>'; }).join('')
+        : vazio('nenhuma')));
+    h = _miolo(h, '>Drible de primeira<',
+      fila(pool.length
+        ? pool.map(function(s){ return '<span data-add="' + esc(s) + '" style="' + E_SUG + '">' + esc(_extenso(s)) + '</span>'; }).join('')
+        : vazio('—')));
+    sub('>5 de 5<', '>' + hab.length + ' de 5<');
+    /* ⛔ 19/08 — OS TITULOS DO BLOCO, UM POR LINHA E EM MAIUSCULAS.
+       Ordem do Luis: `HABILIDADES` + `especiais` viravam duas linhas para
+       dizer uma coisa so. Agora cada grupo tem o nome inteiro, e o rotulo
+       solto `HABILIDADES` sai. */
+    var T_TIT = 'font-family:inherit;font-size:9.5px;letter-spacing:1.4px;color:var(--d17)';
+    h = h.replace('<div style="font-family:inherit;font-size:9.5px;letter-spacing:1.4px;'
+                + 'color:var(--d17)">HABILIDADES</div>', '');
+    sub('<div style="font-size:11px;color:var(--d17)">especiais</div>',
+        '<div style="' + T_TIT + '">HABILIDADES ESPECIAIS</div>');
+    sub('<div style="font-size:11px;color:var(--d17)">nativas</div>',
+        '<div style="' + T_TIT + '">HABILIDADES NATIVAS</div>');
+    sub('<span style="font-size:11px;color:var(--d17)">adicionadas</span>',
+        '<span style="' + T_TIT + '">HABILIDADES ADICIONADAS</span>');
+    sub('<div style="font-size:11px;color:var(--d17)">sugestões · o pool inteiro que o motor pode escolher · 8</div>',
+        '<div style="' + T_TIT + '">HABILIDADES SUGERIDAS</div>'
+      + '<div style="font-size:11px;color:var(--d17);margin-top:-2px">'
+      + (pool.length
+          ? 'trocar por qualquer uma destas não muda a nota'
+          : (poolEhNeutro
+              ? 'nenhuma troca mantém a nota nesta build'
+              : 'o motor ainda não mediu as trocas desta função'))
+      + '</div>');
+
+    /* ⛔ 19/08 — O BLOCO DE ÍMPETO NUNCA FOI PREENCHIDO.
+       O que estava na tela era o EXEMPLO DA DESIGNER: "Fantasia +2", "Instinto
+       Artilheiro +1". Nao era o card. Por isso o Luis viu impeto condicional
+       numa carta que nao tem, e um nativo que nao e o dela.
+       Agora sai do dado, com a mesma cadeia da casca antiga:
+         1. `pimpNativos(c)`  — decompoe o vetor `c.nm` contra o catalogo CAT
+         2. `pimpDoCard(c)`   — a tabela PIMP, por boostId
+         3. decomposicao gulosa do proprio `c.nm`
+         4. o efeito cru, atributo a atributo — nunca "nao tem" em quem tem
+       ⛔ O CONDICIONAL SO APARECE QUANDO EXISTE: `c.CD` com degrau 2 ou 3.
+          A regra e da casca (`_cond` do painelBuild) e vale igual aqui. */
+    (function(){
+      var iCab = h.indexOf('>ÍMPETO<');
+      if (iCab < 0) return;
+      var abCab = h.lastIndexOf('<div', iCab);
+      if (abCab < 0) return;
+      var fim1 = _fimDiv(h, abCab);              /* o rotulo ÍMPETO */
+      var ab2 = h.indexOf('<div', fim1);
+      if (ab2 < 0) return;
+      var fim2 = _fimDiv(h, ab2);                /* o cartao do nativo */
+      var ab3 = h.indexOf('<div', fim2);
+      var fim3 = (ab3 >= 0) ? _fimDiv(h, ab3) : fim2;   /* o cartao do adicionado */
+
+      function _attrNome(i){
+        try{ if (typeof ATTRS !== 'undefined' && ATTRS[i]) return ATTRS[i]; }catch(e){}
+        return 'atributo ' + i;
+      }
+      function _chips(pares){
+        var por = {}, out = [];
+        (pares || []).forEach(function(x){ (por[x[1]] = por[x[1]] || []).push(_attrNome(x[0])); });
+        Object.keys(por).sort(function(a, b){ return b - a; }).forEach(function(v){
+          por[v].forEach(function(nm){
+            out.push('<span style="font-size:11px;color:var(--d85);background:var(--d10);'
+                   + 'padding:4px 8px;border-radius:6px;white-space:nowrap">' + esc(nm) + '</span>');
+          });
+        });
+        return out.join('');
+      }
+      function _grau(pares){
+        var m = 0;
+        (pares || []).forEach(function(x){ if (+x[1] > m) m = +x[1]; });
+        return m ? ('+' + m) : '';
+      }
+      function _doCat(nome){
+        try{ for (var i = 0; i < CAT.length; i++) if (CAT[i][0] === nome) return CAT[i][2]; }catch(e){}
+        return null;
+      }
+
+      /* ---- o NATIVO ----
+         ⛔ 19/08 — A ORDEM DAS FONTES E A QUE A SESSAO DO ENCAIXE MEDIU:
+           1. `c.imp`   — a string que o `impeto_da_carta()` ja montou. E o que
+                          o resto do sistema inteiro le. ESTA e a fonte.
+           2. `pimpNativos(c)` — quando se precisa do nome e do efeito separados
+           3. `c.nmn`   — a lista crua de nomes de fabrica
+           4. `_natDoVetor(c)` — ultimo recurso; com o `c.imp` ja declarado ele
+                          devolve "nao tem", e isso esta CERTO, nao e defeito
+           ⛔ `pimpDoCard` NUNCA para o nome: o PIMP guarda o nome do efscout,
+              em ingles ("Shooting +3"). So serve para o efeito.
+         Medido no Ruud Gullit `88039045074410`: as quatro concordam em
+         `Chute +3`. */
+      var nativos = [];
+      try{
+        var _fab = String(c.imp || '').split('o motor pos:')[0]
+                     .replace(/^\s*de f[aá]brica:\s*/i, '')
+                     .replace(/\s*⚒\s*$/, '').trim();
+        if (_fab && _fab.indexOf('efeito somado') < 0){
+          _fab.split(/\s+[·+]\s+/).forEach(function(n){
+            n = n.trim();
+            if (n) nativos.push({nome: n, ef: _doCat(n)});
+          });
+        }
+      }catch(e){}
+      if (!nativos.length){
+        try{
+          var L = (typeof pimpNativos === 'function') ? pimpNativos(c) : null;
+          if (L && L.length) nativos = L.map(function(x){ return {nome: x.nome, ef: x.efeito}; });
+        }catch(e){}
+      }
+      if (!nativos.length && c.nmn && c.nmn.length){
+        nativos = c.nmn.map(function(n){ return {nome: n, ef: _doCat(n)}; });
+      }
+      if (!nativos.length){
+        /* o efeito cru: melhor mostrar o que se sabe do que dizer "nao tem" */
+        var cru = [];
+        try{
+          var v = expand(c.nm);
+          for (var q = 0; q < 26; q++) if (v[q]) cru.push([q, v[q]]);
+        }catch(e){}
+        if (cru.length) nativos = [{nome: 'ímpeto nativo', ef: cru}];
+      }
+
+      /* ---- o ADICIONADO ---- */
+      var addNome = '';
+      try{
+        if (typeof impAdicionado === 'function') addNome = impAdicionado(c) || '';
+        else {
+          var pp = String(c.imp || '').split('o motor pos:');
+          addNome = (pp.length > 1) ? pp[1].trim() : '';
+        }
+      }catch(e){}
+
+      /* ---- o CONDICIONAL: so quando o card tem ---- */
+      var temCond = false;
+      try{ temCond = !!(c.CD && (c.CD['2'] || c.CD['3'])); }catch(e){}
+      /* ⛔ 19/08 — `cmode` NAO E O DEGRAU: e degrau-1.
+         O `setCondCard(key, degrau)` grava `c.cmode = degrau - 1` (0,1,2) e o
+         degrau que se chama e absoluto (1,2,3). Ler `cmode` como degrau e o
+         leitor velho, e foi ele o `111,6 · 111,6 · 132,2` do Can Uzun. */
+      var grauAtual = 1;
+      try{ grauAtual = (+c.cmode || 0) + 1; }catch(e){}
+      if (!(grauAtual >= 1 && grauAtual <= 3)) grauAtual = 1;
+
+      var E_CARD = 'background:var(--d12);border:1px solid var(--d7);border-radius:12px;'
+                 + 'padding:11px 13px;display:flex;flex-direction:column;gap:7px';
+      var E_LINHA = 'display:flex;align-items:center;gap:9px';
+      var E_BADGE = 'margin-left:auto;font-family:inherit;font-size:14px;font-weight:700;'
+                  + 'padding:2px 9px;border-radius:7px;background:var(--d33);'
+                  + 'border:1px solid var(--d11);color:var(--d1)';
+      var E_FILA = 'display:flex;flex-wrap:wrap;gap:5px';
+
+      function cartao(nome, rotulo, ef, extra){
+        return '<div style="' + E_CARD + '">'
+          + '<div style="' + E_LINHA + '">'
+          +   '<b style="font-size:13.5px">' + esc(_extenso(nome)) + '</b>'
+          +   '<span style="font-weight:400;font-size:11px;color:var(--d17)">' + rotulo + '</span>'
+          +   (_grau(ef) ? '<b style="' + E_BADGE + '">' + _grau(ef) + '</b>' : '')
+          + '</div>'
+          + (ef && ef.length ? '<div style="' + E_FILA + '">' + _chips(ef) + '</div>' : '')
+          + (extra || '')
+          + '</div>';
+      }
+
+      var condHtml = '';
+      if (temCond){
+        var bts = '';
+        [1, 2, 3].forEach(function(gg){
+          var existe = (gg === 1) || !!(c.CD && c.CD[String(gg)]);
+          var on = (gg === grauAtual);
+          bts += '<b data-cond="' + gg + '" style="font-family:inherit;font-size:12px;'
+              + 'font-weight:' + (on ? '700' : '500') + ';padding:4px 12px;border-radius:7px;'
+              + (on ? 'background:linear-gradient(180deg,var(--d121),var(--d122));color:var(--d123);'
+                    + 'box-shadow:0 3px 10px var(--d124)'
+                    : 'background:var(--d12);border:1px solid var(--d18);color:var(--d85)')
+              + (existe ? ';cursor:pointer' : ';opacity:.3')
+              + '">+' + gg + '</b>';
+        });
+        condHtml = '<div style="display:flex;align-items:center;gap:9px;'
+          + 'border-top:1px solid var(--d15);padding-top:9px;margin-top:2px">'
+          + '<span style="display:flex;align-items:center;gap:6px;font-family:inherit;font-size:9px;'
+          +   'letter-spacing:1.2px;color:var(--d120)">'
+          +   '<i style="width:10px;height:10px;background:var(--d120);display:block;'
+          +   'clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></i>ÍMPETO CONDICIONAL</span>'
+          + '<span style="display:flex;gap:5px;margin-left:auto">' + bts + '</span></div>';
+      }
+
+      var novo = h.slice(abCab, fim1);   /* o rotulo ÍMPETO fica como ela desenhou */
+      if (nativos.length){
+        nativos.forEach(function(x, ix){
+          novo += cartao(x.nome, 'nativo', x.ef, (ix === 0 ? condHtml : ''));
+        });
+      } else {
+        /* ⛔ 19/08 — TRES ESTADOS, MEDIDOS NO BANCO (6.902 cards):
+             3.214 dizem que NAO tem ....... "não tem ímpeto nativo"
+               191 tem o codigo e o catalogo nao conhece o efeito
+               433 nunca foram conferidos
+           Escrever "nao tem" nos 624 ultimos e mentir com cara de certeza.
+           E a mesma regra do Luis de 15/08: nao se poe zero no lugar de
+           nao sei — aqui, nao se poe "nao tem" no lugar de "nao perguntei". */
+        var _txt, _sub, _cor;
+        if (c.impDesc){
+          _txt = 'TEM ímpeto — efeito por conferir';
+          _sub = 'a carta veio com ímpeto de fábrica, mas o catálogo não conhece esse código'
+               + ((c.boostIds && c.boostIds.length) ? ' (' + c.boostIds.join(' e ') + ')' : '')
+               + '. O motor calculou SEM ele: a pontuação está por baixo.';
+          _cor = 'var(--d55)';
+        } else if (c.temImp === 0){
+          _txt = 'não tem ímpeto nativo';
+          _sub = '';
+          _cor = 'var(--d17)';
+        } else {
+          _txt = 'ímpeto ainda não conferido';
+          _sub = 'ninguém perguntou esta carta ainda — não é o mesmo que não ter.';
+          _cor = 'var(--d55)';
+        }
+        novo += '<div style="' + E_CARD + '"><div style="' + E_LINHA + '">'
+             + '<b style="font-size:13px;color:' + _cor + '">' + _txt + '</b></div>'
+             + (_sub ? '<div style="font-size:11px;color:var(--d17);line-height:1.45">'
+                     + _sub + '</div>' : '')
+             + condHtml + '</div>';
+      }
+      if (addNome){
+        novo += cartao(addNome, 'adicionado', _doCat(addNome),
+          '<div data-impsel="1" style="display:flex;align-items:center;gap:8px;'
+          + 'border-top:1px solid var(--d15);padding-top:9px;margin-top:2px"></div>');
+      } else {
+        novo += '<div style="' + E_CARD + '"><div style="' + E_LINHA + '">'
+             + '<b style="font-size:12.5px;font-weight:600;color:var(--d17)">'
+             + (c.slot === 0 ? 'não tem vaga para ímpeto adicionado'
+                             : (c.slot ? 'vaga livre' : 'vaga ainda não conferida'))
+             + '</b></div>'
+             + '<div data-impsel="1" style="display:flex;align-items:center;gap:8px"></div></div>';
+      }
+
+      h = h.slice(0, abCab) + novo + h.slice(fim3);
+    })();
+
+    /* ---------- tecnico ---------- */
+    var tecNome = (c._tecNome !== undefined ? c._tecNome : c.TEC) || '';
+    sub('>Pep Guardiola <span', '>' + esc(tecNome || '(nenhum)') + ' <span');
+    var tb = [];
+    try{ tb = (tecAtual(c) || []).map(function(x){ return (typeof tecPT === 'function') ? tecPT(x) : x; }); }catch(e){}
+    sub('+1 Posse de bola · +1 Drible',
+        tb.length ? tb.map(function(x){ return '+1 ' + esc(x); }).join(' · ') : 'sem técnico');
+    /* ⛔ A MOLDURA E A DELA. O corpo da ficha ja e a grade de duas colunas —
+       sem o `abre` dela o modal fica sem fundo e a home aparece por tras. */
+    return M.ficha.abre + h + '</div>';
+  };
+
+  /* ⛔ 19/08 — POR QUE ESTE `t6Bar` EXISTE, e nao um `editBar(...)` direto.
+     Medido: chamar `editBar` NAO mexe no card. Ele fechou sobre uma versao
+     antiga de `_grava` (a casca tem tres, empilhadas por patches diferentes) e
+     grava num lugar que ninguem mais le. A prova: os mesmos passos, chamados
+     com as funcoes de hoje, mudam o nivel de 4 para 3 na hora.
+     ⛔ A REGRA NAO E MINHA: e a mesma do editBar, linha por linha. So as pecas
+        sao as vigentes. Se um dia `editBar` for consertado, esta funcao pode
+        virar uma chamada a ele — e nada mais muda. */
+  window.t6Bar = function(key, bar, d, raiz){
+    var c = null;
+    try{ c = _card(key); }catch(e){}
+    if (!c) return;
+    /* ⛔ 19/08 — A TRAVA DA ABA, PELA DECIMA VEZ PEDIDA.
+       Regra da casca: barra so se mexe na aba "DO MEU JEITO" (`livre`). Na aba
+       do MAXIMO a carta ja esta no teto — nao ha o que subir. A casca tinha a
+       trava (`guarda('editBar', travaBarra)`), mas o `t6Bar` grava direto e
+       passava por fora dela. Agora a mesma regra vale aqui. */
+    if (window.t6Modo() !== 'livre'){
+      window.t6AvisoBar(raiz, window.t6Modo() === 'motor'
+        ? 'no máximo não se edita'
+        : 'edite na aba DO MEU JEITO');
+      return;
+    }
+    try{ _marca(key); }catch(e){}
+    var lvl = _lvlDe(c), antes = lvl[bar] || 0;
+    var nv = Math.max(0, Math.min(25, antes + d));
+    if (nv === antes) return;
+    lvl[bar] = nv;
+    if (gastoDe(lvl) > (c.orc || 0)){
+      lvl[bar] = antes;
+      window.t6AvisoBar(raiz, 'não cabe: só sobram ' + ((c.orc || 0) - gastoDe(lvl)) + ' pts');
+      return;
+    }
+    try{ _grava(c, lvl); }catch(e){ return; }
+    try{ reabrir(key); }catch(e){}
+  };
+  /* o aviso mora no proprio rotulo do orcamento, por dois segundos —
+     nada de alert(), que trava a pagina inteira. */
+  window.t6AvisoBar = function(raiz, txt){
+    try{
+      var alvos = [].slice.call((raiz || document).querySelectorAll('b'));
+      for (var i = 0; i < alvos.length; i++){
+        var t = (alvos[i].textContent || '').trim();
+        if (t === 'tudo gasto' || /sobrando$/.test(t) || /^não cabe/.test(t)){
+          if (alvos[i]._t6volta === undefined) alvos[i]._t6volta = t;
+          alvos[i].textContent = txt;
+          alvos[i].style.color = 'var(--d55)';
+          (function(el){ setTimeout(function(){
+            el.textContent = el._t6volta; el.style.color = ''; }, 2200); })(alvos[i]);
+          return;
+        }
+      }
+    }catch(e){}
+  };
+
+  /* ⛔ 19/08 — MESMO REMEDIO DO `t6Bar`, agora para HABILIDADE e TECNICO.
+     Medido: `addHab` / `remHab` da casca fecham sobre um `_trocaHabs` LOCAL
+     do IIFE dela — nao sobre o `window._trocaHabs` vigente. Clicar mexia num
+     objeto que ninguem mais le. Aqui a lista e montada e entregue ao
+     `window._trocaHabs`, que e o unico que refaz sis/arows/b1 e redesenha. */
+  window.t6Hab = function(key, acao, val, raiz){
+    var c = null;
+    try{ c = _card(key); }catch(e){}
+    if (!c) return;
+    var atuais = [];
+    try{ atuais = (habsAtual(c) || []).slice(); }catch(e){}
+    if (acao === 'rem'){
+      var ix = +val;
+      if (!(ix >= 0 && ix < atuais.length)) return;
+      atuais.splice(ix, 1);
+    } else {
+      if (!val) return;
+      if (atuais.indexOf(val) >= 0) return;
+      var teto = 5;
+      try{ if (c.vagas !== undefined && c.vagas !== null) teto = +c.vagas; }catch(e){}
+      if (atuais.length >= teto){
+        window.t6AvisoBar(raiz, 'sem vaga: o card tem ' + teto);
+        return;
+      }
+      atuais.push(val);
+    }
+    try{ _marca(key); }catch(e){}
+    try{ window._trocaHabs(key, atuais); }catch(e){ return; }
+    try{ reabrir(key); }catch(e){}
+  };
+
+  /* o tecnico: chama o `trocaTec` vigente e CONFERE. Se o card nao mudou,
+     escreve na mao e regrava — sem depender de qual versao venceu. */
+  window.t6Tec = function(key, idx){
+    var c = null;
+    try{ c = _card(key); }catch(e){}
+    if (!c) return;
+    var antes = (c._tecNome !== undefined ? c._tecNome : c.TEC) || '';
+    try{ _marca(key); }catch(e){}
+    try{ trocaTec(key, idx); }catch(e){}
+    var c2 = null;
+    try{ c2 = _card(key); }catch(e){}
+    if (!c2) return;
+    var depois = (c2._tecNome !== undefined ? c2._tecNome : c2.TEC) || '';
+    var alvo = (idx === '' || idx === null || idx === undefined) ? '' 
+             : ((typeof TECS !== 'undefined' && TECS[+idx]) ? TECS[+idx][0] : '');
+    if (depois !== alvo){
+      /* ⛔ 19/08 — ERRO MEU, DE ONTEM. Eu guardava em `_tec` o PAR inteiro
+         `[nome, [chaves]]` em vez das chaves. Ai o rodape lia o par como se
+         fosse lista de atributos e escrevia
+             "+1 Mikel Arteta · +1 acceleration,tightPossession"
+         — o nome do tecnico virava atributo e as chaves saiam cruas, em
+         ingles, grudadas por virgula. `_tec` guarda SO as chaves. */
+      var _t = (alvo && typeof TECS !== 'undefined') ? TECS[+idx] : null;
+      c2._tecNome = alvo;
+      c2._tec = (_t && _t[1]) ? _t[1].slice() : [];
+      try{ c2.TECB = c2._tec.slice(); }catch(e){ c2.TECB = []; }
+      try{ _grava(c2, _lvlDe(c2)); }catch(e){}
+    }
+    try{ reabrir(key); }catch(e){}
+  };
+
+  /* ⛔ 19/08 — A REGRA SIMETRICA DO CAMPINHO, DE VOLTA.
+     Ela existia na casca antiga (`selPos` + `pedeFuncao`, 15/08) e morreu junto
+     com o desenho velho, porque aquilo casava por classe CSS (`.cbp`, `.cbfn`) e
+     o molde da designer nao tem classe nenhuma.
+         clicou na POSICAO -> acende as FUNCOES que ela exerce
+         clicou na FUNCAO  -> acende as POSICOES onde ele a exerce
+     E a regra do Luis de 15/08, que ele repetiu em 19/08: clicar na posicao NAO
+     abre ficha quando ha mais de uma funcao — ele escolhe qual quer ver. Quando
+     ha uma so, abre direto ("quando o cara faz uma funcao so nao precisa
+     escolher"). */
+  window.t6Pos = function(pos, key){
+    if (!pos) return;
+    var c = null;
+    try{ c = _card(key); }catch(e){}
+    if (!c) return;
+    var irm = [];
+    try{
+      var b = String(c.id).split('@')[0];
+      irm = D.filter(function(x){ return x.id !== 'MOLDE' && String(x.id).split('@')[0] === b; });
+    }catch(e){ irm = [c]; }
+    var fs = _funcsDaPos(pos, c, irm);
+    if (!fs.length) return;
+    if (fs.length === 1){
+      window._SELPOS = null;
+      if (fs[0] !== c.tipo){ try{ reabrir(c.id + '|' + fs[0]); }catch(e){} return; }
+      try{ reabrir(key); }catch(e){}
+      return;
+    }
+    window._SELPOS = (window._SELPOS === pos) ? null : pos;
+    try{ reabrir(key); }catch(e){}
+  };
+
+  /* ⛔ A VIDA DOS BOTOES — cada um chama a MESMA funcao da casca. */
+  window.t6FichaCliques = function(raiz, key){
+    if (!raiz) return;
+    function todos(sel){ return [].slice.call(raiz.querySelectorAll(sel)); }
+    todos('[data-fn]').forEach(function(el){
+      el.onclick = function(){
+        window._SELPOS = null;              /* clicou na funcao: solta a posicao */
+        try{ reabrir(el.dataset.fn); }catch(e){}
+      };
+    });
+    todos('[data-pos]').forEach(function(el){
+      var p = el.getAttribute('data-pos');
+      if (!p) return;
+      el.style.cursor = 'pointer';
+      el.onclick = function(){ window.t6Pos(p, key); };
+    });
+    var _modo = window.t6Modo(), _travado = (_modo !== 'livre');
+    var _cardAqui = null; try{ _cardAqui = _card(key); }catch(e){}
+
+    /* ⛔ 19/08 — A BARRA VOLTA A SER ARRASTAVEL.
+       Na casca antiga a trilha era um `<input type=range>` ligado no `setBar`.
+       O molde da designer desenha a trilha como dois elementos, entao o arrasto
+       morreu e sobrou o `-`/`+`. Aqui a propria trilha vira o controle.
+       ⛔ Usa o `setBar` da casca, que DEGRADA sozinho ate caber no orcamento —
+          nao o `editBar`, que recusa e avisa. Arrastar tem que responder. */
+    todos('[data-trilha]').forEach(function(el){
+      var b = el.getAttribute('data-trilha');
+      if (!b) return;
+      el.style.cursor = _travado ? 'default' : 'ew-resize';
+      el.style.opacity = _travado ? '.35' : '';
+      if (_travado) return;
+      function poe(ev){
+        var r = el.getBoundingClientRect();
+        var x = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+        var v = Math.round(Math.max(0, Math.min(1, x / (r.width || 1))) * 25);
+        try{ _marca(key); }catch(e){}
+        try{ setBar(key, b, v); }catch(e){}
+      }
+      var arrastando = false;
+      el.onmousedown = function(ev){ arrastando = true; poe(ev); ev.preventDefault(); };
+      el.onmousemove = function(ev){ if (arrastando) poe(ev); };
+      el.onmouseup = el.onmouseleave = function(){ arrastando = false; };
+      el.ontouchstart = function(ev){ poe(ev); ev.preventDefault(); };
+      el.ontouchmove = poe;
+    });
+    todos('[data-bar]').forEach(function(el){
+      el.style.cursor = _travado ? 'default' : 'pointer';
+      el.style.opacity = _travado ? '.28' : '';
+      el.onclick = function(){ window.t6Bar(key, el.dataset.bar, +el.dataset.d, raiz); };
+    });
+    todos('[data-hx]').forEach(function(el){
+      el.style.cursor = 'pointer';
+      el.onclick = function(){ window.t6Hab(key, 'rem', el.dataset.hx, raiz); };
+    });
+    todos('[data-add]').forEach(function(el){
+      el.style.cursor = 'pointer';
+      el.onclick = function(){ window.t6Hab(key, 'add', el.dataset.add, raiz); };
+    });
+    /* ⛔ 19/08 — SO O ELEMENTO MAIS INTERNO.
+       Quando um `<div>` tem so um `<span>` dentro, os DOIS tem o mesmo
+       textContent — e os dois recebiam o mesmo `onclick`. Clicar disparava
+       duas vezes (filho + bolha no pai), e a aba ia e voltava no mesmo
+       clique. Era isso que fazia "clicar trinta vezes". */
+    function porTexto(txt){
+      var achados = todos('span,div,b,i').filter(function(e){
+        return (e.textContent || '').trim() === txt; });
+      return achados.filter(function(e){
+        for (var i = 0; i < achados.length; i++){
+          if (achados[i] !== e && e.contains(achados[i])) return false;
+        }
+        return true;
+      });
+    }
+    /* ⛔ 19/08 — AS TRES ABAS DO CARD, LIGADAS NO `encModo` DA CASCA.
+       O "FAZER MINHA BUILD" chamava `minhaBuild` e `abrirAntigo`: NENHUMA DAS
+       DUAS EXISTE na tela (medido). Os dois `try` caiam em silencio e o botao
+       so tinha cursor de mao. Quem troca de aba de verdade e o
+       `encModo(m, key)`, que a casca ja define e que pinta o `data-encmodo`. */
+    /* ⛔ 19/08 — A ABA "FAZER MINHA BUILD" COMECA VAZIA.
+       Ordem do Luis: *"esse impeto e adicional; na aba fazer minha build ele
+       nem sequer deveria estar preenchido, assim como o tecnico tambem nao"*.
+       O `zeraBarras` da casca zera as habilidades e as barras, mas puxa o
+       tecnico do MEU TIME e nao mexe no impeto adicionado. Aqui os dois saem
+       tambem — a aba e para ele montar com o que TEM, e ele nao tem nada
+       antes de escolher. O nativo fica: veio de fabrica, nao foi escolha. */
+    function _aba(m){
+      try{ if (typeof encModo === 'function') encModo(m, key); }
+      catch(e){ try{ window.ENC_MODO = m; }catch(e2){} }
+      if (m !== 'motor'){
+        try{
+          var cc = _card(key);
+          if (cc){
+            cc._tec = []; cc._tecNome = '';
+            try{ cc.TECB = []; }catch(e){}
+          }
+        }catch(e){}
+        try{ if (typeof editImp === 'function') editImp(key, ''); }catch(e){}
+      }
+      try{ reabrir(key); }catch(e){}
+    }
+    porTexto('⚡ MÁXIMO POSSÍVEL').forEach(function(el){
+      el.style.cursor = 'pointer';
+      el.onclick = function(){ _aba('motor'); };
+    });
+    porTexto('⚙ FAZER MINHA BUILD').forEach(function(el){
+      el.style.cursor = 'pointer';
+      el.onclick = function(){ _aba('insumos'); };
+    });
+    /* ⛔ O OTIMIZAR SO EXISTE NA ABA LIVRE.
+       Na aba do MAXIMO a carta ja esta no teto: um botao "otimizar" ali nao
+       tem o que fazer, e so confunde. Ordem do Luis, repetida dez vezes. */
+    porTexto('⚡ OTIMIZAR').forEach(function(el){
+      var caixa = el;
+      for (var t = 0; t < 3 && caixa.parentNode; t++){
+        if ((caixa.textContent || '').trim() !== '⚡ OTIMIZAR') break;
+        caixa = caixa.parentNode;
+      }
+      var alvo = (caixa && (caixa.textContent || '').trim() === '⚡ OTIMIZAR') ? caixa : el;
+      if (_travado){ alvo.style.display = 'none'; return; }
+      alvo.style.display = '';
+      alvo.style.cursor = 'pointer';
+      alvo.onclick = function(){
+        try{ if (typeof otimizarBarras === 'function') return otimizarBarras(key); }catch(e){}
+        try{ restaurarMotor(key); }catch(e){}
+      };
+    });
+    /* o × de fechar */
+    porTexto('×').forEach(function(el){
+      if (el.dataset.hx !== undefined) return;
+      el.style.cursor = 'pointer';
+      el.onclick = function(){ try{ fechar(); }catch(e){} };
+    });
+    /* o tecnico vira um select de verdade */
+    var c = null; try{ c = _card(key); }catch(e){}
+    if (c && typeof TECS !== 'undefined'){
+      var atual = (c._tecNome !== undefined ? c._tecNome : c.TEC) || '';
+      var alvo = porTexto((atual || '(nenhum)') + ' ▾')[0];
+      if (alvo){
+        var sel = document.createElement('select');
+        sel.style.cssText = 'width:100%;background:transparent;border:none;color:inherit;font:inherit;cursor:pointer;outline:none';
+        /* ⛔ 19/08 — O SELETOR DE TECNICO SO TINHA O NOME.
+           Ordem do Luis: *"olha o tanto de R. Martinez. Como que o cara vai
+           saber qual e qual? Se voce nao colocar o que ele aumenta, o cara
+           nunca vai saber."*
+           O nome se repete porque o MESMO tecnico aparece com combinacoes de
+           bonus diferentes — o que distingue e o bonus, e ele estava fora da
+           tela. Agora cada linha diz o que ela faz, em portugues, e duas
+           linhas identicas (mesmo nome E mesmo bonus) viram uma so. */
+        function _oQueAumenta(t){
+          var bs = (t && t[1]) || [], out = [];
+          for (var q = 0; q < bs.length; q++){
+            var nm = bs[q];
+            try{ if (typeof tecPT === 'function') nm = tecPT(bs[q]) || bs[q]; }catch(e){}
+            out.push('+1 ' + nm);
+          }
+          return out.join(' · ');
+        }
+        var _vistos = {}, _ops = ['<option value="">(nenhum)</option>'];
+        for (var _i = 0; _i < TECS.length; _i++){
+          var _t = TECS[_i];
+          var _ch = _t[0] + '|' + ((_t[1] || []).join(','));
+          if (_vistos[_ch]) continue;
+          _vistos[_ch] = 1;
+          var _bo = _oQueAumenta(_t);
+          _ops.push('<option value="' + _i + '"' + (_t[0] === atual ? ' selected' : '') + '>'
+                  + esc(_t[0]) + (_bo ? '  —  ' + esc(_bo) : '') + '</option>');
+        }
+        sel.innerHTML = _ops.join('');
+        sel.onchange = function(){ window.t6Tec(key, sel.value); };
+        if (_travado){
+          sel.disabled = true;
+          sel.style.cursor = 'default';
+          sel.style.opacity = '.55';
+          sel.title = 'no MÁXIMO POSSÍVEL o técnico é o que o motor escolheu — '
+                    + 'para trocar, vá em FAZER MINHA BUILD';
+        }
+        alvo.innerHTML = '';
+        alvo.style.display = 'flex';
+        alvo.style.alignItems = 'center';
+        alvo.style.gap = '8px';
+        alvo.appendChild(sel);
+        /* ⛔ 19/08 — O `×` EM TUDO QUE FOI ADICIONADO.
+           Ordem do Luis: habilidade, tecnico e impeto adicional tem que ter
+           como tirar. O nativo NAO leva `×` — ele veio de fabrica, nao foi
+           escolha de ninguem. */
+        if (!_travado && atual){
+          var xt = document.createElement('b');
+          xt.textContent = '×';
+          xt.title = 'tirar o técnico';
+          xt.style.cssText = 'cursor:pointer;color:var(--d13);font-size:15px;line-height:1;flex:none';
+          xt.onclick = function(){ window.t6Tec(key, ''); };
+          alvo.appendChild(xt);
+        }
+      }
+    }
+    /* ⛔ 19/08 — ARRASTAR A SUGESTAO PARA DENTRO DAS ADICIONADAS.
+       Ordem do Luis: *"teria que dar um jeito de arrastar as sugestoes de
+       habilidade e colocar elas dentro do grupo de adicionadas. Se ja tivesse
+       cinco ela nao fica — mas se arrastar pra cima de alguma outra, TROCA."*
+       Duas regras, e as duas estao aqui:
+         soltar no VAZIO do grupo .... entra, se houver vaga
+         soltar EM CIMA de uma ....... troca as duas, mesmo com o grupo cheio
+       ⛔ `<button>` nao inicia arrasto nativo no Chrome — por isso os chips
+          sao `<span>` com `draggable`, e o `×` leva `pointer-events` proprio. */
+    (function(){
+      if (_travado) return;
+      var sugs = todos('[data-add]');
+      var adds = todos('[data-hx]').map(function(x){ return x.parentNode; });
+      if (!sugs.length) return;
+
+      sugs.forEach(function(el){
+        el.setAttribute('draggable', 'true');
+        el.style.cursor = 'grab';
+        el.addEventListener('dragstart', function(ev){
+          try{ ev.dataTransfer.setData('text/plain', el.getAttribute('data-add')); }catch(e){}
+          try{ ev.dataTransfer.effectAllowed = 'copy'; }catch(e){}
+          el.style.opacity = '.45';
+        });
+        el.addEventListener('dragend', function(){ el.style.opacity = ''; });
+      });
+
+      function solta(nome, trocaCom){
+        if (!nome) return;
+        var c2 = null; try{ c2 = _card(key); }catch(e){}
+        if (!c2) return;
+        var atuais = [];
+        try{ atuais = (habsAtual(c2) || []).slice(); }catch(e){}
+        if (atuais.indexOf(nome) >= 0) return;
+        if (trocaCom !== null && trocaCom !== undefined && atuais[trocaCom] !== undefined){
+          atuais[trocaCom] = nome;
+        } else {
+          var teto = 5;
+          try{ if (c2.vagas !== undefined && c2.vagas !== null) teto = +c2.vagas; }catch(e){}
+          if (atuais.length >= teto){
+            window.t6AvisoBar(raiz, 'já tem ' + teto + ': solte em cima de uma para trocar');
+            return;
+          }
+          atuais.push(nome);
+        }
+        try{ _marca(key); }catch(e){}
+        try{ window._trocaHabs(key, atuais); }catch(e){ return; }
+        try{ reabrir(key); }catch(e){}
+      }
+
+      /* soltar EM CIMA de uma adicionada = troca */
+      adds.forEach(function(chip){
+        if (!chip) return;
+        var ix = +chip.querySelector('[data-hx]').getAttribute('data-hx');
+        chip.addEventListener('dragover', function(ev){
+          ev.preventDefault();
+          chip.style.outline = '2px solid var(--d25)';
+        });
+        chip.addEventListener('dragleave', function(){ chip.style.outline = ''; });
+        chip.addEventListener('drop', function(ev){
+          ev.preventDefault(); ev.stopPropagation();
+          chip.style.outline = '';
+          var nome = '';
+          try{ nome = ev.dataTransfer.getData('text/plain'); }catch(e){}
+          solta(nome, ix);
+        });
+      });
+
+      /* soltar no grupo = entra, se couber */
+      var grupo = adds.length ? adds[0].parentNode : null;
+      if (!grupo){
+        var vazio = porTexto('nenhuma')[0];
+        grupo = vazio ? vazio.parentNode : null;
+      }
+      if (grupo){
+        grupo.addEventListener('dragover', function(ev){
+          ev.preventDefault();
+          grupo.style.background = 'rgba(125,242,168,.08)';
+          grupo.style.borderRadius = '9px';
+        });
+        grupo.addEventListener('dragleave', function(){ grupo.style.background = ''; });
+        grupo.addEventListener('drop', function(ev){
+          ev.preventDefault();
+          grupo.style.background = '';
+          var nome = '';
+          try{ nome = ev.dataTransfer.getData('text/plain'); }catch(e){}
+          solta(nome, null);
+        });
+      }
+
+      /* ⛔ E O CATALOGO INTEIRO, para o que nao esta nas sugeridas.
+         As sugeridas sao so as NEUTRAS (as que nao mudam a nota). O Luis quer
+         poder pôr uma que muda — e a nota muda junto, que e o certo. */
+      var alvoCat = porTexto('HABILIDADES SUGERIDAS')[0];
+      if (alvoCat && alvoCat.parentNode && !raiz.querySelector('[data-t6cat]')){
+        var todasHab = [];
+        try{
+          var jaTem = [];
+          try{ jaTem = (habsAtual(_cardAqui) || []); }catch(e){}
+          var nat = ((_cardAqui && _cardAqui.fab) || []).concat((_cardAqui && _cardAqui.raras) || []);
+          todasHab = Object.keys(HABEF).filter(function(n){
+            return jaTem.indexOf(n) < 0 && nat.indexOf(n) < 0; })
+            .sort(function(x, y){ return x.localeCompare(y, 'pt'); });
+        }catch(e){}
+        if (todasHab.length){
+          var cx = document.createElement('div');
+          cx.setAttribute('data-t6cat', '1');
+          cx.style.cssText = 'display:flex;align-items:center;gap:8px;margin-top:8px';
+          var selc = document.createElement('select');
+          selc.style.cssText = 'flex:1 1 auto;min-width:0;background:var(--d10);'
+            + 'border:1px solid var(--d18);color:var(--d8);font:inherit;font-size:11.5px;'
+            + 'padding:5px 8px;border-radius:7px;cursor:pointer';
+          selc.innerHTML = '<option value="">pôr outra habilidade — o catálogo inteiro ('
+            + todasHab.length + ')</option>'
+            + todasHab.map(function(n){
+                return '<option>' + esc(_extenso(n)) + '</option>'; }).join('');
+          selc.onchange = function(){
+            var v = selc.selectedIndex > 0 ? todasHab[selc.selectedIndex - 1] : '';
+            selc.selectedIndex = 0;
+            if (v) window.t6Hab(key, 'add', v, raiz);
+          };
+          cx.appendChild(selc);
+          alvoCat.parentNode.appendChild(cx);
+        }
+      }
+    })();
+
+    /* ⛔ 19/08 — O PAINEL DE ESCOLHA DA POSICAO, DE VOLTA.
+       Regra do Luis, de 15/08 e repetida em 19/08: clicar numa posicao NAO abre
+       ficha quando ela faz mais de uma funcao — ele escolhe qual quer ver.
+       Quando faz uma so, abre direto. Era o `pedeFuncao` da casca antiga; ele
+       casava por classe CSS (`.cbfn.cbfnq`) e o molde da designer nao tem
+       classe nenhuma, entao morreu junto com o desenho velho. */
+    (function(){
+      var velho = raiz.querySelector('[data-t6pede]');
+      if (velho) velho.remove();
+      var pos = window._SELPOS;
+      if (!pos) return;
+      var c = null;
+      try{ c = _card(key); }catch(e){}
+      if (!c) return;
+      var irm = [];
+      try{
+        var bb = String(c.id).split('@')[0];
+        irm = D.filter(function(x){ return x.id !== 'MOLDE' && String(x.id).split('@')[0] === bb; });
+      }catch(e){ irm = [c]; }
+      var fs = _funcsDaPos(pos, c, irm);
+      if (fs.length < 2) return;
+      var caixa = document.createElement('div');
+      caixa.setAttribute('data-t6pede', '1');
+      caixa.style.cssText = 'margin:0 0 12px;padding:14px 15px;border-radius:12px;'
+        + 'background:var(--d75);border:1.5px solid var(--d25);box-shadow:0 10px 26px var(--d104)';
+      var tit = document.createElement('div');
+      tit.style.cssText = 'font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.5px;color:var(--d25);margin-bottom:3px';
+      tit.textContent = _sig(pos) + ' — aqui ele faz ' + fs.length + ' funções';
+      var sub2 = document.createElement('div');
+      sub2.style.cssText = 'font-size:12px;color:var(--d30);margin-bottom:11px';
+      sub2.textContent = 'cada uma tem build e pontuação própria. Escolha qual você quer ver:';
+      var linha = document.createElement('div');
+      linha.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap';
+      fs.forEach(function(f){
+        var alvo = null;
+        for (var i = 0; i < irm.length; i++) if (irm[i].tipo === f){ alvo = irm[i]; break; }
+        var b = document.createElement('button');
+        var nt = 0;
+        try{ nt = (alvo && alvo._n !== undefined) ? alvo._n : (alvo ? nota(alvo) : 0); }catch(e){}
+        b.style.cssText = 'display:flex;align-items:center;gap:9px;font-family:inherit;font-size:12px;'
+          + 'font-weight:700;padding:9px 13px;border-radius:9px;cursor:pointer;'
+          + 'background:var(--d14);border:1px solid var(--d31);color:var(--d1)';
+        b.innerHTML = '<span>' + esc(_nomeFn(f)) + '</span>'
+          + '<b style="font-family:inherit;font-weight:800;color:var(--d25)">' + n2(nt) + '</b>';
+        b.onclick = function(){
+          window._SELPOS = null;
+          try{ reabrir((alvo ? alvo.id : c.id) + '|' + f); }catch(e){}
+        };
+        linha.appendChild(b);
+      });
+      caixa.appendChild(tit); caixa.appendChild(sub2); caixa.appendChild(linha);
+      if (raiz.firstChild) raiz.insertBefore(caixa, raiz.firstChild);
+      else raiz.appendChild(caixa);
+    })();
+
+    /* qual aba esta aberta — a pilula acesa */
+    [['⚡ MÁXIMO POSSÍVEL', 'motor'], ['⚙ FAZER MINHA BUILD', 'insumos']]
+      .forEach(function(par){
+        porTexto(par[0]).forEach(function(el){
+          var on = (_modo === par[1]);
+          el.style.opacity = on ? '1' : '.55';
+          el.style.filter  = on ? '' : 'grayscale(1)';
+        });
+      });
+
+    /* ⛔ 19/08 — A BARRA DA BUILD, INTEIRA, DE VOLTA.
+       Ordem do Luis: *"a gente tinha no encaixe anterior alguns botoes perto
+       dessas barras, como salvar a build, que era onde o cara salvava a build
+       no time dele, la na aba MEU TIME. Voce sumiu com eles."*
+       Ele esta certo: os botoes existem na casca desde 16/08 (`bldSalva`,
+       `bldCopiaDoMaximo`, `bldUsa`, `bldApaga`) e ficaram ORFAOS — a barra
+       deles era encaixada ao lado de um `.bhd`, e o molde da designer nao tem
+       classe nenhuma. As funcoes continuam sendo as da casca; o que muda e
+       so onde a barra e pendurada.
+       ⛔ So na aba FAZER MINHA BUILD: na aba do MAXIMO nao ha build do
+          usuario para salvar — a build de la e a do motor. */
+    (function(){
+      var velha = raiz.querySelector('[data-t6bld]');
+      if (velha) velha.remove();
+      if (_travado) return;
+      /* ⛔ 19/08 — A BARRA MORA NA MESMA LINHA DO OTIMIZAR.
+         Ordem do Luis: *"isso aqui ficaria melhor ao lado do botao otimizar,
+         caso ele fosse menor"*. Entao o OTIMIZAR deixa de ocupar a largura
+         toda e divide a linha com o SALVAR e o COPIAR. */
+      var oti = porTexto('⚡ OTIMIZAR')[0];
+      var botaoOti = null;
+      if (oti){
+        botaoOti = oti;
+        for (var t0 = 0; t0 < 3 && botaoOti.parentNode; t0++){
+          if ((botaoOti.parentNode.textContent || '').trim() !== '⚡ OTIMIZAR') break;
+          botaoOti = botaoOti.parentNode;
+        }
+      }
+      var caixa = null;
+      if (!botaoOti){
+        var alvo = porTexto('DISTRIBUIÇÃO DOS PONTOS')[0];
+        if (!alvo) return;
+        caixa = alvo.parentNode;
+        for (var t = 0; t < 3 && caixa && caixa.parentNode; t++) caixa = caixa.parentNode;
+        if (!caixa || !caixa.parentNode) return;
+      }
+
+      var c = null; try{ c = _card(key); }catch(e){}
+      var idb = String(key).split('|')[0].split('@')[0];
+      var salvas = [], ativa = -1, TETO = 5;
+      try{
+        salvas = (MT.builds && MT.builds[idb]) || [];
+        ativa = (MT.buildOn && MT.buildOn[idb] !== undefined) ? MT.buildOn[idb] : -1;
+      }catch(e){ salvas = []; }
+
+      var bar = document.createElement('div');
+      bar.setAttribute('data-t6bld', '1');
+      bar.style.cssText = 'display:flex;flex-direction:column;gap:9px;margin:0 0 12px;'
+        + 'padding:13px 15px;border-radius:12px;background:var(--d75);border:1px solid var(--d31)';
+
+      var linha = document.createElement('div');
+      linha.style.cssText = 'display:flex;gap:8px;align-items:center;flex-wrap:wrap';
+      var E_BT = 'font-family:inherit;font-size:11.5px;font-weight:800;letter-spacing:.3px;'
+               + 'padding:9px 15px;border-radius:8px;cursor:pointer;border:1px solid var(--d31);';
+
+      var bSalvar = document.createElement('button');
+      bSalvar.textContent = '✔ SALVAR MINHA BUILD';
+      bSalvar.title = 'guarda esta build no seu elenco — ela passa a valer na aba MEU TIME';
+      bSalvar.style.cssText = E_BT + 'background:var(--d25);border-color:var(--d25);color:#06200f';
+      bSalvar.onclick = function(){
+        try{ if (typeof bldSalva === 'function') return bldSalva(); }catch(e){}
+        window.t6AvisoBar(raiz, 'não consegui salvar');
+      };
+
+      var bCopiar = document.createElement('button');
+      bCopiar.textContent = '⧉ COPIAR DO MÁXIMO POSSÍVEL';
+      bCopiar.title = 'traz tudo do MÁXIMO POSSÍVEL pra cá; daqui você vai tirando o que não tem';
+      bCopiar.style.cssText = E_BT + 'background:var(--d14);color:var(--d8)';
+      bCopiar.onclick = function(){
+        try{ if (typeof bldCopiaDoMaximo === 'function') return bldCopiaDoMaximo(); }catch(e){}
+        window.t6AvisoBar(raiz, 'não consegui copiar');
+      };
+
+      /* ⛔ o OTIMIZAR nao se repete aqui: ele e o botao grande do fim do
+         bloco das barras, e ja usa os insumos que estao na tela. */
+      linha.appendChild(bSalvar); linha.appendChild(bCopiar);
+      bar.appendChild(linha);
+
+      var txt = document.createElement('div');
+      txt.style.cssText = 'font-size:11.5px;color:var(--d30)';
+      txt.innerHTML = 'vai salvar como <b style="color:var(--d1)">'
+        + esc(_nomeFn(c ? c.tipo : '')) + '</b> · '
+        + salvas.length + ' de ' + TETO + ' builds guardadas desta carta';
+      bar.appendChild(txt);
+
+      if (salvas.length){
+        var chips = document.createElement('div');
+        chips.style.cssText = 'display:flex;gap:7px;flex-wrap:wrap';
+        salvas.forEach(function(b, i){
+          var ch = document.createElement('span');
+          var on = (i === ativa);
+          ch.style.cssText = 'display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;'
+            + 'padding:5px 8px 5px 11px;border-radius:8px;cursor:pointer;'
+            + (on ? 'background:linear-gradient(180deg,var(--d114),var(--d115));'
+                    + 'border:1px solid var(--d116);color:var(--d117)'
+                  : 'background:var(--d14);border:1px solid var(--d31);color:var(--d8)');
+          ch.innerHTML = '<b style="font-weight:700">' + esc(String(b.nome || ('build ' + (i + 1))))
+            + '</b><u style="text-decoration:none;font-family:inherit;font-weight:800;opacity:.85">'
+            + n2(+b.n || 0) + '</u>';
+          ch.title = 'usar esta build no seu elenco';
+          ch.onclick = function(){
+            try{ if (typeof bldUsa === 'function') bldUsa(idb, i); }catch(e){}
+          };
+          var x = document.createElement('i');
+          x.textContent = '×';
+          x.title = 'apagar esta build';
+          x.style.cssText = 'font-style:normal;font-size:13px;line-height:1;opacity:.7;padding:0 2px';
+          x.onclick = function(ev){
+            ev.stopPropagation();
+            try{ if (typeof bldApaga === 'function') bldApaga(idb, i); }catch(e){}
+          };
+          ch.appendChild(x);
+          chips.appendChild(ch);
+        });
+        bar.appendChild(chips);
+      }
+
+      if (botaoOti && botaoOti.parentNode){
+        /* o OTIMIZAR encolhe e a linha passa a ter os tres */
+        var linhaOti = document.createElement('div');
+        linhaOti.setAttribute('data-t6bld', '1');
+        linhaOti.style.cssText = 'display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;margin-top:10px';
+        botaoOti.parentNode.insertBefore(linhaOti, botaoOti);
+        botaoOti.style.width = 'auto';
+        botaoOti.style.flex = '1 1 200px';
+        botaoOti.style.margin = '0';
+        linhaOti.appendChild(botaoOti);
+        bSalvar.style.flex = '0 0 auto';
+        bCopiar.style.flex = '0 0 auto';
+        linhaOti.appendChild(bSalvar);
+        linhaOti.appendChild(bCopiar);
+        /* o texto e as builds guardadas ficam logo abaixo da linha */
+        bar.removeChild(linha);
+        bar.style.marginTop = '9px';
+        bar.style.marginBottom = '0';
+        linhaOti.parentNode.insertBefore(bar, linhaOti.nextSibling);
+      } else {
+        caixa.parentNode.insertBefore(bar, caixa);
+      }
+    })();
+
+    /* os balõezinhos dos `i` — a designer escreveu o texto, faltava fazer valer */
+    try{ window.t6Hover(raiz); }catch(e){}
+
+    /* ⛔ 19/08 — OS BOTOES DO CONDICIONAL, AGORA PELO DADO.
+       Antes eles eram achados por TEXTO: `porTexto('+1')` casava com qualquer
+       elemento cujo texto fosse "+1" — inclusive as CELULAS DA TABELA DE
+       ATRIBUTOS, que estao cheias de "+1". Metade dos cliques ia parar num
+       atributo, e o botao de verdade chamava `toggleCondCard`, que so cicla e
+       ainda estava travado fora da aba livre.
+       Agora cada botao carrega o proprio degrau (`data-cond`) e chama o
+       `setCondCard(key, degrau)` da casca, que troca a build inteira que o
+       motor gravou para aquele degrau. Degrau que o motor nao calculou fica
+       apagado e nao responde. */
+    todos('[data-cond]').forEach(function(el){
+      var g = +el.getAttribute('data-cond');
+      var existe = (g === 1);
+      try{ existe = existe || !!(_cardAqui && _cardAqui.CD && _cardAqui.CD[String(g)]); }catch(e){}
+      if (!existe) return;
+      el.style.cursor = 'pointer';
+      el.onclick = function(){
+        try{ if (typeof setCondCard === 'function') return setCondCard(key, g); }catch(e){}
+        try{ toggleCondCard(key); }catch(e){}
+      };
+    });
+
+    /* o seletor do impeto ADICIONADO — so na aba FAZER MINHA BUILD */
+    todos('[data-impsel]').forEach(function(el){
+      el.innerHTML = '';
+      if (_travado){
+        el.style.display = 'none';
+        return;
+      }
+      var ops = [];
+      try{ ops = (typeof impOpcoes === 'function') ? (impOpcoes(_cardAqui) || []) : []; }catch(e){}
+      var atual = '';
+      try{ atual = (typeof impAdicionado === 'function') ? (impAdicionado(_cardAqui) || '') : ''; }catch(e){}
+      var sel = document.createElement('select');
+      sel.style.cssText = 'flex:1 1 auto;min-width:0;background:var(--d10);border:1px solid var(--d18);'
+        + 'color:var(--d8);font:inherit;font-size:11.5px;padding:5px 8px;border-radius:7px;cursor:pointer';
+      var html = '<option value="">(nenhum)</option>';
+      for (var q = 0; q < ops.length; q++){
+        html += '<option' + (ops[q] === atual ? ' selected' : '') + '>' + esc(ops[q]) + '</option>';
+      }
+      sel.innerHTML = html;
+      sel.onchange = function(){
+        try{ editImp(key, sel.value); }catch(e){}
+      };
+      el.appendChild(sel);
+      if (atual){
+        var x = document.createElement('b');
+        x.textContent = '×';
+        x.title = 'tirar este ímpeto';
+        x.style.cssText = 'cursor:pointer;color:var(--d13);font-size:14px;line-height:1;flex:none';
+        x.onclick = function(){ try{ editImp(key, ''); }catch(e){} };
+        el.appendChild(x);
+      }
+    });
+  };
+
+  window.t6Melhores = function(lista, quantos){
+    var por = {};
+    lista.forEach(function(c){
+      var k = c.nome, v = pct(c);
+      if (!por[k] || v > por[k][1]) por[k] = [c, v];
+    });
+    return Object.keys(por).map(function(k){ return por[k]; })
+      .sort(function(a, b){ return b[1] - a[1]; })
+      .slice(0, quantos || 3).map(function(x){ return x[0]; });
+  };
+})();
+</script>
+"""
+
+
+def js_telas():
+    """O bloco pronto: o motor + os moldes da designer embutidos."""
+    import json
+    return JS_TELAS.replace('__MOLDES__', json.dumps(MOLDES, ensure_ascii=False))
