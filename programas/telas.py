@@ -2884,6 +2884,111 @@ JS_TELAS = r"""
       .slice(0, quantos || 3).map(function(x){ return x[0]; });
   };
 })();
+
+/* ========================================================================
+   PAGINA DINAMICA DO CARD — 19/08/2026
+
+   Uma unica pagina atende todos os cards. O identificador e a funcao ficam
+   na URL; a ficha aprovada continua sendo desenhada pelo mesmo `t6TelaFicha`.
+   O modal nao foi apagado: o commit 2865f5c e o arquivo de checkpoint guardam
+   exatamente o estado anterior a esta mudanca.
+   ======================================================================== */
+(function(){
+  if (window.T6_PAGINA_CARD) return;
+  window.T6_PAGINA_CARD = 1;
+
+  var css = document.createElement('style');
+  css.textContent = [
+    'html[data-t6pagina="card"],html[data-t6pagina="card"] body{min-height:100%;background:var(--d3,#07100b)}',
+    'html[data-t6pagina="card"] body{overflow:auto!important}',
+    'html[data-t6pagina="card"] #filtros,html[data-t6pagina="card"] body>main{display:none!important}',
+    'html[data-t6pagina="card"] #ov{position:relative!important;inset:auto!important;display:block!important;',
+      'z-index:1!important;overflow:visible!important;min-height:calc(100vh - 72px);padding:20px 18px 92px!important;',
+      'background:var(--d3,#07100b)!important}',
+    'html[data-t6pagina="card"] #box{max-width:1440px;margin:0 auto}',
+    'html[data-t6pagina="card"] #voltar{display:block!important;position:fixed!important;z-index:80!important}',
+    '@media(max-width:700px){html[data-t6pagina="card"] #ov{padding:8px 0 82px!important}}'
+  ].join('');
+  (document.head || document.documentElement).appendChild(css);
+
+  function partes(key){
+    var s=String(key||''), i=s.indexOf('|');
+    return i<0 ? [s,''] : [s.slice(0,i),s.slice(i+1)];
+  }
+  function urlDaFicha(key){
+    var p=partes(key), u=new URL(location.href);
+    u.searchParams.set('card',p[0]);
+    u.searchParams.set('funcao',p[1]);
+    u.searchParams.set('modo',(typeof window.t6Modo==='function'&&window.t6Modo()==='livre')?'minha-build':'maximo');
+    return u.pathname+u.search+u.hash;
+  }
+  function ativa(key){
+    if(!key) return;
+    document.documentElement.setAttribute('data-t6pagina','card');
+    try{ document.body.setAttribute('data-t6pagina','card'); }catch(e){}
+    try{
+      var st={ficha:1,paginaCard:1,key:String(key)};
+      history.replaceState(st,'',urlDaFicha(key));
+    }catch(e){}
+    try{ window.scrollTo(0,0); }catch(e){}
+  }
+  function desativa(){
+    document.documentElement.removeAttribute('data-t6pagina');
+    try{ document.body.removeAttribute('data-t6pagina'); }catch(e){}
+  }
+  window.t6PaginaAtiva=ativa;
+  window.t6PaginaDesativa=desativa;
+
+  function liga(){
+    if(typeof window.abrir!=='function') return setTimeout(liga,250);
+    if(window._t6AbrirPagina) return;
+    window._t6AbrirPagina=window.abrir;
+    window.abrir=function(key){
+      var r=window._t6AbrirPagina.apply(this,arguments);
+      ativa(key);
+      return r;
+    };
+    /* `reabrir` usa o `abrir` global e, portanto, mantem a pagina e atualiza
+       funcao/modo na URL sem criar outra ficha nem outra pagina fisica. */
+    var fecharAnterior=window.fechar;
+    if(typeof fecharAnterior==='function'){
+      window.fechar=function(){
+        desativa();
+        return fecharAnterior.apply(this,arguments);
+      };
+    }
+    abreDaUrl();
+  }
+
+  function abreDaUrl(){
+    var q=new URLSearchParams(location.search), id=q.get('card'), fn=q.get('funcao');
+    if(!id) return;
+    var tentativas=0;
+    (function espera(){
+      tentativas++;
+      var c=null;
+      try{
+        c=(typeof D!=='undefined'?D:[]).find(function(x){
+          return String(x.id).split('@')[0]===String(id).split('@')[0] && (!fn||x.tipo===fn);
+        });
+      }catch(e){}
+      if(!c && tentativas<120) return setTimeout(espera,250);
+      if(!c) return;
+      var key=c.id+'|'+c.tipo;
+      try{ window._T6ABA=q.get('modo')==='minha-build'?'livre':'motor'; }catch(e){}
+      try{ window.ENC_MODO=window._T6ABA; }catch(e){}
+      window.abrir(key);
+      if(q.get('modo')==='minha-build' && typeof window.t6AbreLivreZerado==='function')
+        window.t6AbreLivreZerado(key);
+    })();
+  }
+
+  window.addEventListener('popstate',function(){
+    var q=new URLSearchParams(location.search);
+    if(!q.get('card')) desativa();
+  });
+  liga();
+})();
 </script>
 """
 
