@@ -583,6 +583,18 @@ JS_TELAS = r"""
     return 'font-family:inherit;font-size:9.5px;text-align:center;padding:2px 6px;'
          + 'border-radius:5px;white-space:nowrap;' + desenho;
   }
+  /* Habilidades especiais sao inerentes ao card: nunca entram pelo seletor.
+     A lista completa e a uniao de `raras` de todas as cartas carregadas. */
+  function _ehEspecial(nome){
+    if (!nome) return false;
+    try{ if (typeof HABRARAS !== 'undefined' && HABRARAS[nome]) return true; }catch(e){}
+    try{
+      for (var i = 0; i < D.length; i++)
+        if (D[i] && (D[i].raras || []).indexOf(nome) >= 0) return true;
+    }catch(e){}
+    return false;
+  }
+  window.t6EhEspecial = _ehEspecial;
   /* o fim do <div> que comeca em `i` — contando abre e fecha. */
   function _fimDiv(h, i){
     var n = 0, q = i;
@@ -625,7 +637,7 @@ JS_TELAS = r"""
   function _miolo(h, marca, novo){
     var i = h.indexOf(marca);
     if (i < 0) return h;
-    var ab = h.lastIndexOf('<div', i), f = h.indexOf('>', i) + 1;
+    var ab = h.lastIndexOf('<div', i), f = h.indexOf('>', ab) + 1;
     if (ab < 0 || f <= 0) return h;
     var n = 1, q = f;
     while (q < h.length && n > 0){
@@ -761,6 +773,12 @@ JS_TELAS = r"""
     for (var i = 0; i < ps.length; i++) if (es.indexOf(ps[i]) >= 0) return true;
     return false;
   }
+  function _estiloLigaNaPos(x, pos){
+    var es = null, m = x && x.modelo;
+    try{ es = EST_POS[m] || (typeof ESTPT !== 'undefined' ? EST_POS[ESTPT[m]] : null); }catch(e){}
+    if (!pos || !es) return null;
+    return es.indexOf(pos) >= 0;
+  }
 
   function _sigla(p){
     try{ if (typeof SIGJ !== 'undefined' && SIGJ[p]) return SIGJ[p]; }catch(e){}
@@ -783,15 +801,14 @@ JS_TELAS = r"""
      de mostrar as duas pontas da familia. Mesma conta da `sigsDoCard` da casca
      antiga; ela morreu junto com o desenho velho e voltou aqui. */
   function _sigFn(x, dono){
-    var out = [], minhas = _minhasDe(dono || x);
-    minhas.forEach(function(p){
-      var f = null, r = null;
-      try{ f = (typeof funcDaPos === 'function') ? funcDaPos(p, (dono || x).modelo) : null; }catch(e){}
-      try{ r = (typeof TJ_REGRA !== 'undefined') ? TJ_REGRA[p] : null; }catch(e){}
-      if (_mesmaFn(f, x.tipo) || (r && (_mesmaFn(r[1], x.tipo) || _mesmaFn(r[2], x.tipo)))){
-        var g = _sigla(p);
-        if (out.indexOf(g) < 0) out.push(g);
-      }
+    var out = [], minhas = _minhasDe(dono || x), oficiais = _posFn(x);
+    /* A relacao funcao × posicao vem SOMENTE de FUNC_POS, cuja origem e
+       `funcao_nativa.py`. O estilo decide a funcao NATIVA; ele nao autoriza
+       inventar outra posicao para uma funcao ja definida. */
+    oficiais.forEach(function(p){
+      if (minhas.indexOf(p) < 0) return;
+      var g = _sigla(p);
+      if (out.indexOf(g) < 0) out.push(g);
     });
     if (out.length) return out.join('/');
     /* nenhuma posicao dele bate: cai para as posicoes da propria funcao */
@@ -805,24 +822,25 @@ JS_TELAS = r"""
 
   /* AS FUNCOES QUE UMA POSICAO PODE EXERCER, dentro das que ESTE card tem. */
   function _funcsDaPos(pos, dono, irmaos){
-    var out = [], f = null, r = null;
-    try{ f = (typeof funcDaPos === 'function') ? funcDaPos(pos, dono.modelo) : null; }catch(e){}
-    try{ r = (typeof TJ_REGRA !== 'undefined') ? TJ_REGRA[pos] : null; }catch(e){}
+    var out = [];
     (irmaos || []).forEach(function(y){
-      if (_mesmaFn(f, y.tipo) || (r && (_mesmaFn(r[1], y.tipo) || _mesmaFn(r[2], y.tipo)))){
-        if (out.indexOf(y.tipo) < 0) out.push(y.tipo);
+      if (_posDaFuncao(y.tipo, dono).indexOf(pos) >= 0){
+        var repetida = false;
+        for (var i = 0; i < out.length; i++){
+          if (_mesmaFn(out[i], y.tipo) || _nomeFn(out[i]) === _nomeFn(y.tipo)){
+            repetida = true; break;
+          }
+        }
+        if (!repetida) out.push(y.tipo);
       }
     });
     return out;
   }
   /* AS POSICOES ONDE ESTA FUNCAO PODE SER EXERCIDA POR ESTE CARD */
   function _posDaFuncao(tipo, dono){
-    var out = [];
-    _minhasDe(dono).forEach(function(p){
-      var f = null, r = null;
-      try{ f = (typeof funcDaPos === 'function') ? funcDaPos(p, dono.modelo) : null; }catch(e){}
-      try{ r = (typeof TJ_REGRA !== 'undefined') ? TJ_REGRA[p] : null; }catch(e){}
-      if (_mesmaFn(f, tipo) || (r && (_mesmaFn(r[1], tipo) || _mesmaFn(r[2], tipo)))) out.push(p);
+    var out = [], minhas = _minhasDe(dono);
+    _posFn({tipo:tipo}).forEach(function(p){
+      if (minhas.indexOf(p) >= 0 && out.indexOf(p) < 0) out.push(p);
     });
     return out;
   }
@@ -864,7 +882,69 @@ JS_TELAS = r"""
 
   /* QUAL ABA DO CARD ESTA ABERTA — 'motor' (maximo), 'insumos' ou 'livre' */
   window.t6Modo = function(){
-    try{ return window.ENC_MODO || 'motor'; }catch(e){ return 'motor'; }
+    try{
+      if (window._T6ABA === 'livre' || window._T6ABA === 'motor') return window._T6ABA;
+      var m = window.ENC_MODO || 'motor';
+      /* Duas geracoes da casca usam nomes diferentes para a mesma aba. */
+      return m === 'insumos' ? 'livre' : m;
+    }catch(e){ return 'motor'; }
+  };
+
+  /* DUAS ABAS, DOIS ESTADOS. Esta fotografia nasce quando a camada atual e
+     carregada, antes de qualquer edicao humana, e nunca e sobrescrita. As
+     camadas antigas reutilizam `_ori`, `_anc` e fotos da build livre; essa
+     sobreposicao era a origem da tela hibrida (rotulo MAXIMO + barras zero). */
+  function _t6FotoMotor(c){
+    if (!c) return null;
+    if (!c._t6MotorOriginal){
+      /* `_anc0` e criada pela camada da equacao a partir da linha gravada
+         pelo motor, antes de qualquer aba/localStorage mexer no card. */
+      var a0 = c._anc0;
+      var sis0 = (a0 && a0.v && a0.v.length) ? a0.v : (c.sis || []);
+      var sb0 = (a0 && a0.sisBar) ? a0.sisBar : (c.sisBar || []);
+      var imp0 = (a0 && a0.imp !== undefined) ? a0.imp : c.imp;
+      var tec0 = (a0 && a0.tecb) ? a0.tecb : (c.TECB || []);
+      c._t6MotorOriginal = {
+        sis:sis0.slice(),
+        sisBar:sb0.map(function(r){ return r.slice(); }),
+        sobra:(a0 && a0.sobra !== undefined) ? a0.sobra : c.sobra,
+        imp:imp0,
+        imps:(c.imps || []).map(function(x){ return {n:x.n,c:x.c,f:x.f}; }),
+        tecb:tec0.slice(), b1:c.b1, b1n:c.b1n,
+        rows:(c.arows || []).map(function(r){
+          var v = sis0[r[0]];
+          return [v, v - r[2], v];
+        })
+      };
+    }
+    return c._t6MotorOriginal;
+  }
+  try{ (typeof D !== 'undefined' ? D : []).forEach(function(c){
+    if (c && c.id !== 'MOLDE') _t6FotoMotor(c);
+  }); }catch(e){}
+
+  window.t6RestauraMotor = function(destino){
+    var c = null; try{ c = _card(destino); }catch(e){}
+    var f = _t6FotoMotor(c); if (!c || !f) return false;
+    c.sis = f.sis.slice();
+    c.sisBar = f.sisBar.map(function(r){ return r.slice(); });
+    c.sobra = f.sobra; c.imp = f.imp;
+    c.imps = f.imps.map(function(x){ return {n:x.n,c:x.c,f:x.f}; });
+    c.TECB = f.tecb.slice(); c.b1 = f.b1; c.b1n = f.b1n;
+    (c.arows || []).forEach(function(r,i){
+      if (!f.rows[i]) return;
+      r[3] = f.rows[i][0]; r[4] = f.rows[i][1]; r[5] = f.rows[i][2];
+    });
+    try{ c.b1 = notaDe(c.sis, c.arows); }catch(e){}
+    try{
+      c.b1n = (function(A){ var n=0,d=0,i,w; A=A||[];
+        for(i=0;i<A.length;i++){ w=A[i][1]; if(!w) continue; n+=w*A[i][3]; d+=w*A[i][2]; }
+        return d ? 100*n/d : c.b1n;
+      })(c.arows);
+    }catch(e){}
+    delete c._habs; delete c._tec; delete c._tecNome;
+    delete c._cp; delete c._n; delete c._ori;
+    return true;
   };
 
   /* ⛔ 19/08 — O `style-hover` DA DESIGNER NAO EXISTE NO NAVEGADOR.
@@ -905,6 +985,65 @@ JS_TELAS = r"""
     });
   };
 
+  /* A pagina recebe `tela_encaixe` em levas. Isso e bom para a home, mas uma
+     ficha nao pode nascer pela metade: se o card foi aberto quando apenas uma
+     de suas funcoes estava em D, a lateral dizia "FUNCOES QUE EXERCE - 1".
+     Ao abrir a ficha, buscamos somente as linhas daquele card e incorporamos
+     as que ainda faltam no MESMO array D. A chamada e deduplicada por card e,
+     quando termina, a ficha aberta e redesenhada uma unica vez. */
+  function _t6CompletaFuncoesDoCard(c, key){
+    if (!c || typeof D === 'undefined') return;
+    var base = String(c.id || '').split('@')[0];
+    if (!base || !/^\d+$/.test(base)) return;
+    window._T6_CARGA_CARD = window._T6_CARGA_CARD || {};
+    if (window._T6_CARGA_CARD[base]) return;
+    window._T6_CARGA_CARD[base] = 'carregando';
+    var url = 'https://trqqpsnafpbudtvvicch.supabase.co/rest/v1/tela_encaixe'
+      + '?select=linha&card_id=eq.' + encodeURIComponent(base) + '&order=funcao.asc';
+    var chave = 'sb_publishable_XTKGboY9RyYiirPiIsWMhw_P8B51cHj';
+    fetch(url, {headers:{apikey:chave, Authorization:'Bearer ' + chave}})
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(rows){
+        var entrou = 0;
+        (rows || []).forEach(function(r){
+          var x = r && r.linha;
+          if (!x || x.id === undefined || x.tipo === undefined) return;
+          var xb = String(x.id).split('@')[0], repetida = false;
+          for (var di = 0; di < D.length; di++){
+            var ja = D[di];
+            if (ja && ja.id !== 'MOLDE' && String(ja.id).split('@')[0] === xb
+                && _mesmaFn(ja.tipo, x.tipo)){ repetida = true; break; }
+          }
+          if (!repetida){ D.push(x); entrou++; }
+        });
+        window._T6_CARGA_CARD[base] = 'pronto';
+        if (entrou){
+          try{ if (typeof _pos_D === 'function') _pos_D(); }catch(e){}
+          try{ reabrir(key); }catch(e){ try{ abrir(key); }catch(e2){} }
+        }
+      })
+      .catch(function(){ window._T6_CARGA_CARD[base] = 'erro'; });
+  }
+
+  /* Uma mesma linha pode chegar pela leva inicial, pela carga em segundo plano
+     e pela busca pontual da ficha. O identificador pode ganhar um sufixo `@`,
+     portanto a identidade real aqui e card-base + funcao equivalente. */
+  function _t6IrmasUnicas(c){
+    var base = String(c.id).split('@')[0], out = [];
+    for (var i = 0; i < D.length; i++){
+      var x = D[i];
+      if (!x || x.id === 'MOLDE' || String(x.id).split('@')[0] !== base) continue;
+      var existe = false;
+      for (var j = 0; j < out.length; j++){
+        if (_mesmaFn(out[j].tipo, x.tipo) || _nomeFn(out[j].tipo) === _nomeFn(x.tipo)){
+          existe = true; break;
+        }
+      }
+      if (!existe) out.push(x);
+    }
+    return out.length ? out : [c];
+  }
+
   window.t6TelaFicha = function(key){
     if (!M || !M.ficha || !M.ficha.corpo) return '';
     var c = null;
@@ -915,6 +1054,7 @@ JS_TELAS = r"""
     try{ ET  = c.base ? etapas(c, lvl) : null; }catch(e){}
     try{ ETN = c.base ? _e4nat(c, lvl) : null; }catch(e){}
     try{ ST  = c.base ? _startDe(c) : null; }catch(e){}
+    try{ _t6CompletaFuncoesDoCard(c, key); }catch(e){}
 
     /* ---------- o campinho (3 por linha, como ela desenhou) ---------- */
     var np = c.np || '', minhas = [];
@@ -944,7 +1084,10 @@ JS_TELAS = r"""
     /* a posicao selecionada no campinho — o `_SELPOS` da casca antiga */
     var _sel = null, _funcsSel = null;
     try{
-      if (window._SELPOS && _minhasDe(c).indexOf(window._SELPOS) >= 0) _sel = window._SELPOS;
+      var _baseFicha = String(c.id).split('@')[0];
+      var _selGuardada = (window._T6SELPOS_CARD === _baseFicha)
+        ? (window._T6SELPOS_FORCADA || window._SELPOS) : window._SELPOS;
+      if (_selGuardada && _minhasDe(c).indexOf(_selGuardada) >= 0) _sel = _selGuardada;
     }catch(e){}
 
     /* ⛔ 19/08 — OS ESTADOS DO CAMPINHO, E A LEITURA ANTES DA COR.
@@ -972,6 +1115,14 @@ JS_TELAS = r"""
           borda = '2px solid #ffffff';
           cor   = '#06200f';
           extra = ';box-shadow:0 0 0 3px rgba(255,255,255,.28),0 6px 14px rgba(0,0,0,.35);font-size:11.5px';
+        /* Ao clicar numa POSICAO, somente ela fica acesa. A nativa e as
+           compradas continuam clicaveis, mas perdem todo destaque enquanto
+           a escolha por posicao estiver ativa. Clique em FUNCAO limpa `_sel`
+           e volta a acender todas as posicoes relacionadas aquela funcao. */
+        } else if (_sel){
+          fundo = 'rgba(0,0,0,.20)';
+          borda = '1px solid rgba(255,255,255,.20)';
+          cor   = pode ? '#c7d8cd' : '#819187';
         } else if (eNat){
           fundo = 'rgba(255,255,255,.10)';
           borda = '2px solid #ffd75e';
@@ -997,7 +1148,7 @@ JS_TELAS = r"""
     /* ---------- as funcoes que ele exerce ---------- */
     var base = String(c.id).split('@')[0], irm = [];
     try{
-      irm = D.filter(function(x){ return x.id !== 'MOLDE' && String(x.id).split('@')[0] === base; });
+      irm = _t6IrmasUnicas(c);
       irm.forEach(function(x){ _notaDoMotor(x); });
       irm.sort(function(a, b){ return b._nMot - a._nMot; });
     }catch(e){ irm = [c]; }
@@ -1006,12 +1157,17 @@ JS_TELAS = r"""
     var fnsW = irm.map(function(x, i){
       var g = (irm.length > 1) ? (1 - i / (irm.length - 1)) : 1;
       var aqui = (x.tipo === c.tipo);
-      /* quando ha uma POSICAO selecionada no campinho, acendem as funcoes
-         daquela posicao — a regra simetrica que existia na casca antiga */
-      if (_funcsSel) aqui = (_funcsSel.indexOf(x.tipo) >= 0);
+      /* Clicar numa posicao com varias funcoes NAO seleciona todas elas.
+         A build que esta por tras continua sendo a funcao anteriormente
+         aberta ate a escolha obrigatoria na tampa. */
       /* BÁSICO so quando se MEDIU que o estilo nao liga. `null` = nao sei,
          e nao sei nao vira etiqueta. (Antes, todo nome renomeado caia aqui.) */
-      var bas = (_estiloLiga(x) === false);
+      var posicoesFn = _posDaFuncao(x.tipo, c);
+      if (!posicoesFn.length) posicoesFn = _posFn(x);
+      var estadosEstilo = posicoesFn.map(function(p){ return _estiloLigaNaPos(x, p); });
+      var conhecidos = estadosEstilo.filter(function(v){ return v !== null; });
+      var bas = conhecidos.length > 0 && conhecidos.every(function(v){ return v === false; });
+      var misturaEstilo = conhecidos.indexOf(true) >= 0 && conhecidos.indexOf(false) >= 0;
       /* a sigla e a posicao que ESTE card exerce nesta funcao */
       var sg = _sigFn(x, c);
       return {n: esc(_nomeFn(x.tipo)),
@@ -1026,7 +1182,7 @@ JS_TELAS = r"""
            nao diz se e de saida ou de combate. Agora o nome quebra em duas
            linhas quando precisar, e as outras tres colunas e que nao mexem. */
         nSt: 'flex:1 1 auto;min-width:0;text-align:left;line-height:1.2;'
-           + 'white-space:normal;overflow-wrap:anywhere',
+           + 'white-space:normal;overflow-wrap:normal;word-break:normal;hyphens:none',
         bas: bas ? 'BÁSICO' : '',
         basSt: bas ? 'font-family:inherit;font-size:8px;font-weight:800;letter-spacing:.6px;padding:2px 6px;border-radius:4px;background:var(--d14);border:1px solid var(--d31);color:var(--d17);flex:0 0 auto' : 'display:none',
         /* ⛔ a coluna da posicao fica NO MEIO da linha, centralizada — nao
@@ -1036,15 +1192,20 @@ JS_TELAS = r"""
            O `pos` deixa de ser texto e vira marcacao — por isso o molde
            precisa imprimir sem escapar (o `tpl` ja aceita, e o conteudo e
            gerado aqui, nao vem de fora). */
-        pos: sg.split('/').map(function(g){
-          return '<b style="display:block;font-family:inherit;font-size:9.5px;'
-               + 'font-weight:800;letter-spacing:.4px;padding:3px 0;border-radius:5px;'
+        pos: posicoesFn.map(function(p, pi){
+          var g = _sigla(p), ligaAqui = estadosEstilo[pi];
+          var estadoAqui = misturaEstilo && ligaAqui !== null
+            ? '<small style="display:block;margin-top:1px;font-size:6.5px;line-height:1;letter-spacing:.25px;'
+              + 'color:' + (ligaAqui ? 'var(--d25)' : 'var(--d17)') + '">'
+              + (ligaAqui ? 'COM ESTILO' : 'BÁSICO') + '</small>' : '';
+          return '<b style="display:block;font-family:inherit;font-size:9px;'
+               + 'font-weight:800;letter-spacing:.4px;padding:2px 0;border-radius:5px;'
                + 'text-align:center;background:'
                + (aqui ? 'rgba(255,255,255,.14)' : 'var(--d14)')
                + ';color:' + (aqui ? 'var(--d117)' : 'var(--d45)') + '">'
-               + esc(g) + '</b>';
+               + esc(g) + estadoAqui + '</b>';
         }).join(''),
-        posSt: 'display:flex;flex-direction:column;gap:3px;flex:0 0 66px',
+        posSt: 'display:flex;flex-direction:column;gap:3px;flex:0 0 78px',
         /* ⛔ TODA pontuacao do site tem DUAS casas. Ordem do Luis, 19/08. */
         pts: n2(_notaDoMotor(x)),
         num: 'font-family:inherit;font-size:14px;font-weight:800;flex:0 0 58px;text-align:right;color:'
@@ -1057,14 +1218,50 @@ JS_TELAS = r"""
            "pra ela estar na cor roxa igual o outro". Os tokens sao os mesmos
            que o molde da designer usa naquela etiqueta: d114/d115/d116/d117. */
         row: 'display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;'
-           + 'padding:9px 11px;border-radius:9px;cursor:pointer;transition:all .16s ease;'
+           + 'height:58px;min-height:58px;max-height:58px;box-sizing:border-box;'
+           + 'padding:6px 11px;border-radius:9px;cursor:pointer;transition:all .16s ease;'
            + (aqui
               ? 'background:linear-gradient(180deg,var(--d114),var(--d115));'
-                + 'border:1px solid var(--d116);color:var(--d117)'
-              : 'background:rgba(125,242,168,' + (0.03 + 0.10 * g).toFixed(3) + ');'
-                + 'border:1px solid var(--d18);color:var(--d8)'),
+                 + 'border:1px solid var(--d116);color:var(--d117)'
+              : 'background:rgba(38,184,112,' + (0.10 + 0.34 * g).toFixed(3) + ');'
+                + 'border:1px solid rgba(90,226,153,' + (0.20 + 0.48 * g).toFixed(3) + ');'
+                + 'color:var(--d8)'),
         k: esc(x.id + '|' + x.tipo)};
     });
+
+    /* O seletor de uma posicao com varias funcoes nasce junto com o HTML.
+       Assim ele nao depende de uma insercao tardia que o molde possa apagar. */
+    var escolhaPosHtml = '';
+    if (_sel && _funcsSel && _funcsSel.length > 1){
+      var opHtml = '';
+      _funcsSel.forEach(function(f){
+        var al = null;
+        for (var ei = 0; ei < irm.length; ei++) if (_mesmaFn(irm[ei].tipo, f)){ al = irm[ei]; break; }
+        if (!al) return;
+        var ligaEscolha = _estiloLigaNaPos(al, _sel);
+        var basEscolha = (ligaEscolha !== null)
+          ? '<small style="font-family:inherit;font-size:8px;font-weight:800;letter-spacing:.6px;'
+            + 'padding:2px 6px;border-radius:4px;background:var(--d14);border:1px solid var(--d31);'
+            + 'color:' + (ligaEscolha ? 'var(--d25)' : 'var(--d17)') + '">'
+            + (ligaEscolha ? 'COM ESTILO' : 'BÁSICO') + '</small>' : '';
+        opHtml += '<button data-t6pickfn="' + esc(al.id + '|' + al.tipo) + '" style="'
+          + 'display:flex;align-items:center;justify-content:space-between;gap:10px;'
+          + 'font-family:inherit;font-size:12px;font-weight:700;padding:10px 12px;'
+          + 'border-radius:9px;cursor:pointer;background:var(--d14);'
+          + 'border:1px solid var(--d31);color:var(--d1)">'
+          + '<span style="display:flex;align-items:center;gap:7px">'
+          + '<span>' + esc(_nomeFn(al.tipo)) + '</span>' + basEscolha
+          + '</span><b style="color:var(--d25)">'
+          + n2(_notaDoMotor(al)) + '</b></button>';
+      });
+      escolhaPosHtml = '<div data-t6pede="1" style="position:relative;z-index:9;width:100%;'
+        + 'padding:15px;margin:0 0 10px;border-radius:12px;display:flex;flex-direction:column;gap:9px;'
+        + 'background:#08120d;border:1.5px solid var(--d25);box-shadow:0 10px 26px var(--d104)">'
+        + '<b style="font-size:12px;letter-spacing:.5px;color:var(--d25)">ESCOLHA A FUNÇÃO PARA '
+        + esc(_sig(_sel)) + '</b><span style="font-size:12px;color:var(--d30)">'
+        + 'Cada função tem uma build diferente. Selecione qual você quer abrir:</span>'
+        + '<div style="display:flex;flex-direction:column;gap:7px">' + opHtml + '</div></div>';
+    }
 
     /* ---------- as barras ---------- */
     function custo(n){ var t = 0; for (var k = 1; k <= n; k++) t += Math.ceil(k / 4); return t; }
@@ -1130,11 +1327,21 @@ JS_TELAS = r"""
       _fr0 = c.frows || [];
     }
     var fr = _fr0.slice().sort(function(a, b){ return (a[6] || 0) - (b[6] || 0); });
+    var nomesCorpo = {
+      'Tam. braço':'Tamanho do braço',
+      'Tam. pescoço':'Tamanho do pescoço',
+      'Compr. perna':'Comprimento da perna',
+      'Compr. braço':'Comprimento do braço',
+      'Compr. pescoço':'Comprimento do pescoço',
+      'Larg. ombro':'Largura dos ombros',
+      'Alt. ombro':'Altura dos ombros'
+    };
     var porCol = Math.ceil(fr.length / 3) || 1, medidas = [];
     for (var q = 0; q < fr.length; q += porCol){
       medidas.push(fr.slice(q, q + porCol).map(function(r){
         var pts = r[6] || 0, nt = r[4] || 0;
-        return {n: esc(String(r[0]).replace(/ p\d+$/, '')), p: 'p' + r[1],
+        var nomeCorpo = String(r[0]).replace(/ p\d+$/, '');
+        return {n: esc(nomesCorpo[nomeCorpo] || nomeCorpo), p: '',
           nota: nt ? _sn(nt) : '0',
           notaSt: 'font-family:inherit;font-size:10.5px;text-align:center;color:'
                 + (nt > 0 ? C_MAIS : (nt < 0 ? C_MENOS : C_ZERO)),
@@ -1160,11 +1367,26 @@ JS_TELAS = r"""
       .replace('">−</i>', '" data-bar="{{ b.b }}" data-d="-1">−</i>')
       .replace('">+</i>', '" data-bar="{{ b.b }}" data-d="1">+</i>');
     var h = tpl(molde, dados);
+    if (escolhaPosHtml){
+      var priFn = h.indexOf('<div data-fn=');
+      if (priFn >= 0) h = h.slice(0, priFn) + escolhaPosHtml + h.slice(priFn);
+    }
 
     /* ---------- os textos que sao dado nosso ---------- */
     var nt = 0, tp = 0, pc = 0;
     try{ nt = nota(c); tp = topoDoTipo(c.tipo); pc = tp > 0 ? 100 * nt / tp : 0; }catch(e){}
     function sub(de, para){ h = h.split(de).join(para); }
+    /* O bloco de corpo mostrava nomes de implementacao (`p0`, `p1`, `p5`) e
+       cabecalhos curtos demais para explicar a conta. Esses pesos continuam na
+       matematica do motor, mas nao sao informacao util para o leitor. */
+    sub('>Nota da medida<', '>Faixa (-2 a +2)<');
+    sub('>No card<', '>Valor do card<');
+    sub('>Alvo<', '>Faixa ideal<');
+    sub('>Pontos<', '>Efeito na nota<');
+    sub('>MEDIDAS DO CORPO</div>', '>MEDIDAS DO CORPO</div>\n'
+      + '<div style="font-size:10.5px;line-height:1.45;color:var(--d17);margin-top:-5px">'
+      + 'A faixa compara a medida do card com a régua da função. O efeito mostra quanto ela acrescenta ou retira da nota.'
+      + '</div>');
     sub('>Lionel Messi<', '>' + esc(c.nome) + '<');
     sub('>PD<', '>' + esc(_sig(np) || '—') + '<');
     sub('>Ponta direita<', '>' + esc(_nomeP(np) || '—') + '<');
@@ -1204,11 +1426,14 @@ JS_TELAS = r"""
     sub('>170 cm<', '>' + (c.h || '—') + ' cm<');
     sub('>72 kg<', '>' + (c.w || '—') + ' kg<');
     sub('>38 anos<', '>' + (c.age || '—') + ' anos<');
-    sub('tendência a lesão Baixa', 'tendência a lesão ' + esc(c.inj || '—'));
+    sub('tendência a lesão Baixa', 'Tendência a Lesão: ' + esc(c.inj || '—'));
     sub('>Esquerdo<', '>' + esc(c.foot || '—') + '<');
     var pr = null; try{ pr = prPar(c); }catch(e){}
     sub('>Raramente<', '>' + esc(pr ? ((typeof PR_ROT_F !== 'undefined' && PR_ROT_F[pr[0]]) || '—') : 'sem dado') + '<');
     sub('>Média<', '>' + esc(pr ? ((typeof PR_ROT_Q !== 'undefined' && PR_ROT_Q[pr[1]]) || '—') : '—') + '<');
+    sub('>pé bom <b', '>Pé Bom: <b');
+    sub('>pé ruim <b', '>Pé Ruim: <b');
+    sub('>precisão <b', '>Precisão: <b');
     var pb = 0; try{ pb = prBonus(c); }catch(e){}
     /* ⛔ 19/08 — OS DOIS "bônus na nota" SAIRAM. Ordem do Luis, e ele tem
        razao: eles vinham de DOIS enderecos. A nota usa `bonusPronto(c,i,...)`
@@ -1217,12 +1442,24 @@ JS_TELAS = r"""
        linhas divergem no estilo da IA e 250 no corpo. Enquanto vierem de dois
        lugares, mostrar e pior que nao mostrar. */
     h = _tiraTexto(h, 'bônus');
+    h = h.replace(/\s*na nota/gi, '');
     sub('>+0.14<', '>' + _sn(pb, 2) + '<');
+    /* Centraliza somente o titulo e o numero da pontuacao, sem alterar o
+       restante do cartao nem os estilos da designer. */
+    h = h.replace(
+      '<div style="display:flex;flex-direction:column;gap:7px">\n'
+      + '<div style="font-family:inherit;font-size:9.5px;letter-spacing:1.4px;color:var(--d50)">PONTUAÇÃO TOTAL</div>',
+      '<div style="display:flex;flex-direction:column;gap:7px;align-items:center;text-align:center">\n'
+      + '<div style="font-family:inherit;font-size:9.5px;letter-spacing:1.4px;color:var(--d50)">PONTUAÇÃO TOTAL</div>');
     sub('>+305.9 pts<', '>' + _sn(c.b1 || 0, 1) + ' pts<');
     sub('>-1%<', '>' + _sn(c.b4 || 0, 0) + '%<');
     sub('>-3</b>', '>' + Math.round(c.b4r || 0) + '</b>');
     sub('>15</b>', '>' + (c.frows || []).reduce(function(a, r){ return a + r[1]; }, 0) + '</b>');
     sub('>-0.15</b>', '>' + _sn(c._fb !== undefined ? c._fb : 0, 2) + '</b>');
+    sub('>soma <b', '>Pontos somados: <b');
+    h = h.replace(/<span>peso <b[^>]*>.*?<\/b><\/span>/, '');
+    h = h.replace(/(<span style="margin-left:auto;font-size:14px;font-weight:700;color:var\(--d127\)">)/,
+                  '$1Impacto na nota: ');
 
     /* ⛔ 19/08 — A FOTO DA FICHA.
        O molde da designer traz um quadrado com a palavra "foto" dentro, e a
@@ -1254,7 +1491,7 @@ JS_TELAS = r"""
         +   '<span style="width:26px;height:26px;border-radius:50%;flex:none;display:flex;'
         +   'align-items:center;justify-content:center;background:var(--d14);'
         +   'border:1px solid var(--d31);font-size:13px;color:var(--d108)">◎</span>'
-        +   '<span style="font-size:17px;font-weight:700;letter-spacing:-.2px;color:var(--d108)">'
+        +   '<span style="font-size:17px;font-weight:700;letter-spacing:-.2px;color:var(--d108);text-transform:uppercase">'
         +   esc(_extenso(c.modelo) || '—') + '</span>'
         + '</div>'
         + '</div>';
@@ -1298,6 +1535,8 @@ JS_TELAS = r"""
 
     /* ---------- habilidades: os quatro blocos ---------- */
     var hab = [], nat = (c.fab || []).concat(c.raras || []), pool = [];
+    var podeRemoverHab = false;
+    try{ podeRemoverHab = (window.t6Modo() === 'livre'); }catch(e){}
     try{ hab = habsAtual(c) || []; }catch(e){}
     /* ⛔ 19/08 — SUGESTAO NAO E O POOL INTEIRO.
        Ordem do Luis, e ele ja tinha dito antes: *"sugestoes sao aquelas
@@ -1317,9 +1556,18 @@ JS_TELAS = r"""
         _neu = [];
       }
       pool = _neu.filter(function(s){
-        return hab.indexOf(s) < 0 && nat.indexOf(s) < 0; })
+        return hab.indexOf(s) < 0 && nat.indexOf(s) < 0 && !_ehEspecial(s); })
         .sort(function(x, y){ return x.localeCompare(y, 'pt'); });
     }catch(e){ pool = []; poolEhNeutro = false; }
+    /* Na montagem manual a secao existe, mas nasce vazia. Ela so recebe as
+       sugestoes do motor quando o usuario copia o maximo possivel. */
+    var poolOcultoMinha = false;
+    try{
+      var _idPool = String(c.id).split('@')[0];
+      poolOcultoMinha = (window.t6Modo() !== 'motor')
+        && !(window._T6_COPIOU_MAX && window._T6_COPIOU_MAX[_idPool]);
+      if (poolOcultoMinha) pool = [];
+    }catch(e){}
     /* ⛔ 19/08 — AS ETIQUETAS DE HABILIDADE SE ATROPELAVAM.
        Mesmo defeito do nome da funcao na lista: a etiqueta nao tinha largura
        propria, entao um nome de duas palavras ("Chute de primeira", "Curva
@@ -1352,7 +1600,10 @@ JS_TELAS = r"""
       fila(hab.length
         ? hab.map(function(s, i){
             return '<span style="' + E_ADD + '">' + esc(_extenso(s))
-                 + '<b data-hx="' + i + '" style="font-size:13px;color:var(--d13);line-height:1;cursor:pointer">×</b></span>'; }).join('')
+                 + (podeRemoverHab
+                    ? '<b data-hx="' + i + '" style="font-size:13px;color:var(--d13);line-height:1;cursor:pointer">×</b>'
+                    : '')
+                 + '</span>'; }).join('')
         : vazio('nenhuma')));
     h = _miolo(h, '>Drible de primeira<',
       fila(pool.length
@@ -1375,11 +1626,11 @@ JS_TELAS = r"""
     sub('<div style="font-size:11px;color:var(--d17)">sugestões · o pool inteiro que o motor pode escolher · 8</div>',
         '<div style="' + T_TIT + '">HABILIDADES SUGERIDAS</div>'
       + '<div style="font-size:11px;color:var(--d17);margin-top:-2px">'
-      + (pool.length
+      + (poolOcultoMinha ? '' : (pool.length
           ? 'trocar por qualquer uma destas não muda a nota'
           : (poolEhNeutro
               ? 'nenhuma troca mantém a nota nesta build'
-              : 'o motor ainda não mediu as trocas desta função'))
+              : 'o motor ainda não mediu as trocas desta função')))
       + '</div>');
 
     /* ⛔ 19/08 — O BLOCO DE ÍMPETO NUNCA FOI PREENCHIDO.
@@ -1672,6 +1923,10 @@ JS_TELAS = r"""
       atuais.splice(ix, 1);
     } else {
       if (!val) return;
+      if (_ehEspecial(val)){
+        window.t6AvisoBar(raiz, 'habilidade especial só vem de fábrica');
+        return;
+      }
       if (atuais.indexOf(val) >= 0) return;
       var teto = 5;
       try{ if (c.vagas !== undefined && c.vagas !== null) teto = +c.vagas; }catch(e){}
@@ -1735,18 +1990,143 @@ JS_TELAS = r"""
     var irm = [];
     try{
       var b = String(c.id).split('@')[0];
-      irm = D.filter(function(x){ return x.id !== 'MOLDE' && String(x.id).split('@')[0] === b; });
+      irm = _t6IrmasUnicas(c);
     }catch(e){ irm = [c]; }
     var fs = _funcsDaPos(pos, c, irm);
     if (!fs.length) return;
     if (fs.length === 1){
+      var unico = null;
+      for (var u = 0; u < irm.length; u++) if (_mesmaFn(irm[u].tipo, fs[0])){ unico = irm[u]; break; }
       window._SELPOS = null;
-      if (fs[0] !== c.tipo){ try{ reabrir(c.id + '|' + fs[0]); }catch(e){} return; }
-      try{ reabrir(key); }catch(e){}
+      window._T6SELPOS_FORCADA = null;
+      window._T6SELPOS_CARD = null;
+      var destinoUnico = (unico ? unico.id : c.id) + '|' + (unico ? unico.tipo : fs[0]);
+      try{ window.t6AbreFuncao(destinoUnico); }catch(e){}
       return;
     }
-    window._SELPOS = (window._SELPOS === pos) ? null : pos;
+    var nova = (window._T6SELPOS_FORCADA === pos) ? null : pos;
+    window._SELPOS = nova;
+    /* Outras camadas antigas de `reabrir` limpam `_SELPOS`. Esta chave e da
+       ficha atual e sobrevive somente ate o usuario escolher uma funcao. */
+    window._T6SELPOS_FORCADA = nova;
+    window._T6SELPOS_CARD = nova ? String(c.id).split('@')[0] : null;
     try{ reabrir(key); }catch(e){}
+  };
+
+  /* Toda navegacao para outra FUNCAO comeca no retrato oficial do motor.
+     A edicao de "fazer minha build" nao vaza para a funcao seguinte. */
+  window.t6AbreMaximo = function(destino){
+    if (!destino) return;
+    /* Nao passa por `encModo`: a casca tem mais de uma camada dessa funcao e
+       uma delas reaplica a foto da build livre depois de marcar "motor". O
+       resultado era uma tela dizendo MAXIMO, mas com barras zeradas e botao
+       OTIMIZAR. A fonte de verdade e `restaurarMotor`. */
+    window.ENC_MODO = 'motor';
+    window._T6ABA = 'motor';
+    window._BLD_FOTO = null;
+    window.BLD_SEM_LACO = 1;
+    try{ document.documentElement.setAttribute('data-encmodo', 'motor'); }catch(e){}
+    try{ if (document.body) document.body.setAttribute('data-encmodo', 'motor'); }catch(e){}
+    try{ window.t6RestauraMotor(destino); }catch(e){}
+    try{ if (typeof traducaoViva === 'function') traducaoViva(); }catch(e){}
+    try{ if (typeof render === 'function') render(); }catch(e){}
+    window.BLD_SEM_LACO = 0;
+    try{ reabrir(destino); }catch(e){ try{ abrir(destino); }catch(e2){} }
+  };
+
+  function _t6ImpetoSoDeFabrica(txt){
+    txt = String(txt == null ? '' : txt);
+    var i = txt.indexOf('o motor p');
+    if (i > 0) txt = txt.slice(0, i).replace(/\s*[\u00b7+]\s*$/, '');
+    return txt.replace(/\s*[\u00b7+]\s*[^\u00b7]*\u2692\s*$/, '').trim();
+  }
+
+  /* Reconstroi a CARTA DE FABRICA pela equacao, em vez de aproveitar `sis`,
+     `arows` ou `b1n` da build maxima. Os atributos de fabrica sao os mesmos,
+     mas cada funcao tem seus proprios pesos e alvos; por isso a nota base
+     precisa nascer outra vez no molde do card de destino. */
+  function _t6AplicaCartaBase(destino){
+    var c = null; try{ c = _card(destino); }catch(e){}
+    if (!c) return false;
+    var foto = _t6FotoMotor(c), z = {};
+    try{ MBK.forEach(function(x){ z[x] = 0; }); }catch(e){}
+
+    c._habs = [];
+    c._tec = [];
+    c._tecNome = null;
+    c.TECB = [];
+    c.imp = _t6ImpetoSoDeFabrica(foto ? foto.imp : c.imp);
+    /* `imps` alimenta somente a apresentacao dos impetos nativos. O calculo
+       usa a string `imp`, que e a fonte de verdade documentada pela equacao. */
+    if (foto && foto.imps) c.imps = foto.imps.map(function(x){
+      return {n:x.n,c:x.c,f:x.f};
+    });
+
+    var vals = null;
+    try{ vals = cadeia(c, z); }catch(e){}
+    if (!vals || !vals.length) return false;
+    c.sis = vals.slice();
+    try{ c.sisBar = MBK.map(function(x){ return [x, 0]; }); }catch(e){ c.sisBar = []; }
+    try{ c.sobra = +c.orc || +c.pts || 0; }catch(e){}
+    (c.arows || []).forEach(function(r){
+      r[3] = vals[r[0]];
+      r[4] = r[3] - r[2];
+      r[5] = r[3];
+    });
+    try{ c.b1 = notaDe(vals, c.arows); }catch(e){}
+    try{
+      var n=0,d=0;
+      (c.arows||[]).forEach(function(r){
+        var w=+r[1]||0; if(!w) return;
+        n += w*r[3]; d += w*r[2];
+      });
+      if(d) c.b1n = 100*n/d;
+    }catch(e){}
+    delete c._cp; delete c._n; delete c._ori;
+    return true;
+  }
+
+  window.t6AplicaCartaBase = _t6AplicaCartaBase;
+
+  /* A build manual e descartavel por definicao: cada entrada nessa aba e cada
+     troca de funcao enquanto ela esta aberta recomeca somente com os itens de
+     fabrica. `elBuildBase` conserva nativos/especiais/impeto nativo e zera
+     barras, tecnico, habilidades e impeto adicionados. A nota e recalculada
+     pelo card da NOVA funcao, portanto nao reaproveita a nota anterior. */
+  window.t6AbreLivreZerado = function(destino){
+    if (!destino) return;
+    window._T6ABA = 'livre';
+    window.ENC_MODO = 'livre';
+    window._BLD_FOTO = null;
+    window._T6_COPIOU_MAX = window._T6_COPIOU_MAX || {};
+    delete window._T6_COPIOU_MAX[String(destino).split('|')[0].split('@')[0]];
+    try{ document.documentElement.setAttribute('data-encmodo', 'livre'); }catch(e){}
+    try{ if (document.body) document.body.setAttribute('data-encmodo', 'livre'); }catch(e){}
+    var aplicouBase = false;
+    try{
+      window.BLD_SEM_LACO = 1;
+      aplicouBase = _t6AplicaCartaBase(destino);
+      if (!aplicouBase) {
+        window.BLD_SEM_LACO = 1;
+        var cc = _card(destino), z = {};
+        try{ MBK.forEach(function(x){ z[x] = 0; }); }catch(e){}
+        try{ _grava(cc, z); }catch(e){}
+        try{ window._trocaHabs(destino, []); }catch(e){}
+        if (cc){ cc._tec = []; cc._tecNome = ''; try{ cc.TECB = []; }catch(e){} }
+        try{ if (typeof editImp === 'function') editImp(destino, ''); }catch(e){}
+      }
+    }catch(e){}
+    window.BLD_SEM_LACO = 0;
+    try{ if (typeof traducaoViva === 'function') traducaoViva(); }catch(e){}
+    try{ if (typeof render === 'function') render(); }catch(e){}
+    try{ reabrir(destino); }catch(e){ try{ abrir(destino); }catch(e2){} }
+  };
+
+  /* A funcao e a chave da ficha. Trocar funcao preserva a ABA: maximo chama o
+     maximo da nova funcao; montagem manual chama a base zerada da nova funcao. */
+  window.t6AbreFuncao = function(destino){
+    if (window.t6Modo() === 'livre') window.t6AbreLivreZerado(destino);
+    else window.t6AbreMaximo(destino);
   };
 
   /* ⛔ A VIDA DOS BOTOES — cada um chama a MESMA funcao da casca. */
@@ -1756,7 +2136,11 @@ JS_TELAS = r"""
     todos('[data-fn]').forEach(function(el){
       el.onclick = function(){
         window._SELPOS = null;              /* clicou na funcao: solta a posicao */
-        try{ reabrir(el.dataset.fn); }catch(e){}
+        window._T6SELPOS_FORCADA = null;
+        window._T6SELPOS_CARD = null;
+        var destino = el.getAttribute('data-fn');
+        if (!destino) return;
+        window.t6AbreFuncao(destino);
       };
     });
     todos('[data-pos]').forEach(function(el){
@@ -1780,19 +2164,40 @@ JS_TELAS = r"""
       el.style.cursor = _travado ? 'default' : 'ew-resize';
       el.style.opacity = _travado ? '.35' : '';
       if (_travado) return;
-      function poe(ev){
+      var pendente = null;
+      function valorDe(ev){
         var r = el.getBoundingClientRect();
         var x = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
-        var v = Math.round(Math.max(0, Math.min(1, x / (r.width || 1))) * 25);
+        return Math.round(Math.max(0, Math.min(1, x / (r.width || 1))) * 25);
+      }
+      function poeVisual(ev){
+        pendente = valorDe(ev);
+        var fill = el.firstElementChild;
+        if (fill) fill.style.width = Math.round(pendente * 100 / 25) + '%';
+      }
+      function confirma(){
+        if (pendente === null) return;
+        var v = pendente; pendente = null;
         try{ _marca(key); }catch(e){}
         try{ setBar(key, b, v); }catch(e){}
       }
       var arrastando = false;
-      el.onmousedown = function(ev){ arrastando = true; poe(ev); ev.preventDefault(); };
-      el.onmousemove = function(ev){ if (arrastando) poe(ev); };
-      el.onmouseup = el.onmouseleave = function(){ arrastando = false; };
-      el.ontouchstart = function(ev){ poe(ev); ev.preventDefault(); };
-      el.ontouchmove = poe;
+      function moveDoc(ev){ if (arrastando){ poeVisual(ev); ev.preventDefault(); } }
+      function soltaDoc(){
+        if (!arrastando) return;
+        arrastando = false;
+        document.removeEventListener('mousemove', moveDoc);
+        document.removeEventListener('mouseup', soltaDoc);
+        confirma();
+      }
+      el.onmousedown = function(ev){
+        arrastando = true; poeVisual(ev); ev.preventDefault();
+        document.addEventListener('mousemove', moveDoc);
+        document.addEventListener('mouseup', soltaDoc);
+      };
+      el.ontouchstart = function(ev){ arrastando = true; poeVisual(ev); ev.preventDefault(); };
+      el.ontouchmove = function(ev){ if (arrastando) poeVisual(ev); };
+      el.ontouchend = function(){ arrastando = false; confirma(); };
     });
     todos('[data-bar]').forEach(function(el){
       el.style.cursor = _travado ? 'default' : 'pointer';
@@ -1835,6 +2240,18 @@ JS_TELAS = r"""
        tambem — a aba e para ele montar com o que TEM, e ele nao tem nada
        antes de escolher. O nativo fica: veio de fabrica, nao foi escolha. */
     function _aba(m){
+      if (m === 'motor'){
+        window._T6ABA = 'motor';
+        window._SELPOS = null;
+        window._T6SELPOS_FORCADA = null;
+        window._T6SELPOS_CARD = null;
+        window.t6AbreMaximo(key);
+        return;
+      }
+      if (m === 'insumos'){
+        window.t6AbreLivreZerado(key);
+        return;
+      }
       try{ if (typeof encModo === 'function') encModo(m, key); }
       catch(e){ try{ window.ENC_MODO = m; }catch(e2){} }
       if (m !== 'motor'){
@@ -1849,24 +2266,37 @@ JS_TELAS = r"""
       }
       try{ reabrir(key); }catch(e){}
     }
+    function ligaAba(txt, modo){
+      porTexto(txt).forEach(function(el){
+        /* O texto ocupa so o miolo da pilula. O clique no padding caia no pai
+           sem handler e parecia exigir duas tentativas. Sobe ate o elemento
+           inteiro cujo conteudo ainda e apenas o nome desta aba. */
+        var bt = el;
+        while (bt.parentNode && (bt.parentNode.textContent || '').trim() === txt) bt = bt.parentNode;
+        bt.style.cursor = 'pointer';
+        bt.onclick = function(ev){
+          if (ev){ ev.preventDefault(); ev.stopPropagation(); }
+          _aba(modo);
+        };
+      });
+    }
+    /* Máximo possível já estava correto e permanece com o comportamento
+       original. O aumento da área clicável vale somente para a aba manual. */
     porTexto('⚡ MÁXIMO POSSÍVEL').forEach(function(el){
       el.style.cursor = 'pointer';
       el.onclick = function(){ _aba('motor'); };
     });
-    porTexto('⚙ FAZER MINHA BUILD').forEach(function(el){
-      el.style.cursor = 'pointer';
-      el.onclick = function(){ _aba('insumos'); };
-    });
+    ligaAba('⚙ FAZER MINHA BUILD', 'insumos');
     /* ⛔ O OTIMIZAR SO EXISTE NA ABA LIVRE.
        Na aba do MAXIMO a carta ja esta no teto: um botao "otimizar" ali nao
        tem o que fazer, e so confunde. Ordem do Luis, repetida dez vezes. */
     porTexto('⚡ OTIMIZAR').forEach(function(el){
-      var caixa = el;
-      for (var t = 0; t < 3 && caixa.parentNode; t++){
-        if ((caixa.textContent || '').trim() !== '⚡ OTIMIZAR') break;
-        caixa = caixa.parentNode;
+      var alvo = el, pai = el.parentNode;
+      /* sobe somente enquanto o pai inteiro ainda for o mesmo botao; assim
+         some o controle completo, e nao apenas o span que contem o texto */
+      while (pai && (pai.textContent || '').trim() === '⚡ OTIMIZAR'){
+        alvo = pai; pai = pai.parentNode;
       }
-      var alvo = (caixa && (caixa.textContent || '').trim() === '⚡ OTIMIZAR') ? caixa : el;
       if (_travado){ alvo.style.display = 'none'; return; }
       alvo.style.display = '';
       alvo.style.cursor = 'pointer';
@@ -1879,7 +2309,10 @@ JS_TELAS = r"""
     porTexto('×').forEach(function(el){
       if (el.dataset.hx !== undefined) return;
       el.style.cursor = 'pointer';
-      el.onclick = function(){ try{ fechar(); }catch(e){} };
+      el.onclick = function(){
+        window._T6ABA = 'motor'; window.ENC_MODO = 'motor';
+        try{ fechar(); }catch(e){}
+      };
     });
     /* o tecnico vira um select de verdade */
     var c = null; try{ c = _card(key); }catch(e){}
@@ -1942,6 +2375,32 @@ JS_TELAS = r"""
           xt.onclick = function(){ window.t6Tec(key, ''); };
           alvo.appendChild(xt);
         }
+        /* Tecnicos equivalentes: usa somente a lista medida pelo motor/tela.
+           Linhas antigas sem essa informacao permanecem sem sugestao. */
+        try{
+          var iguais = (typeof tecIguais === 'function') ? (tecIguais(c) || []) : (c.TECIG || []);
+          if (alvo.parentNode){
+            var sgTec = document.createElement('div');
+            sgTec.setAttribute('data-t6tecsug', '1');
+            sgTec.style.cssText = 'display:flex;flex-direction:column;gap:6px;margin-top:8px';
+            sgTec.innerHTML = '<span style="font-family:inherit;font-size:9.5px;letter-spacing:1.2px;color:var(--d17)">TÉCNICOS SUGERIDOS · MESMA NOTA</span>'
+              + '<div style="display:flex;gap:6px;flex-wrap:wrap;min-height:28px">'
+              + iguais.slice(0,5).map(function(n){ return '<span style="font-size:11.5px;padding:5px 9px;border-radius:7px;background:var(--d14);border:1px solid var(--d18);color:var(--d85)">' + esc(n) + '</span>'; }).join('')
+              + '</div>';
+            /* Fica dentro da secao TECNICO, antes da linha que inicia IMPETO.
+               `alvo.parentNode` e a coluna inteira; anexar no fim jogava as
+               sugestoes para baixo de todo o bloco de impeto. */
+            var titImp = porTexto('ÍMPETO')[0];
+            if (titImp && titImp.parentNode){
+              var ponto = titImp;
+              var ant = titImp.previousElementSibling;
+              if (ant && ((ant.getAttribute('style') || '').indexOf('border-top') >= 0)) ponto = ant;
+              titImp.parentNode.insertBefore(sgTec, ponto);
+            } else {
+              alvo.parentNode.appendChild(sgTec);
+            }
+          }
+        }catch(e){}
       }
     }
     /* ⛔ 19/08 — ARRASTAR A SUGESTAO PARA DENTRO DAS ADICIONADAS.
@@ -2044,7 +2503,7 @@ JS_TELAS = r"""
           try{ jaTem = (habsAtual(_cardAqui) || []); }catch(e){}
           var nat = ((_cardAqui && _cardAqui.fab) || []).concat((_cardAqui && _cardAqui.raras) || []);
           todasHab = Object.keys(HABEF).filter(function(n){
-            return jaTem.indexOf(n) < 0 && nat.indexOf(n) < 0; })
+            return jaTem.indexOf(n) < 0 && nat.indexOf(n) < 0 && !_ehEspecial(n); })
             .sort(function(x, y){ return x.localeCompare(y, 'pt'); });
         }catch(e){}
         if (todasHab.length){
@@ -2078,30 +2537,54 @@ JS_TELAS = r"""
        classe nenhuma, entao morreu junto com o desenho velho. */
     (function(){
       var velho = raiz.querySelector('[data-t6pede]');
-      if (velho) velho.remove();
-      var pos = window._SELPOS;
-      if (!pos) return;
+      var pos = window._T6SELPOS_FORCADA || window._SELPOS;
+      if (!pos){ if (velho) velho.remove(); return; }
       var c = null;
       try{ c = _card(key); }catch(e){}
       if (!c) return;
       var irm = [];
       try{
         var bb = String(c.id).split('@')[0];
-        irm = D.filter(function(x){ return x.id !== 'MOLDE' && String(x.id).split('@')[0] === bb; });
+        irm = _t6IrmasUnicas(c);
       }catch(e){ irm = [c]; }
       var fs = _funcsDaPos(pos, c, irm);
-      if (fs.length < 2) return;
+      if (fs.length < 2){ if (velho) velho.remove(); return; }
+      var botoesFn = todos('[data-fn]');
+      if (!botoesFn.length) return;
+      var listaFn = botoesFn[0].parentNode;
+      if (!listaFn) return;
+      listaFn.style.position = 'relative';
+      listaFn.style.isolation = 'isolate';
+      botoesFn.forEach(function(bt){
+        bt.style.pointerEvents = 'none';
+        bt.style.filter = 'brightness(.42) saturate(.55)';
+        bt.style.opacity = '.48';
+      });
+      /* Na ficha atual o painel ja veio no HTML. Basta ligar as escolhas. */
+      if (velho){
+        todos('[data-t6pickfn]').forEach(function(bt){
+          bt.onclick = function(ev){
+            if (ev){ ev.preventDefault(); ev.stopPropagation(); }
+            window._SELPOS = null; window._T6SELPOS_FORCADA = null; window._T6SELPOS_CARD = null;
+            window.t6AbreFuncao(bt.getAttribute('data-t6pickfn'));
+          };
+        });
+        return;
+      }
       var caixa = document.createElement('div');
       caixa.setAttribute('data-t6pede', '1');
-      caixa.style.cssText = 'margin:0 0 12px;padding:14px 15px;border-radius:12px;'
-        + 'background:var(--d75);border:1.5px solid var(--d25);box-shadow:0 10px 26px var(--d104)';
+      caixa.style.cssText = 'position:relative!important;z-index:999!important;width:100%;padding:16px 15px;'
+        + 'margin:0 0 10px;border-radius:12px;display:flex!important;flex-direction:column;'
+        + 'justify-content:flex-start;align-items:stretch;flex:0 0 auto;'
+        + 'background:rgba(8,18,13,.985);border:1.5px solid var(--d25);box-shadow:0 10px 26px var(--d104)';
       var tit = document.createElement('div');
       tit.style.cssText = 'font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.5px;color:var(--d25);margin-bottom:3px';
-      tit.textContent = _sig(pos) + ' — aqui ele faz ' + fs.length + ' funções';
+      tit.textContent = 'ESCOLHA A FUNÇÃO PARA ' + _sig(pos);
       var sub2 = document.createElement('div');
       sub2.style.cssText = 'font-size:12px;color:var(--d30);margin-bottom:11px';
-      sub2.textContent = 'cada uma tem build e pontuação própria. Escolha qual você quer ver:';
+      sub2.textContent = 'Cada função tem uma build diferente. Selecione qual você quer abrir:';
       var linha = document.createElement('div');
+      linha.setAttribute('data-t6controles-build', '1');
       linha.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap';
       fs.forEach(function(f){
         var alvo = null;
@@ -2112,21 +2595,33 @@ JS_TELAS = r"""
         b.style.cssText = 'display:flex;align-items:center;gap:9px;font-family:inherit;font-size:12px;'
           + 'font-weight:700;padding:9px 13px;border-radius:9px;cursor:pointer;'
           + 'background:var(--d14);border:1px solid var(--d31);color:var(--d1)';
-        b.innerHTML = '<span>' + esc(_nomeFn(f)) + '</span>'
+        var ligaFallback = alvo ? _estiloLigaNaPos(alvo, pos) : null;
+        var basFallback = (ligaFallback !== null)
+          ? '<small style="font-family:inherit;font-size:8px;font-weight:800;letter-spacing:.6px;'
+            + 'padding:2px 6px;border-radius:4px;background:var(--d14);border:1px solid var(--d31);'
+            + 'color:' + (ligaFallback ? 'var(--d25)' : 'var(--d17)') + '">'
+            + (ligaFallback ? 'COM ESTILO' : 'BÁSICO') + '</small>' : '';
+        b.innerHTML = '<span style="display:flex;align-items:center;gap:7px">'
+          + '<span>' + esc(_nomeFn(f)) + '</span>' + basFallback + '</span>'
           + '<b style="font-family:inherit;font-weight:800;color:var(--d25)">' + n2(nt) + '</b>';
-        b.onclick = function(){
+        b.onclick = function(ev){
+          if (ev){ ev.preventDefault(); ev.stopPropagation(); }
           window._SELPOS = null;
-          try{ reabrir((alvo ? alvo.id : c.id) + '|' + f); }catch(e){}
+          window._T6SELPOS_FORCADA = null;
+          window._T6SELPOS_CARD = null;
+          var destino = (alvo ? alvo.id : c.id) + '|' + (alvo ? alvo.tipo : f);
+          window.t6AbreFuncao(destino);
         };
         linha.appendChild(b);
       });
       caixa.appendChild(tit); caixa.appendChild(sub2); caixa.appendChild(linha);
-      if (raiz.firstChild) raiz.insertBefore(caixa, raiz.firstChild);
-      else raiz.appendChild(caixa);
+      /* Em fluxo normal, antes da primeira funcao: nao depende da geometria
+         do molde nem pode escapar para fora da area visivel. */
+      listaFn.insertBefore(caixa, botoesFn[0]);
     })();
 
     /* qual aba esta aberta — a pilula acesa */
-    [['⚡ MÁXIMO POSSÍVEL', 'motor'], ['⚙ FAZER MINHA BUILD', 'insumos']]
+    [['⚡ MÁXIMO POSSÍVEL', 'motor'], ['⚙ FAZER MINHA BUILD', 'livre']]
       .forEach(function(par){
         porTexto(par[0]).forEach(function(el){
           var on = (_modo === par[1]);
@@ -2182,8 +2677,10 @@ JS_TELAS = r"""
 
       var bar = document.createElement('div');
       bar.setAttribute('data-t6bld', '1');
-      bar.style.cssText = 'display:flex;flex-direction:column;gap:9px;margin:0 0 12px;'
-        + 'padding:13px 15px;border-radius:12px;background:var(--d75);border:1px solid var(--d31)';
+      /* O aviso de salvamento e apenas uma legenda. O bloco nao recebe fundo,
+         borda nem moldura: somente os controles continuam parecendo botoes. */
+      bar.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin:0 0 12px;'
+        + 'padding:0;background:transparent;border:0';
 
       var linha = document.createElement('div');
       linha.style.cssText = 'display:flex;gap:8px;align-items:center;flex-wrap:wrap';
@@ -2204,17 +2701,36 @@ JS_TELAS = r"""
       bCopiar.title = 'traz tudo do MÁXIMO POSSÍVEL pra cá; daqui você vai tirando o que não tem';
       bCopiar.style.cssText = E_BT + 'background:var(--d14);color:var(--d8)';
       bCopiar.onclick = function(){
+        window._T6_COPIOU_MAX = window._T6_COPIOU_MAX || {};
+        window._T6_COPIOU_MAX[idb] = 1;
         try{ if (typeof bldCopiaDoMaximo === 'function') return bldCopiaDoMaximo(); }catch(e){}
         window.t6AvisoBar(raiz, 'não consegui copiar');
       };
 
+      var bLimpar = document.createElement('button');
+      bLimpar.textContent = 'LIMPAR TUDO';
+      bLimpar.title = 'limpa barras, técnico, ímpeto e habilidades preenchidos por você';
+      bLimpar.style.cssText = E_BT + 'background:transparent;color:var(--d17)';
+      bLimpar.onclick = function(){
+        try{
+          /* Usa exatamente a mesma porta de entrada da aba manual. O caminho
+             antigo chamava `aplicaNaTela`, que reaproveitava caches e podia
+             deixar barras/nota/insumos do maximo na tela. */
+          if (typeof window.t6AbreLivreZerado === 'function'){
+            window.t6AbreLivreZerado(key);
+            return;
+          }
+          throw new Error('reset da carta-base indisponivel');
+        }catch(e){ window.t6AvisoBar(raiz, 'não consegui limpar'); }
+      };
+
       /* ⛔ o OTIMIZAR nao se repete aqui: ele e o botao grande do fim do
          bloco das barras, e ja usa os insumos que estao na tela. */
-      linha.appendChild(bSalvar); linha.appendChild(bCopiar);
+      linha.appendChild(bSalvar); linha.appendChild(bCopiar); linha.appendChild(bLimpar);
       bar.appendChild(linha);
 
       var txt = document.createElement('div');
-      txt.style.cssText = 'font-size:11.5px;color:var(--d30)';
+      txt.style.cssText = 'font-size:11.5px;line-height:1.35;color:var(--d30);padding:1px 2px';
       txt.innerHTML = 'vai salvar como <b style="color:var(--d1)">'
         + esc(_nomeFn(c ? c.tipo : '')) + '</b> · '
         + salvas.length + ' de ' + TETO + ' builds guardadas desta carta';
@@ -2253,9 +2769,10 @@ JS_TELAS = r"""
       }
 
       if (botaoOti && botaoOti.parentNode){
-        /* o OTIMIZAR encolhe e a linha passa a ter os tres */
+        /* o OTIMIZAR encolhe e a linha recebe todos os controles da build. */
         var linhaOti = document.createElement('div');
         linhaOti.setAttribute('data-t6bld', '1');
+        linhaOti.setAttribute('data-t6controles-build', '1');
         linhaOti.style.cssText = 'display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;margin-top:10px';
         botaoOti.parentNode.insertBefore(linhaOti, botaoOti);
         botaoOti.style.width = 'auto';
@@ -2264,8 +2781,10 @@ JS_TELAS = r"""
         linhaOti.appendChild(botaoOti);
         bSalvar.style.flex = '0 0 auto';
         bCopiar.style.flex = '0 0 auto';
+        bLimpar.style.flex = '0 0 auto';
         linhaOti.appendChild(bSalvar);
         linhaOti.appendChild(bCopiar);
+        linhaOti.appendChild(bLimpar);
         /* o texto e as builds guardadas ficam logo abaixo da linha */
         bar.removeChild(linha);
         bar.style.marginTop = '9px';
@@ -2301,7 +2820,26 @@ JS_TELAS = r"""
       };
     });
 
-    /* o seletor do impeto ADICIONADO — so na aba FAZER MINHA BUILD */
+    /* o seletor do impeto ADICIONADO — so na aba FAZER MINHA BUILD.
+       Algumas variantes do molde eliminam o `data-impsel` vazio ao montar o
+       cartao. Nesse caso, recria-se a ancora dentro do proprio cartao de
+       "vaga livre"; o usuario nunca fica apenas com a legenda sem controle. */
+    if (!_travado && !todos('[data-impsel]').length){
+      var vagaImp = porTexto('vaga livre')[0];
+      if (vagaImp){
+        var cardImp = vagaImp;
+        for (var vi=0; vi<4 && cardImp.parentNode; vi++){
+          if ((cardImp.getAttribute && (cardImp.getAttribute('style')||'').indexOf('border-radius:12px') >= 0)) break;
+          cardImp = cardImp.parentNode;
+        }
+        if (cardImp && cardImp.appendChild){
+          var ancoraImp = document.createElement('div');
+          ancoraImp.setAttribute('data-impsel','1');
+          ancoraImp.style.cssText = 'display:flex;align-items:center;gap:8px;margin-top:7px;width:100%';
+          cardImp.appendChild(ancoraImp);
+        }
+      }
+    }
     todos('[data-impsel]').forEach(function(el){
       el.innerHTML = '';
       if (_travado){
