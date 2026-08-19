@@ -1012,14 +1012,31 @@ JS_TELAS = r"""
           for (var di = 0; di < D.length; di++){
             var ja = D[di];
             if (ja && ja.id !== 'MOLDE' && String(ja.id).split('@')[0] === xb
-                && _mesmaFn(ja.tipo, x.tipo)){ repetida = true; break; }
+                && _mesmaFn(ja.tipo, x.tipo)){
+              try{
+                if(_notaDoMotor(x)>_notaDoMotor(ja)){ D[di]=x; entrou++; }
+              }catch(e){}
+              repetida = true; break;
+            }
           }
           if (!repetida){ D.push(x); entrou++; }
         });
         window._T6_CARGA_CARD[base] = 'pronto';
         if (entrou){
           try{ if (typeof _pos_D === 'function') _pos_D(); }catch(e){}
-          try{ reabrir(key); }catch(e){ try{ abrir(key); }catch(e2){} }
+          var destinoCarga = key, abriuInicial = false;
+          try{
+            if (window._T6_INICIAL_CARD && window._T6_INICIAL_CARD[base]){
+              var ini = _t6InicialDaPosicaoNativa(c);
+              if (ini) destinoCarga = ini.id + '|' + ini.tipo;
+              delete window._T6_INICIAL_CARD[base];
+              abriuInicial = !!ini;
+            }
+          }catch(e){}
+          try{
+            if(abriuInicial && typeof window.t6AbreFuncao==='function') window.t6AbreFuncao(destinoCarga);
+            else reabrir(destinoCarga);
+          }catch(e){ try{ abrir(destinoCarga); }catch(e2){} }
         }
       })
       .catch(function(){ window._T6_CARGA_CARD[base] = 'erro'; });
@@ -1036,6 +1053,10 @@ JS_TELAS = r"""
       var existe = false;
       for (var j = 0; j < out.length; j++){
         if (_mesmaFn(out[j].tipo, x.tipo) || _nomeFn(out[j].tipo) === _nomeFn(x.tipo)){
+          /* Linha antiga e linha renomeada podem coexistir no banco. Para a
+             mesma funcao exibida, conserva deterministicamente a de maior
+             nota do motor — nunca a que chegou primeiro pela paginacao. */
+          try{ if(_notaDoMotor(x)>_notaDoMotor(out[j])) out[j]=x; }catch(e){}
           existe = true; break;
         }
       }
@@ -1043,6 +1064,25 @@ JS_TELAS = r"""
     }
     return out.length ? out : [c];
   }
+
+  /* A primeira funcao da pagina e a MAIS FORTE entre as que correspondem a
+     posicao nativa do card. A busca pode ter sido aberta por qualquer linha;
+     ela nao decide a funcao inicial. */
+  function _t6InicialDaPosicaoNativa(c){
+    if(!c) return null;
+    var nat=c.np||'';
+    try{ if(typeof npFixo==='function') nat=npFixo(c)||nat; }catch(e){}
+    var irm=_t6IrmasUnicas(c), candidatas=[];
+    for(var i=0;i<irm.length;i++){
+      var ps=_posDaFuncao(irm[i].tipo,c);
+      if(!ps.length) ps=_posFn(irm[i]);
+      if(ps.indexOf(nat)>=0) candidatas.push(irm[i]);
+    }
+    if(!candidatas.length) return null;
+    candidatas.sort(function(a,b){ return _notaDoMotor(b)-_notaDoMotor(a); });
+    return candidatas[0];
+  }
+  window.t6InicialDaPosicaoNativa=_t6InicialDaPosicaoNativa;
 
   window.t6TelaFicha = function(key){
     if (!M || !M.ficha || !M.ficha.corpo) return '';
@@ -1166,8 +1206,10 @@ JS_TELAS = r"""
       if (!posicoesFn.length) posicoesFn = _posFn(x);
       var estadosEstilo = posicoesFn.map(function(p){ return _estiloLigaNaPos(x, p); });
       var conhecidos = estadosEstilo.filter(function(v){ return v !== null; });
-      var bas = conhecidos.length > 0 && conhecidos.every(function(v){ return v === false; });
-      var misturaEstilo = conhecidos.indexOf(true) >= 0 && conhecidos.indexOf(false) >= 0;
+      /* BÁSICO e uma ETIQUETA da funcao, nunca um texto dentro do botao da
+         posicao. Se ao menos uma das posicoes nao ativa o estilo, a etiqueta
+         aparece uma vez na coluna propria. "COM ESTILO" nao existe na ficha. */
+      var bas = conhecidos.indexOf(false) >= 0;
       /* a sigla e a posicao que ESTE card exerce nesta funcao */
       var sg = _sigFn(x, c);
       return {n: esc(_nomeFn(x.tipo)),
@@ -1192,18 +1234,14 @@ JS_TELAS = r"""
            O `pos` deixa de ser texto e vira marcacao — por isso o molde
            precisa imprimir sem escapar (o `tpl` ja aceita, e o conteudo e
            gerado aqui, nao vem de fora). */
-        pos: posicoesFn.map(function(p, pi){
-          var g = _sigla(p), ligaAqui = estadosEstilo[pi];
-          var estadoAqui = misturaEstilo && ligaAqui !== null
-            ? '<small style="display:block;margin-top:1px;font-size:6.5px;line-height:1;letter-spacing:.25px;'
-              + 'color:' + (ligaAqui ? 'var(--d25)' : 'var(--d17)') + '">'
-              + (ligaAqui ? 'COM ESTILO' : 'BÁSICO') + '</small>' : '';
+        pos: posicoesFn.map(function(p){
+          var g = _sigla(p);
           return '<b style="display:block;font-family:inherit;font-size:9px;'
                + 'font-weight:800;letter-spacing:.4px;padding:2px 0;border-radius:5px;'
                + 'text-align:center;background:'
                + (aqui ? 'rgba(255,255,255,.14)' : 'var(--d14)')
                + ';color:' + (aqui ? 'var(--d117)' : 'var(--d45)') + '">'
-               + esc(g) + estadoAqui + '</b>';
+               + esc(g) + '</b>';
         }).join(''),
         posSt: 'display:flex;flex-direction:column;gap:3px;flex:0 0 78px',
         /* ⛔ TODA pontuacao do site tem DUAS casas. Ordem do Luis, 19/08. */
@@ -1238,12 +1276,13 @@ JS_TELAS = r"""
         var al = null;
         for (var ei = 0; ei < irm.length; ei++) if (_mesmaFn(irm[ei].tipo, f)){ al = irm[ei]; break; }
         if (!al) return;
-        var ligaEscolha = _estiloLigaNaPos(al, _sel);
-        var basEscolha = (ligaEscolha !== null)
+        var psEscolha = _posDaFuncao(al.tipo, c);
+        if (!psEscolha.length) psEscolha = _posFn(al);
+        var basEscolhaTem = psEscolha.some(function(p){ return _estiloLigaNaPos(al,p) === false; });
+        var basEscolha = basEscolhaTem
           ? '<small style="font-family:inherit;font-size:8px;font-weight:800;letter-spacing:.6px;'
             + 'padding:2px 6px;border-radius:4px;background:var(--d14);border:1px solid var(--d31);'
-            + 'color:' + (ligaEscolha ? 'var(--d25)' : 'var(--d17)') + '">'
-            + (ligaEscolha ? 'COM ESTILO' : 'BÁSICO') + '</small>' : '';
+            + 'color:var(--d17)">BÁSICO</small>' : '';
         opHtml += '<button data-t6pickfn="' + esc(al.id + '|' + al.tipo) + '" style="'
           + 'display:flex;align-items:center;justify-content:space-between;gap:10px;'
           + 'font-family:inherit;font-size:12px;font-weight:700;padding:10px 12px;'
@@ -2152,6 +2191,23 @@ JS_TELAS = r"""
     var _modo = window.t6Modo(), _travado = (_modo !== 'livre');
     var _cardAqui = null; try{ _cardAqui = _card(key); }catch(e){}
 
+    /* Na pagina, a FUNCAO manda na build. A ordem aprovada da coluna e:
+       identificacao, pontuacao, funcoes e somente depois o campinho. Nao se
+       recria nenhum bloco nem se muda seu desenho; apenas inverte os dois
+       blocos ja existentes. */
+    try{
+      var primeiraFnOrdem = raiz.querySelector('[data-fn]');
+      var primeiraPosOrdem = raiz.querySelector('[data-pos]');
+      if (primeiraFnOrdem && primeiraPosOrdem){
+        var blocoFnOrdem = primeiraFnOrdem.parentNode;
+        var blocoCampoOrdem = primeiraPosOrdem;
+        while (blocoCampoOrdem.parentNode && blocoCampoOrdem.parentNode !== blocoFnOrdem.parentNode)
+          blocoCampoOrdem = blocoCampoOrdem.parentNode;
+        if (blocoFnOrdem.parentNode && blocoCampoOrdem.parentNode === blocoFnOrdem.parentNode)
+          blocoFnOrdem.parentNode.insertBefore(blocoFnOrdem, blocoCampoOrdem);
+      }
+    }catch(e){}
+
     /* ⛔ 19/08 — A BARRA VOLTA A SER ARRASTAVEL.
        Na casca antiga a trilha era um `<input type=range>` ligado no `setBar`.
        O molde da designer desenha a trilha como dois elementos, entao o arrasto
@@ -2595,12 +2651,15 @@ JS_TELAS = r"""
         b.style.cssText = 'display:flex;align-items:center;gap:9px;font-family:inherit;font-size:12px;'
           + 'font-weight:700;padding:9px 13px;border-radius:9px;cursor:pointer;'
           + 'background:var(--d14);border:1px solid var(--d31);color:var(--d1)';
-        var ligaFallback = alvo ? _estiloLigaNaPos(alvo, pos) : null;
-        var basFallback = (ligaFallback !== null)
+        var psFallback = alvo ? _posDaFuncao(alvo.tipo, c) : [];
+        if (alvo && !psFallback.length) psFallback = _posFn(alvo);
+        var basFallbackTem = alvo && psFallback.some(function(pp){
+          return _estiloLigaNaPos(alvo, pp) === false;
+        });
+        var basFallback = basFallbackTem
           ? '<small style="font-family:inherit;font-size:8px;font-weight:800;letter-spacing:.6px;'
             + 'padding:2px 6px;border-radius:4px;background:var(--d14);border:1px solid var(--d31);'
-            + 'color:' + (ligaFallback ? 'var(--d25)' : 'var(--d17)') + '">'
-            + (ligaFallback ? 'COM ESTILO' : 'BÁSICO') + '</small>' : '';
+            + 'color:var(--d17)">BÁSICO</small>' : '';
         b.innerHTML = '<span style="display:flex;align-items:center;gap:7px">'
           + '<span>' + esc(_nomeFn(f)) + '</span>' + basFallback + '</span>'
           + '<b style="font-family:inherit;font-weight:800;color:var(--d25)">' + n2(nt) + '</b>';
@@ -2944,7 +3003,22 @@ JS_TELAS = r"""
     if(window._t6AbrirPagina) return;
     window._t6AbrirPagina=window.abrir;
     window.abrir=function(key){
-      var r=window._t6AbrirPagina.apply(this,arguments);
+      /* Ao sair da home, a linha clicada serve para identificar o CARD, nao
+         para escolher sua funcao inicial. A pagina comeca na melhor funcao
+         ligada a posicao nativa. URL direta/F5 conserva a funcao da URL. */
+      try{
+        var qp=new URLSearchParams(location.search);
+        var entrando=!document.documentElement.getAttribute('data-t6pagina') && !qp.get('card');
+        if(entrando){
+          var pc=partes(key), base=String(pc[0]).split('@')[0], cc=_card(key);
+          window._T6_INICIAL_CARD=window._T6_INICIAL_CARD||{};
+          window._T6_INICIAL_CARD[base]=1;
+          var inicial=(typeof window.t6InicialDaPosicaoNativa==='function')
+            ? window.t6InicialDaPosicaoNativa(cc) : null;
+          if(inicial) key=inicial.id+'|'+inicial.tipo;
+        }
+      }catch(e){}
+      var r=window._t6AbrirPagina.call(this,key);
       ativa(key);
       return r;
     };
