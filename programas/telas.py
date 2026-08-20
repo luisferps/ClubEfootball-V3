@@ -39,12 +39,18 @@ CSS_TELAS = ("""
    sumiam TODAS e a tela saia sem nada. O escuro passa a ser o piso. */
 :root{
 """ + _vars(TOK_ESCURO) + """
+ --t6-hire-any-fg:#63efa8;--t6-hire-any-bg:rgba(15,157,99,.13);--t6-hire-any-bd:rgba(99,239,168,.38);
+ --t6-hire-cheap-fg:#f0a531;--t6-hire-cheap-bg:rgba(245,166,53,.10);--t6-hire-cheap-bd:rgba(245,166,53,.46);
+ --t6-hire-free-fg:#b8c4bd;--t6-hire-free-bg:rgba(184,196,189,.07);--t6-hire-free-bd:rgba(184,196,189,.25);
 }
 html[data-tema=escuro]{
 """ + _vars(TOK_ESCURO) + """
 }
 html[data-tema=claro]{
 """ + _vars(TOK_CLARO) + """
+ --t6-hire-any-fg:#075c3a;--t6-hire-any-bg:#d9f3e5;--t6-hire-any-bd:#259565;
+ --t6-hire-cheap-fg:#714500;--t6-hire-cheap-bg:#fff0c9;--t6-hire-cheap-bd:#c98200;
+ --t6-hire-free-fg:#34453d;--t6-hire-free-bg:#e7ede9;--t6-hire-free-bd:#82968b;
 }
 /* Contraste funcional no tema claro. Os controles continuam discretos, mas
    nao podem desaparecer sobre o fundo claro. */
@@ -85,10 +91,35 @@ html[data-tema=claro] .t6ficha [data-campo=fora]{
  .t6tela [style*="grid-template-columns:repeat(2,minmax(0,1fr))"],
  .t6tela [style*="grid-template-columns:repeat(3,minmax(0,1fr))"],
  .t6tela [style*="grid-template-columns:repeat(4,minmax(0,1fr))"],
+ .t6tela [style*="grid-template-columns:repeat(12,minmax(0,1fr))"],
  .t6tela [style*="grid-template-columns:1fr 1fr"],
  .t6tela [style*="grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)"],
  .t6tela [style*="grid-template-columns:404px minmax(0,1fr)"]{
   grid-template-columns:1fr!important}
+ .t6tela [data-t6boxcard]{grid-column:1 / -1!important;width:100%!important}
+ .t6tela [data-t6boxlinha]{
+  position:relative!important;grid-template-columns:64px minmax(0,1fr) auto!important;
+  align-items:start!important;gap:11px!important}
+ .t6tela [data-t6boxlinha]>span:first-child{display:none!important}
+ .t6tela [data-t6boxlinha] [data-t6boxfoto]{
+  grid-column:1!important;grid-row:1 / span 2!important;width:64px!important;
+  height:auto!important;min-height:112px!important;align-self:stretch!important}
+ .t6tela [data-t6boxlinha] [data-t6boxinfo]{grid-column:2;grid-row:1;min-width:0!important}
+ .t6tela [data-t6boxlinha] [data-t6score]{
+  grid-column:3!important;grid-row:1 / span 2!important;display:flex!important;
+  flex-direction:column!important;align-items:flex-end!important;justify-content:flex-start!important;
+  gap:4px!important;margin-top:0!important;text-align:right!important}
+ .t6tela [data-t6boxlinha] [data-t6score] [data-t6veredito]{
+  grid-column:auto!important;justify-self:auto!important;align-self:flex-end!important}
+ .t6tela [data-t6boxinfo]>b,.t6tela [data-t6boxinfo]>em{overflow:visible!important;text-overflow:clip!important}
+ .t6tela [data-t6boxdetcab]{
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px 12px!important}
+ .t6tela [data-t6boxdetcab] [data-t6voltabox]{grid-column:1 / -1!important;justify-self:start!important}
+ .t6tela [data-t6boxdetcab] h2{
+  grid-column:1!important;min-width:0!important;white-space:nowrap!important;
+  overflow:hidden!important;text-overflow:ellipsis!important}
+ .t6tela [data-t6boxdetcab] [data-t6boxq]{
+  grid-column:2!important;margin-left:0!important;justify-self:end!important;text-align:right!important}
  .t6tela [style*="grid-template-columns:repeat(6,minmax(0,1fr))"]{
   grid-template-columns:repeat(2,minmax(0,1fr))!important}
  .t6tela [style*="padding:22px"]{padding:14px!important}
@@ -226,10 +257,29 @@ JS_TELAS = r"""
   function estiloPct(p){
     return FONTE_PCT + (p >= 99.5 ? 'var(--d8)' : (p >= 95 ? 'var(--d55)' : 'var(--d13)'));
   }
+  function siglaTela(p){
+    var mapa = {GK:'GO', MC:'MLG', MO:'MAT', PE:'PTE', PD:'PTD'};
+    p = String(p || '').toUpperCase();
+    return mapa[p] || p;
+  }
+  function estiloTela(n){
+    var mapa = {
+      'Jog. de infiltração':'Jogador de infiltração',
+      'Jog. de Infiltração':'Jogador de infiltração'
+    };
+    n = String(n || '');
+    return mapa[n] || n;
+  }
+  function destacaPontosBox(molde){
+    return molde.replace(
+      '<b style="{{ c.pctSt }}">{{ c.pct }}%</b>\n<em style="font-style:normal;font-family:inherit;font-size:10px;color:var(--d13)">{{ c.pts }} pts</em>',
+      '<b style="font-family:inherit;font-size:19px;font-weight:700;letter-spacing:-.4px;color:var(--d25)">{{ c.pts }}</b>\n<em style="font-style:normal;font-family:inherit;font-size:10px;color:var(--d13);white-space:nowrap">Recomendação: {{ c.pct }}%</em>'
+    );
+  }
   window.t6card = function(c, i){
     var p = pct(c);
-    return {r: (i + 1) + 'º', nome: esc(c.nome), est: esc(c.modelo || ''),
-            fn: esc(c.tipo), pos: esc(c.np || c.pos || ''),
+    return {r: (i + 1) + 'º', nome: esc(c.nome), est: esc(estiloTela(c.modelo || '')),
+            fn: esc(c.tipo), pos: esc(siglaTela(c.np || c.pos || '')),
             pct: n2(p), pctSt: estiloPct(p), pts: n2(nota(c)),
             k: esc(c.id + '|' + c.tipo)};
   };
@@ -241,6 +291,49 @@ JS_TELAS = r"""
       (cx[c.pacote] = cx[c.pacote] || []).push(c);
     }
     return cx;
+  };
+  /* Boxes atuais nao dependem mais de o carregador geral atravessar todas as
+     avaliacoes. A relacao PACOTE ja informa exatamente quais cards pertencem
+     às campanhas no ar; busca essas linhas primeiro e deixa o restante seguir
+     em segundo plano. */
+  window.t6CarregaBoxesPrimeiro = function(){
+    if(window._t6boxesCargaRapida) return;
+    var ativas={}, ids=[];
+    try{
+      (BOXATIVA||[]).forEach(function(n){ativas[n]=1;});
+      Object.keys(PACOTE||{}).forEach(function(id){if(ativas[PACOTE[id]])ids.push(String(id));});
+    }catch(e){ return; }
+    if(!ids.length) return;
+    window._t6boxesCargaRapida=1;
+    var lista='("'+ids.join('","')+'")';
+    var baseUrl='https://trqqpsnafpbudtvvicch.supabase.co/rest/v1/tela_encaixe';
+    var url=baseUrl
+      +'?select=linha&card_id=in.'+encodeURIComponent(lista)
+      +'&forca=not.is.null&limit=5000';
+    /* A recomendacao precisa do lider oficial de cada funcao. Buscar somente
+       os cards visiveis transforma o melhor DA TELA em 100%. As linhas com
+       maior `forca` sao a ancora persistida pelo banco para conter todos os
+       lideres; chegam junto com as boxes e nunca dependem da ordem da tela. */
+    var urlTop=baseUrl+'?select=linha&order=forca.desc.nullslast&limit=2000';
+    var chave='sb_publishable_XTKGboY9RyYiirPiIsWMhw_P8B51cHj';
+    var cab={apikey:chave,Authorization:'Bearer '+chave};
+    Promise.all([urlTop,url].map(function(u){
+      return fetch(u,{headers:cab}).then(function(r){
+        if(!r.ok)throw new Error('HTTP '+r.status);return r.json();
+      });
+    })).then(function(partes){
+       var rows=(partes[0]||[]).concat(partes[1]||[]);
+       var tem={};
+       (D||[]).forEach(function(c){if(c&&c.id!=='MOLDE')tem[String(c.id).split('@')[0]+'|'+c.tipo]=1;});
+       (rows||[]).forEach(function(r){
+         var c=r&&r.linha;if(!c||c.id===undefined||c.tipo===undefined)return;
+         var k=String(c.id).split('@')[0]+'|'+c.tipo;if(!tem[k]){tem[k]=1;D.push(c);}
+       });
+       try{if(typeof window._pos_D==='function')window._pos_D();}catch(e){}
+       /* Qualquer topo memorizado antes da ancora chegar e provisório. */
+       try{if(typeof _TOPO!=='undefined')_TOPO={};}catch(e){}
+       try{if(window._t6aba==='boxatual')window.t6Painel('boxatual');}catch(e){}
+     }).catch(function(){window._t6boxesCargaRapida=0;});
   };
   /* ---------------- quem manda no painel ----------------
      ⛔ A CAMADA VELHA SAI DE CENA. Assim que este arquivo existe, o desenho
@@ -275,16 +368,12 @@ JS_TELAS = r"""
     }finally{
       window._t6pintando = false;       /* SOLTA SEMPRE */
     }
-    if (!h || String(h).replace(/<[^>]*>/g,'').trim().length < 3){
-      /* a tela nova nao tinha o que mostrar (ainda carregando, ou erro):
-         devolve o desenho antigo em vez de deixar o painel vazio */
-      if (typeof window._t6homeAntigo === 'function'){
-        try{ window._t6homeAntigo.call(window); return; }catch(e){}
-      }
-      return;                            /* nao apaga o que ja esta na tela */
-    }
+    if (!h || String(h).replace(/<[^>]*>/g,'').trim().length < 3) return;
     w.innerHTML = '<div class="t6tela">' + h + '</div>';
     try{ window.t6Cliques(w); }catch(e){}
+    /* Libera o primeiro quadro somente depois que a camada oficial terminou.
+       Assim nenhuma estrutura antiga aparece durante a inicializacao. */
+    document.documentElement.removeAttribute('data-t6boot');
   };
   /* os cliques entram DEPOIS, sem mexer na marcacao dela: as linhas de card
      aparecem na mesma ordem em que foram montadas, entao basta caminhar. */
@@ -295,6 +384,16 @@ JS_TELAS = r"""
       el.onclick = function(ev){ ev.stopPropagation();
         try{ abrir(el.dataset.k); }catch(e){} };
     });
+    var troca = raiz.querySelector('[data-t6boxalternar]');
+    if (troca) troca.onclick = function(){
+      window.t6Painel(window._t6aba === 'boxant' ? 'boxatual' : 'boxant');
+      try{ window.scrollTo(0, 0); }catch(e){}
+    };
+    raiz.querySelectorAll('[data-t6abrirbox]').forEach(function(el){
+      el.onclick=function(ev){ ev.stopPropagation(); window.t6AbreBox(el.dataset.t6abrirbox); };
+    });
+    var voltaBox=raiz.querySelector('[data-t6voltabox]');
+    if(voltaBox) voltaBox.onclick=function(){ window.t6Painel('boxatual'); window.scrollTo(0,0); };
   };
 
   /* ⛔ QUEM ESCREVE O PAINEL PASSA A SER ESTA CAMADA. O homeRender da casca
@@ -304,7 +403,6 @@ JS_TELAS = r"""
      a rodar ganha — foi o que fez a tela piscar antes. */
   if (typeof window.homeRender === 'function'){
     var _hr = window.homeRender;
-    window._t6homeAntigo = _hr;          /* a rede de seguranca do t6Painel */
     window.homeRender = function(){
       if (window._t6aba && window.t6Painel){ window.t6Painel(window._t6aba); return; }
       return _hr.apply(this, arguments);
@@ -313,7 +411,12 @@ JS_TELAS = r"""
   /* ⛔ A TELA JA ABRE NO DESENHO NOVO. Sem esta linha o primeiro desenho era o
      antigo e so trocava depois do primeiro clique numa aba — que foi
      exatamente o "boa parte do site ta operando com design antigo". */
-  if (!window._t6aba) window._t6aba = 'inicio';
+  if (!window._t6aba){
+    var _t6paginaInicial='';
+    try{ _t6paginaInicial=new URLSearchParams(location.search).get('pagina')||''; }catch(e){}
+    window._t6aba = _t6paginaInicial==='boxes-atuais' ? 'boxatual' : 'inicio';
+  }
+  if(window._t6aba==='boxatual') setTimeout(window.t6CarregaBoxesPrimeiro,0);
 
   /* ⛔ 19/08 — O VIGIA DA TELA EM BRANCO.
      Na maquina do Luis o painel ficou vazio e nunca mais voltou. A causa foi
@@ -328,7 +431,6 @@ JS_TELAS = r"""
       if (window._t6pintando){ window._t6pintando = false; }  /* destrava */
       if (window.t6Painel) window.t6Painel(window._t6aba || 'inicio');
       if ((w.innerText || '').trim().length > 2) return;
-      if (typeof window._t6homeAntigo === 'function') window._t6homeAntigo.call(window);
     }catch(e){}
   }, 1500);
 
@@ -342,34 +444,122 @@ JS_TELAS = r"""
     var nomes = Object.keys(cx).filter(function(n){
       return anteriores ? !ativas[n] : !!ativas[n];
     });
+    /* Nunca apresenta uma lista parcial como se estivesse pronta. A primeira
+       leva do banco pode conhecer apenas duas boxes; a tela aguarda a leva
+       completa e o redesenho final libera todas de uma vez. */
+    var esperadas = 0;
+    try{ esperadas = (BOXATIVA || []).length; }catch(e){}
+    if (!anteriores && esperadas && nomes.length < esperadas){
+      return '<div style="min-height:360px;display:flex;align-items:center;justify-content:center;'
+           + 'font-size:13px;color:var(--d13)">Carregando boxes atuais…</div>';
+    }
     /* anteriores: da mais nova para a mais velha, pela data que o historico guarda */
     function quando(n){
       try{ return (BOXHIST[n] && BOXHIST[n].visto) || (BOXDT && BOXDT[n]) || ''; }
       catch(e){ return ''; }
     }
+    function melhorPct(n){
+      var cs = cx[n] || [], melhor = -Infinity;
+      for (var i = 0; i < cs.length; i++){
+        var p = pct(cs[i]);
+        if (isFinite(p) && p > melhor) melhor = p;
+      }
+      return melhor;
+    }
     if (anteriores) nomes.sort(function(a, b){ return (quando(b) || '').localeCompare(quando(a) || ''); });
-    else nomes.sort(function(a, b){ return (cx[b] || []).length - (cx[a] || []).length; });
-    var quantas = window._t6todasBoxes ? nomes.length : (anteriores ? 6 : 4);
-    var dados = {boxesAnt: nomes.slice(0, quantas).map(function(n){
+    else nomes.sort(function(a, b){
+      return melhorPct(b) - melhorPct(a) || a.localeCompare(b, 'pt-BR');
+    });
+    /* Boxes atuais sempre aparecem completas. O corte permanece apenas no
+       historico, onde o usuario ainda pode pedir para ver todas. */
+    var quantas = anteriores ? (window._t6todasBoxes ? nomes.length : 6) : nomes.length;
+    var dados = {boxesAnt: nomes.slice(0, quantas).map(function(n, idx){
       var cs = cx[n] || [];
-      return {n: esc(n), q: cs.length + ' card' + (cs.length === 1 ? '' : 's'),
-              cards: window.t6Melhores(cs, 3).map(window.t6card)};
+      var destaque = !anteriores && idx < 2
+        && !(window.matchMedia && window.matchMedia('(max-width:820px)').matches);
+      var todos = window.t6Melhores(cs, 9999);
+      var cards = todos.slice(0, 3).map(window.t6cardBox);
+      cards.forEach(function(c){
+        c.fotoTam = destaque ? 'width:58px;height:76px;' : 'width:38px;height:50px;';
+        c.rowSt = destaque
+          ? 'display:flex;align-items:center;gap:11px;'
+          : 'display:grid;grid-template-columns:16px 38px minmax(0,1fr);gap:8px;align-items:center;';
+        c.scoreSt = destaque
+          ? 'display:flex;flex-direction:column;align-items:flex-end;gap:3px;'
+          : 'grid-column:2 / 4;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 8px;align-items:center;margin-top:-3px;';
+        if (!destaque){
+          c.vSt += ';grid-column:1 / 3;justify-self:end';
+        }
+      });
+      return {n: esc(n), nomeCru:n, total:todos.length,
+              q: todos.length + ' card' + (todos.length === 1 ? '' : 's'),
+              colSt: !anteriores ? ('grid-column:span ' + (destaque ? 6 : 4) + ';') : '',
+              cards: cards};
     })};
-    /* ⛔ o data-k entra no molde ANTES de preencher, na linha do card. E o
-       unico acrescimo a marcacao dela — sem ele nao da para abrir a ficha. */
-    var molde = M.boxes.corpo.replace(
-      '<div style="display:flex;align-items:center;gap:11px">',
-      '<div data-k="{{ c.k }}" style="display:flex;align-items:center;gap:11px">');
-    var h = tpl(molde, dados);
+    /* Esta pagina nao passa mais pelo molde antigo. As substituicoes de texto
+       eram frageis: pequenas diferencas no molde faziam pontos e recomendacao
+       sumirem apenas nas caixas compactas. Uma unica montagem agora entrega o
+       HTML final e conserva os mesmos dados, cliques, cores e hierarquia. */
+    function cardHtml(c, destaque){
+      var foto = '<span data-t6boxfoto="1" style="' + c.fotoTam
+        + 'border-radius:8px;background:' + c.foto + ' center/cover no-repeat,'
+        + 'linear-gradient(160deg,var(--d33),var(--d32));border:1px solid var(--d7);flex:none;display:block"></span>';
+      var info = '<span data-t6boxinfo="1" style="min-width:0;display:flex;flex-direction:column;gap:3px">'
+        + '<b style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + c.nome + '</b>'
+        + '<em style="font-style:normal;font-size:10.5px;color:var(--d13);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + c.est
+        + (c.pos ? ' <b style="margin-left:5px;color:var(--d45)">· ' + c.pos + '</b>' : '') + '</em></span>';
+      var nota = '<span data-t6score="1" style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:0">'
+        + '<b style="font-family:inherit;font-size:19px;font-weight:700;letter-spacing:-.4px;color:var(--d25);white-space:nowrap">' + c.pts + '</b>'
+        + '<em data-t6rec="1" style="font-style:normal;font-family:inherit;font-size:10px;color:var(--d13);white-space:nowrap">Recomendação: ' + c.pct + '%</em>'
+        + '<em data-t6veredito="1" style="' + c.vSt + '">' + c.v + '</em></span>';
+      if (destaque){
+        return '<div data-t6boxlinha="1" data-k="' + c.k + '" style="display:grid;grid-template-columns:18px 58px minmax(0,1fr) auto;gap:11px;align-items:center">'
+          + '<span style="font-size:10px;color:var(--d13)">' + c.r + '</span>' + foto + info + nota + '</div>';
+      }
+      return '<div data-t6boxlinha="1" data-k="' + c.k + '" style="display:grid;grid-template-columns:18px 38px minmax(0,1fr) auto;gap:8px;align-items:center">'
+        + '<span style="font-size:10px;color:var(--d13)">' + c.r + '</span>' + foto + info + nota + '</div>';
+    }
+    function boxHtml(bx, idx){
+      var destaque = !anteriores && idx < 2
+        && !(window.matchMedia && window.matchMedia('(max-width:820px)').matches);
+      var cards = bx.cards.map(function(c){ return cardHtml(c, destaque); }).join('');
+      return '<section data-t6boxcard="1" style="' + bx.colSt
+        + 'border-radius:15px;background:linear-gradient(158deg,var(--d42),var(--d43));border:1px solid var(--d20);overflow:hidden">'
+        + '<div data-t6boxcab="1" style="display:flex;align-items:center;width:100%;box-sizing:border-box;gap:16px;padding:12px 16px;background:var(--d12);border-bottom:1px solid var(--d7)">'
+        + '<b style="font-size:15px;line-height:1.25;min-width:0;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + bx.n + '</b>'
+        + '<span style="font-size:10px;line-height:1.25;color:var(--d13);white-space:nowrap;text-align:right;margin-left:auto;flex:0 0 auto">' + bx.q + '</span></div>'
+        + '<div style="padding:' + (destaque ? '14px 17px' : '12px 13px') + ';display:flex;flex-direction:column;gap:' + (destaque ? '12px' : '10px') + '">' + cards
+        + (bx.total>3?'<button data-t6abrirbox="'+bx.nomeCru.replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'" style="margin-top:2px;padding:7px 10px;border-radius:8px;border:1px solid var(--d18);background:var(--d32);color:var(--d30);font:inherit;font-size:11px;cursor:pointer">ver todos os '+bx.total+' cards</button>':'')
+        + '</div></section>';
+    }
+    var titulo = anteriores ? 'BOXES ANTERIORES' : 'BOXES ATUAIS';
+    var acao = anteriores ? 'voltar às atuais' : 'ver as anteriores';
+    var grade = anteriores ? 'repeat(3,minmax(0,1fr))' : 'repeat(12,minmax(0,1fr))';
+    var h = '<div style="padding:22px;display:flex;flex-direction:column;gap:16px">'
+      + '<div style="display:flex;align-items:center;gap:12px"><h2 style="margin:0;font-size:19px;font-weight:700">' + titulo + '</h2>'
+      + '<button data-t6boxalternar="1" style="margin-left:auto;border:1px solid var(--d18);background:var(--d32);color:var(--d30);padding:7px 11px;border-radius:9px;cursor:pointer">' + acao + '</button></div>'
+      + '<div style="display:grid;grid-template-columns:' + grade + ';gap:13px">'
+      + dados.boxesAnt.map(boxHtml).join('') + '</div></div>';
     var sub = anteriores
       ? (nomes.length + ' boxes encerradas · top 3 de cada uma · mostrando as '
          + Math.min(quantas, nomes.length) + ' mais recentes')
-      : (nomes.length + ' boxes no ar · top 3 de cada uma · mostrando as '
-         + Math.min(quantas, nomes.length) + ' maiores');
-    h = h.replace('72 boxes encerradas · top 3 de cada uma · mostrando as 6 mais recentes', sub);
-    if (!anteriores) h = h.replace('>Boxes anteriores<', '>Boxes atuais<')
-                          .replace('voltar aos lançamentos', 'ver as anteriores');
+      : (nomes.length + ' boxes no ar');
     return h;
+  };
+
+  window.t6AbreBox = function(nome){
+    var w=document.getElementById('homewrap'); if(!w) return;
+    var lista=(window.t6PorBox()[nome]||[]), todos=window.t6Melhores(lista,9999);
+    function item(c,i,destaque){
+      var x=window.t6cardBox(c,i), v=destaque?'width:92px;height:124px':'width:64px;height:86px';
+      return '<article data-t6boxitem="1" data-k="'+x.k+'" style="display:grid;grid-template-columns:'+v.split(';')[0].split(':')[1]+' minmax(0,1fr);gap:11px;padding:'+(destaque?'15px':'11px')+';border-radius:13px;border:1px solid var(--d20);background:linear-gradient(158deg,var(--d42),var(--d43));cursor:pointer">'
+       +'<span style="'+v+';border-radius:8px;background:'+x.foto+' center/cover no-repeat;border:1px solid var(--d7)"></span>'
+       +'<span data-t6boxinfo="1" style="min-width:0;display:flex;flex-direction:column;gap:4px"><b style="font-size:'+(destaque?'15px':'13px')+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+x.nome+'</b><em style="font-style:normal;font-size:11px;color:var(--d13);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+x.est+' <b style="color:var(--d45)">· '+x.pos+'</b></em><b style="margin-top:auto;font-size:'+(destaque?'20px':'16px')+';color:var(--d25)">'+x.pts+'</b><em style="font-style:normal;font-size:10px;color:var(--d13)">Recomendação: '+x.pct+'%</em><em data-t6veredito="1" style="'+x.vSt+';align-self:flex-start">'+x.v+'</em></span></article>';
+    }
+    var top=todos.slice(0,3).map(function(c,i){return item(c,i,true)}).join('');
+    var resto=todos.slice(3).map(function(c,i){return item(c,i+3,false)}).join('');
+    var h='<div style="padding:22px;display:flex;flex-direction:column;gap:16px"><div data-t6boxdetcab="1" style="display:flex;align-items:center;gap:12px"><button data-t6voltabox="1" style="padding:7px 11px;border-radius:9px;border:1px solid var(--d18);background:var(--d32);color:var(--d30);cursor:pointer">← Boxes atuais</button><h2 style="margin:0;font-size:19px">'+esc(nome)+'</h2><span data-t6boxq="1" style="margin-left:auto;color:var(--d13);font-size:11px">'+todos.length+' cards</span></div><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px">'+top+'</div>'+(resto?'<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px">'+resto+'</div>':'')+'</div>';
+    window._t6aba='boxdetalhe'; w.innerHTML='<div class="t6tela">'+h+'</div>'; window.t6Cliques(w); window.scrollTo(0,0);
   };
 
   /* ---------------- INICIO ---------------- */
@@ -385,9 +575,9 @@ JS_TELAS = r"""
   }
   function veredicto(p){
     var C = window.T6_CORTES || [99, 95];
-    if (p >= C[0]) return ['CONTRATAR A QUALQUER CUSTO', 'var(--d8)', 'var(--d94)', 'var(--d96)'];
-    if (p >= C[1]) return ['CONTRATAR SE FOR BARATO', 'var(--d55)', 'var(--d89)', 'var(--d90)'];
-    return ['CONTRATAR SE FOR GRÁTIS', 'var(--d13)', 'var(--d14)', 'var(--d29)'];
+    if (p >= C[0]) return ['CONTRATAR A QUALQUER CUSTO', 'var(--t6-hire-any-fg)', 'var(--t6-hire-any-bg)', 'var(--t6-hire-any-bd)'];
+    if (p >= C[1]) return ['CONTRATAR SE FOR BARATO', 'var(--t6-hire-cheap-fg)', 'var(--t6-hire-cheap-bg)', 'var(--t6-hire-cheap-bd)'];
+    return ['CONTRATAR SE FOR GRÁTIS', 'var(--t6-hire-free-fg)', 'var(--t6-hire-free-bg)', 'var(--t6-hire-free-bd)'];
   }
   window.t6cardBox = function(c, i){
     var d = window.t6card(c, i), p = parseFloat(d.pct), v = veredicto(p);
@@ -484,7 +674,7 @@ JS_TELAS = r"""
         })
     };
 
-    var molde = M.inicio.corpo
+    var molde = destacaPontosBox(M.inicio.corpo)
       .replace('<div style="display:flex;align-items:center;gap:11px">',
                '<div data-k="{{ c.k }}" style="display:flex;align-items:center;gap:11px">')
       .replace('<span style="{{ t.medSt }}"></span>',
@@ -496,6 +686,10 @@ JS_TELAS = r"""
     h = h.replace('3 de 9 boxes atuais · top 3 de cada uma',
                   Math.min(3, nomes.length) + ' de ' + nomes.length
                   + ' boxes atuais · top 3 de cada uma');
+    h = h.replace(
+      'CONTRATAR: 99% ou mais do topo da função. SE SOBRAR: entre 96% e 99%. DEIXA PASSAR: abaixo de 96% — há card melhor pela mesma moeda.',
+      'CONTRATAR A QUALQUER CUSTO: 99% ou mais do topo da função. CONTRATAR SE FOR BARATO: de 95% até 98,99%. CONTRATAR SE FOR GRÁTIS: abaixo de 95%.'
+    );
     return h;
   };
 
@@ -3678,3 +3872,4 @@ def js_telas():
     """O bloco pronto: o motor + os moldes da designer embutidos."""
     import json
     return JS_TELAS.replace('__MOLDES__', json.dumps(MOLDES, ensure_ascii=False))
+
