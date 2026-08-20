@@ -2787,6 +2787,10 @@ T6_JS7 = """
         if(window.console) console.warn('a casca caiu ao calcular', key, eCasca);
       }
       try{
+        /* A fonte compartilhada e a unica dona do desenho e dos cliques. A
+           casca antiga fica acima apenas para preparar a entrada e como
+           retorno de seguranca. */
+        if(window.t6DesenhaFicha && window.t6DesenhaFicha(key)) return r;
         if(!window.t6TelaFicha) return r;
         var box=document.getElementById('box'); if(!box) return r;
         var h=window.t6TelaFicha(key);
@@ -3349,6 +3353,21 @@ def main():
         for x in str(c.get('sec') or '').split('/'):
             if x.strip(): POS[b].add(x.strip())
 
+    # A build e uma so por funcao; apenas o bonus de estilo pode variar por
+    # posicao. O motor_bonus grava essas pequenas variantes separadamente.
+    BONUS_POS = collections.defaultdict(dict)
+    _bp_arq = os.path.join('saida_v6', 'bonus_posicao.jsonl')
+    if os.path.exists(_bp_arq):
+        for _l in open(_bp_arq, encoding='utf-8'):
+            try: _r = json.loads(_l)
+            except Exception: continue
+            _cid, _fun, _pos = _r.get('card_id'), _r.get('funcao'), _r.get('posicao')
+            if _cid and _fun and _pos:
+                BONUS_POS[(str(_cid), _fun)][_pos] = {
+                    'estilo_ativo': bool(_r.get('estilo_ativo')),
+                    'b_estilo': _r.get('b_estilo'), 'b_total': _r.get('b_total')}
+        print('variantes de bonus/posicao', sum(len(v) for v in BONUS_POS.values()))
+
     M = collections.defaultdict(dict)
     for r in json.load(open(MOLDE, encoding='utf-8')):
         M[r['funcao']][r['attr']] = (r['peso'], r['alvo'])
@@ -3443,6 +3462,7 @@ def main():
         D.append({
             'tipo': f, 'fam': SETOR.get(f, ''), 'pos': POS_DA_FUNCAO.get(f, ''),
             'id': b, 'nome': c.get('nome'), 'ovr': c.get('ovr') or 0,
+            'bonus_posicoes': BONUS_POS.get((b, f), {}),
             'votos': c.get('votos') or 0, 'tier': c.get('tier') or '?',
             'sec': c.get('sec'), 'h': c.get('altura'), 'w': c.get('peso'),
             'foot': c.get('pe'), 'temMax': bool(c.get('max_ovr')),
@@ -3500,6 +3520,9 @@ def main():
             # NEU = da pra selecionar e a nota NAO muda · TECIG = outro tecnico, mesma nota
             'NEU': x.get('neutras') or [],
             'TECIG': x.get('tecnicos_iguais') or [],
+            # Chave estavel. `TEC` continua por compatibilidade com as telas
+            # antigas, mas codigo novo resolve primeiro pelo ID.
+            'TECID': x.get('tecnico_id'),
             'TECB': x.get('boost_tecnico') or [],
             'b4r': 0, 'np': c.get('np') or c.get('pos'),
             # sp = TAMBEM JOGA. A estrela vem do metadado de tela quando existe
@@ -3790,6 +3813,13 @@ def main():
             '\r\n'.join(_linhas) + '\r\n')
     except Exception as _e:
         print('nao consegui gravar o RETRATO-DA-GERACAO.txt: %s' % _e)
+
+    # O catalogo era declarado como `const HABEF` dentro da casca. As telas
+    # compartilhadas sao avaliadas por outra camada e, nessa camada, o nome
+    # lexical nao existe: o seletor de habilidades adicionais nascia vazio.
+    # Publica o mesmo objeto no `window`; o motor continua lendo `HABEF` e a
+    # tela passa a ler `window.HABEF`, sem duplicar catalogo nem regra.
+    novo = novo.replace('const HABEF=', 'window.HABEF=', 1)
 
     _bloco, _msg = _confere_js(novo)
     if _bloco is not None:
@@ -5240,7 +5270,9 @@ def patch_tecnico_sugestao(html):
     if not T:
         return html, 'lista vazia'
 
-    dados = [[t['nome'], round(t['m'], 6), sorted(t['boost'])] for t in T]
+    # Mantem os tres indices historicos [nome, m, boost] e acrescenta o ID no
+    # fim. Assim a casca antiga continua funcionando sem traducao de chave.
+    dados = [[t['nome'], round(t['m'], 6), sorted(t['boost']), t.get('id')] for t in T]
     bloco = ('\n<script>\n'
              '/* SUGESTAO DE TECNICO - 14/08/2026 - injetado pelo gera_encaixe.py */\n'
              'window.TECS=' + json.dumps(dados, ensure_ascii=False,
@@ -5249,15 +5281,18 @@ def patch_tecnico_sugestao(html):
              ' try{\n'
              '  var nm=(c._tecNome!==undefined?c._tecNome:c.TEC);\n'
              '  if(!nm||!window.TECS) return c.TECIG||[];\n'
-             '  var t0=null,i;\n'
-             '  for(i=0;i<TECS.length;i++) if(TECS[i][0]===nm){t0=TECS[i];break;}\n'
+             '  var t0=null,i,cur=[];\n'
+             '  if(c.TECID!==undefined&&c.TECID!==null){for(i=0;i<TECS.length;i++) if(String(TECS[i][3])===String(c.TECID)){t0=TECS[i];break;}}\n'
+             '  try{ (tecAtual(c)||[]).forEach(function(k){if(TECIDX[k]!==undefined)cur.push(TECIDX[k]);});cur.sort(function(a,b){return a-b;}); }catch(e){}\n'
+             '  if(!t0) for(i=0;i<TECS.length;i++) if(TECS[i][0]===nm&&TECS[i][2].join(",")===cur.join(",")){t0=TECS[i];break;}\n'
+             '  if(!t0){var un=TECS.filter(function(t){return t[0]===nm;});if(un.length===1)t0=un[0];}\n'
              '  if(!t0) return c.TECIG||[];\n'
              '  var pes={};\n'
              '  for(i=0;i<(c.arows||[]).length;i++) if(c.arows[i][1]) pes[c.arows[i][0]]=1;\n'
              '  var a={},j; for(j=0;j<t0[2].length;j++) a[t0[2][j]]=1;\n'
              '  var out=[];\n'
              '  for(i=0;i<TECS.length;i++){ var t=TECS[i];\n'
-             '   if(t[0]===nm||t[1]!==t0[1]) continue;\n'
+             '   if(t[3]===t0[3]||t[1]!==t0[1]) continue;\n'
              '   var b={},k,bate=true; for(j=0;j<t[2].length;j++) b[t[2][j]]=1;\n'
              '   for(k in a) if(!b[k]&&pes[k]){bate=false;break;}\n'
              '   if(bate) for(k in b) if(!a[k]&&pes[k]){bate=false;break;}\n'
@@ -10918,6 +10953,7 @@ def patch_build_do_usuario_1608(html):
       ' function base(k){ return String(k).split("|")[0].split("@")[0]; }\n'
       ' function chaveAberta(){\n'
       '  try{ if(typeof CUR!=="undefined" && CUR) return CUR; }catch(e){}\n'
+      '  try{ if(window._T6_CHAVE_ATUAL) return window._T6_CHAVE_ATUAL; }catch(e){}\n'
       '  return null;\n'
       ' }\n'
       ' function bd(){ if(typeof MT==="undefined") return null;\n'
@@ -11191,9 +11227,9 @@ def patch_build_do_usuario_1608(html):
       '  return func+" "+n;\n'
       ' }\n'
       '\n'
-      ' window.bldSalva=function(){\n'
-      '  var k=chaveAberta(); if(!k) return;\n'
-      '  var func=funcaoSelecionada();\n'
+      ' function salvaBuildDireta(k, func, nomeForcado){\n'
+      '  if(!k) return;\n'
+      '  if(!func){ try{ var cf=_card(k); func=cf&&cf.tipo; }catch(e){} }\n'
       '  if(!func){ alert("Escolha a fun\\u00e7\\u00e3o l\\u00e1 em cima antes de salvar.\\n\\n"\n'
       '   +"A build guarda a fun\\u00e7\\u00e3o junto \\u2014 sem ela n\\u00e3o d\\u00e1 "\n'
       '   +"pra saber em que posi\\u00e7\\u00e3o ele joga."); return; }\n'
@@ -11207,7 +11243,10 @@ def patch_build_do_usuario_1608(html):
       '  var b=leDaTela(k); if(!b) return;\n'
       '  b.func=func;\n'
       '  var sug=nomePadrao(idb, func);\n'
-      '  var nome=prompt("Nome desta build:", sug);\n'
+      '  if(nomeForcado===undefined && typeof window.t6PedeNomeBuild==="function"){\n'
+      '   window.t6PedeNomeBuild(sug,function(v){ if(v!==null) salvaBuildDireta(k,func,v); }); return;\n'
+      '  }\n'
+      '  var nome=(nomeForcado!==undefined)?nomeForcado:prompt("Nome desta build:", sug);\n'
       '  if(nome===null) return;\n'
       '  nome=String(nome).replace(/\\s+/g," ").trim() || sug;\n'
       '  /*  ⛔ O TECNICO SAI ZERADO. Ordem do Luis: *"o tecnico, independente do\n'
@@ -11222,8 +11261,15 @@ def patch_build_do_usuario_1608(html):
       '  try{ MTdb.save(); }catch(e){}\n'
       '  try{ if(typeof mtRender==="function") mtRender(); }catch(e){}\n'
       '  barra();\n'
-      '  alert("Build \\u201c"+nome+"\\u201d salva: "+b.n.toFixed(2).replace(".",",")\n'
-      '   +" em "+func+".\\n\\nEla j\\u00e1 vale no seu elenco.");\n'
+      '  var msg="Build \\u201c"+nome+"\\u201d salva: "+b.n.toFixed(2).replace(".",",")\n'
+      '   +" em "+func+". Ela j\\u00e1 vale no seu elenco.";\n'
+      '  if(typeof window.t6Notifica==="function") window.t6Notifica(msg); else alert(msg);\n'
+      ' }\n'
+      ' window.bldSalvaDireto=function(k,func){ return salvaBuildDireta(k,func); };\n'
+      ' window.bldSalva=function(){\n'
+      '  var k=chaveAberta(); if(!k) return;\n'
+      '  var func=funcaoSelecionada();\n'
+      '  return salvaBuildDireta(k,func);\n'
       ' };\n'
       ' window.bldUsa=function(idb, i){\n'
       '  var m=bd(); if(!m) return;\n'
