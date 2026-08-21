@@ -1,0 +1,777 @@
+
+inicio ............ 2026-08-21 00:57:37
+[2026-08-21 00:57:38]     1/775     0.1% · Kylian Mbappe            Centroavante móvel         b1     -8.50 ·  0.2s  | decorrido 00:00:00 · media 0.4 s/linha · falta ~00:05:34
+[2026-08-21 00:57:38]     2/775     0.3% · Kylian Mbappe            Centroavante fixo          b1   -554.90 ·  0.2s  | decorrido 00:00:00 · media 0.2 s/linha · falta ~00:02:48
+[2026-08-21 00:57:38]     3/775     0.4% · Kylian Mbappe            Falso nove                 b1   -275.50 ·  0.0s  | decorrido 00:00:00 · media 0.2 s/linha · falta ~00:01:56
+[2026-08-21 00:57:38]     4/775     0.5% · Kylian Mbappe            Meia de lado por dentro    b1   -367.00 ·  0.0s  | decorrido 00:00:00 · media 0.1 s/linha · falta ~00:01:27
+[2026-08-21 00:57:38]     5/775     0.6% · Kylian Mbappe            Ponta finalizadora         b1   -122.80 ·  0.0s  | decorrido 00:00:00 · media 0.1 s/linha · falta ~00:01:12
+[2026-08-21 00:57:38]     6/775     0.8% · Kylian Mbappe            Meia ofensivo armador      b1   -647.90 ·  0.0s  | decorrido 00:00:00 · media 0.1 s/linha · falta ~00:01:00
+[2026-08-21 00:57:38]     7/775     0.9% · Vitinha                  Meia central armador       b1   -111.80 ·  0.0s  | decorrido 00:00:00 · media 0.1 s/linha · falta ~00:00:52
+[2026-08-21 00:57:38]     8/775     1.0% · Vitinha                  Meia central de chegada    b1     59.40 ·  0.0s  | decorrido 00:00:00 · media 0.1 s/linha · falta ~00:00:47
+[2026-08-21 00:57:38]     9/775     1.2% · Vitinha                  Meia de lado por dentro    b1   -481.00 ·  0.0s  | decorrido 00:00:00 · media 0.1 s/linha · falta ~00:00:42
+[2026-08-21 00:57:38]    10/775     1.3% · Vitinha                  Meia ofensivo armador      b1   -323.10 ·  0.0s  | decorrido 00:00:00 · media 0.1 s/linha · falta ~00:00:38
+[2026-08-21 00:57:38]    11/775     1.4% · Vitinha                  Volante de construção      b1   -589.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:35
+[2026-08-21 00:57:38]    12/775     1.5% · Declan Rice              Meia central armador       b1   -569.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:33
+[2026-08-21 00:57:38]    13/775     1.7% · Declan Rice              Lateral ofensivo           b1   -222.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:30
+[2026-08-21 00:57:38]    14/775     1.8% · Declan Rice              Meia ofensivo armador      b1   -750.90 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:28
+[2026-08-21 00:57:38]    15/775     1.9% · Declan Rice              Meia central de chegada    b1   -247.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:27
+[2026-08-21 00:57:38]    16/775     2.1% · Martin Odegaard          Meia central armador       b1    173.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:25
+[2026-08-21 00:57:38]    17/775     2.2% · Declan Rice              Volante de construção      b1   -394.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:24
+[2026-08-21 00:57:38]    18/775     2.3% · Martin Odegaard          Meia de lado por dentro    b1   -215.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:38]    19/775     2.5% · Martin Odegaard          Meia ofensivo armador      b1     98.20 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:22
+[2026-08-21 00:57:38]    20/775     2.6% · Martin Odegaard          Segundo atacante           b1     44.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:38]    21/775     2.7% · Virgil van Dijk          Zagueiro de combate        b1   -583.20 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:38]    22/775     2.8% · Virgil van Dijk          Zagueiro de saída          b1   -408.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:38]    23/775     3.0% · Bryan Mbeumo             Centroavante fixo          b1   -511.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:38]    24/775     3.1% · Bryan Mbeumo             Centroavante móvel         b1     33.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:38]    25/775     3.2% · Bryan Mbeumo             Falso nove                 b1   -190.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:38]    26/775     3.4% · Bryan Mbeumo             Meia de lado por dentro    b1   -376.50 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:38]    27/775     3.5% · Bryan Mbeumo             Ponta finalizadora         b1   -121.70 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:38]    28/775     3.6% · Bryan Mbeumo             Meia ofensivo armador      b1   -527.50 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:38]    29/775     3.7% · Frenkie de Jong          Meia central armador       b1   -214.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:38]    30/775     3.9% · Frenkie de Jong          Meia central de chegada    b1     19.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:38]    31/775     4.0% · Frenkie de Jong          Meia ofensivo armador      b1   -360.50 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:38]    32/775     4.1% · Frenkie de Jong          Zagueiro de saída          b1  -1225.20 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:38]    33/775     4.3% · Frenkie de Jong          Volante de construção      b1   -623.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:38]    34/775     4.4% · Raphinha                 Centroavante móvel         b1   -223.50 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:38]    35/775     4.5% · Raphinha                 Meia de lado por fora      b1   -414.90 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:38]    36/775     4.6% · Raphinha                 Meia ofensivo armador      b1   -667.90 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:38]    37/775     4.8% · Raphinha                 Ponta criadora             b1   -261.90 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:38]    38/775     4.9% · Raphinha                 Ponta finalizadora         b1   -186.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:38]    39/775     5.0% · Jules Kounde             Lateral defensivo          b1   -129.20 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:38]    40/775     5.2% · Jules Kounde             Lateral ofensivo           b1   -545.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:38]    41/775     5.3% · Jules Kounde             Zagueiro de saída          b1   -182.00 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:38]    42/775     5.4% · Jules Kounde             Meia de lado por dentro    b1  -1227.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:38]    43/775     5.5% · Moise Kean               Centroavante fixo          b1   -278.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:38]    44/775     5.7% · Moise Kean               Centroavante móvel         b1     66.60 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:38]    45/775     5.8% · Moise Kean               Meia de lado por dentro    b1   -615.60 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:38]    46/775     5.9% · Moise Kean               Falso nove                 b1   -252.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:38]    47/775     6.1% · Moise Kean               Ponta finalizadora         b1   -440.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:38]    48/775     6.2% · Desire Doue              Centroavante móvel         b1   -186.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:38]    49/775     6.3% · Desire Doue              Meia central armador       b1   -344.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:38]    50/775     6.5% · Desire Doue              Meia de lado por dentro    b1    -97.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    51/775     6.6% · Desire Doue              Ponta criadora             b1     -0.60 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    52/775     6.7% · Desire Doue              Meia ofensivo armador      b1   -501.00 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    53/775     6.8% · Desire Doue              Ponta finalizadora         b1     36.50 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    54/775     7.0% · Benjamin Sesko           Centroavante fixo          b1   -337.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    55/775     7.1% · Benjamin Sesko           Centroavante móvel         b1   -284.00 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    56/775     7.2% · Benjamin Sesko           Falso nove                 b1   -524.60 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    57/775     7.4% · Benjamin Sesko           Ponta finalizadora         b1   -861.20 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:10
+[2026-08-21 00:57:38]    58/775     7.5% · Dani Olmo                Centroavante móvel         b1   -237.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    59/775     7.6% · Dani Olmo                Meia central de chegada    b1   -168.00 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    60/775     7.7% · Dani Olmo                Meia de lado por dentro    b1   -218.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    61/775     7.9% · Dani Olmo                Meia ofensivo armador      b1   -247.50 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    62/775     8.0% · Dani Olmo                Ponta finalizadora         b1   -302.70 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    63/775     8.1% · Dani Olmo                Segundo atacante           b1    -70.70 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    64/775     8.3% · Gavi                     Meia central armador       b1   -330.50 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    65/775     8.4% · Gavi                     Meia central de chegada    b1     21.20 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    66/775     8.5% · Gavi                     Meia de lado por dentro    b1   -321.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    67/775     8.6% · Gavi                     Ponta finalizadora         b1   -366.90 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    68/775     8.8% · Gavi                     Segundo atacante           b1   -138.90 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:38]    69/775     8.9% · Gavi                     Volante de contenção       b1   -862.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    70/775     9.0% · Vangelis Pavlidis        Centroavante fixo          b1   -361.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    71/775     9.2% · Vangelis Pavlidis        Centroavante móvel         b1   -177.70 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    72/775     9.3% · Vangelis Pavlidis        Meia de lado por dentro    b1   -724.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    73/775     9.4% · Vangelis Pavlidis        Falso nove                 b1   -158.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    74/775     9.5% · Vangelis Pavlidis        Ponta finalizadora         b1   -709.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    75/775     9.7% · Vangelis Pavlidis        Meia ofensivo armador      b1   -945.90 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    76/775     9.8% · Luke Shaw                Lateral defensivo          b1   -824.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    77/775     9.9% · Luke Shaw                Lateral ofensivo           b1   -108.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    78/775    10.1% · Luke Shaw                Zagueiro de saída          b1  -1181.60 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    79/775    10.2% · Luke Shaw                Meia de lado por dentro    b1   -712.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    80/775    10.3% · Mason Mount              Meia central de chegada    b1   -253.60 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    81/775    10.5% · Mason Mount              Meia de lado por dentro    b1   -425.30 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    82/775    10.6% · Mason Mount              Meia ofensivo armador      b1   -382.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:38]    83/775    10.7% · Mason Mount              Ponta finalizadora         b1   -505.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    84/775    10.8% · Mason Mount              Segundo atacante           b1   -302.40 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    85/775    11.0% · Senne Lammens            Goleiro defensivo          b1   -293.00 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    86/775    11.1% · Mason Mount              Volante de contenção       b1  -1074.10 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    87/775    11.2% · Senne Lammens            Goleiro ofensivo           b1   -171.80 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    88/775    11.4% · Florian Thauvin          Centroavante móvel         b1    -95.60 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    89/775    11.5% · Florian Thauvin          Meia central de chegada    b1   -537.00 ·  0.0s  | decorrido 00:00:00 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    90/775    11.6% · Florian Thauvin          Meia de lado por dentro    b1   -262.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    91/775    11.7% · Florian Thauvin          Meia ofensivo armador      b1   -518.40 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    92/775    11.9% · Florian Thauvin          Ponta finalizadora         b1   -268.70 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    93/775    12.0% · Florian Thauvin          Segundo atacante           b1   -164.30 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    94/775    12.1% · Sergino Dest             Lateral defensivo          b1   -912.60 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    95/775    12.3% · Sergino Dest             Meia de lado por dentro    b1   -463.00 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    96/775    12.4% · Sergino Dest             Lateral ofensivo           b1     34.50 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    97/775    12.5% · Sergino Dest             Ponta finalizadora         b1   -458.80 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    98/775    12.6% · Christos Tzolis          Centroavante móvel         b1   -362.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]    99/775    12.8% · Christos Tzolis          Meia de lado por dentro    b1   -219.80 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]   100/775    12.9% · Christos Tzolis          Meia ofensivo armador      b1   -524.70 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]   101/775    13.0% · Christos Tzolis          Ponta criadora             b1   -244.60 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]   102/775    13.2% · Christos Tzolis          Ponta finalizadora         b1   -169.40 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]   103/775    13.3% · Robin Risser             Goleiro defensivo          b1   -129.60 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:38]   104/775    13.4% · Robin Risser             Goleiro ofensivo           b1    -44.20 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   105/775    13.5% · Alessandro Deiola        Meia central armador       b1  -1217.30 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   106/775    13.7% · Alessandro Deiola        Meia de lado por dentro    b1  -1419.70 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   107/775    13.8% · Alessandro Deiola        Volante de contenção       b1   -702.00 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   108/775    13.9% · Alessandro Deiola        Meia ofensivo armador      b1  -1485.00 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   109/775    14.1% · Alessandro Deiola        Zagueiro de combate        b1   -731.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   110/775    14.2% · Alessandro Deiola        Zagueiro de saída          b1   -661.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   111/775    14.3% · Mariano Diaz             Centroavante fixo          b1   -463.20 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   112/775    14.5% · Mariano Diaz             Centroavante móvel         b1   -328.70 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   113/775    14.6% · Tommaso Baldanzi         Meia central armador       b1   -308.20 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   114/775    14.7% · Mariano Diaz             Falso nove                 b1   -236.80 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   115/775    14.8% · Tommaso Baldanzi         Meia central de chegada    b1   -221.60 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   116/775    15.0% · Tommaso Baldanzi         Meia ofensivo armador      b1   -306.80 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   117/775    15.1% · Tommaso Baldanzi         Ponta finalizadora         b1   -282.50 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:38]   118/775    15.2% · Tommaso Baldanzi         Volante de construção      b1   -771.60 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:39]   119/775    15.4% · Fabio Cannavaro          Zagueiro de combate        b1    370.00 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:39]   120/775    15.5% · Fabio Cannavaro          Zagueiro de saída          b1    385.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:39]   121/775    15.6% · Morgan Rogers            Centroavante móvel         b1   -982.20 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:06
+[2026-08-21 00:57:39]   122/775    15.7% · Morgan Rogers            Meia central de chegada    b1  -1044.20 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   123/775    15.9% · Morgan Rogers            Meia de lado por dentro    b1  -1205.00 ·  0.1s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   124/775    16.0% · Morgan Rogers            Meia ofensivo armador      b1  -1254.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   125/775    16.1% · Morgan Rogers            Ponta finalizadora         b1  -1202.30 ·  0.1s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   126/775    16.3% · Morgan Rogers            Segundo atacante           b1  -1171.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   127/775    16.4% · Elliot Anderson          Meia central armador       b1   -944.10 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   128/775    16.5% · Elliot Anderson          Meia central de chegada    b1   -866.20 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   129/775    16.6% · Elliot Anderson          Meia de lado por dentro    b1  -1113.70 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   130/775    16.8% · Elliot Anderson          Meia ofensivo armador      b1  -1216.40 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   131/775    16.9% · Elliot Anderson          Volante de construção      b1  -1225.40 ·  0.0s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:07
+[2026-08-21 00:57:39]   132/775    17.0% · Denzel Dumfries          Lateral defensivo          b1   -995.30 ·  0.1s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:39]   133/775    17.2% · Denzel Dumfries          Lateral ofensivo           b1   -814.10 ·  0.1s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:39]   134/775    17.3% · Denzel Dumfries          Meia de lado por dentro    b1  -1192.70 ·  0.1s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:08
+[2026-08-21 00:57:39]   135/775    17.4% · Denzel Dumfries          Ponta finalizadora         b1  -1282.40 ·  0.1s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:39]   136/775    17.5% · Denzel Dumfries          Volante de contenção       b1  -1051.30 ·  0.1s  | decorrido 00:00:01 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:39]   137/775    17.7% · Denzel Dumfries          Zagueiro de saída          b1  -1011.30 ·  0.0s  | decorrido 00:00:02 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:39]   138/775    17.8% · Marc Guehi               Zagueiro de combate        b1  -1344.50 ·  0.0s  | decorrido 00:00:02 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:39]   139/775    17.9% · Marc Guehi               Zagueiro de saída          b1  -1289.80 ·  0.0s  | decorrido 00:00:02 · media 0.0 s/linha · falta ~00:00:09
+[2026-08-21 00:57:41]   140/775    18.1% · Fabio Cannavaro          Lateral ofensivo           b1    279.50 ·  2.2s  | decorrido 00:00:03 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:41]   141/775    18.2% · Tijani Babangida         Meia de lado por dentro    b1    162.70 ·  2.0s  | decorrido 00:00:04 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   142/775    18.3% · Tijani Babangida         Ponta finalizadora         b1    208.30 ·  1.5s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:24
+[2026-08-21 00:57:43]   143/775    18.5% · Raphinha                 Centroavante móvel         b1  -1300.90 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:24
+[2026-08-21 00:57:43]   144/775    18.6% · Raphinha                 Meia de lado por fora      b1  -1443.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:24
+[2026-08-21 00:57:43]   145/775    18.7% · Raphinha                 Meia ofensivo armador      b1  -1457.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:24
+[2026-08-21 00:57:43]   146/775    18.8% · Raphinha                 Ponta criadora             b1  -1389.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:24
+[2026-08-21 00:57:43]   147/775    19.0% · Raphinha                 Ponta finalizadora         b1  -1430.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:43]   148/775    19.1% · Nicolo Barella           Meia central armador       b1  -1271.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:43]   149/775    19.2% · Nicolo Barella           Meia central de chegada    b1  -1346.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:43]   150/775    19.4% · Nicolo Barella           Meia de lado por fora      b1  -1403.40 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:43]   151/775    19.5% · Nicolo Barella           Meia ofensivo armador      b1  -1430.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:43]   152/775    19.6% · Nicolo Barella           Volante de construção      b1  -1434.40 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:43]   153/775    19.7% · Michael Olise            Meia central armador       b1  -1066.40 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:23
+[2026-08-21 00:57:43]   154/775    19.9% · Michael Olise            Meia de lado por dentro    b1  -1199.10 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:22
+[2026-08-21 00:57:43]   155/775    20.0% · Tijani Babangida         Ponta criadora             b1    113.70 ·  2.2s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:22
+[2026-08-21 00:57:43]   156/775    20.1% · Michael Olise            Meia ofensivo armador      b1  -1127.10 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:22
+[2026-08-21 00:57:43]   157/775    20.3% · Michael Olise            Ponta criadora             b1  -1068.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:22
+[2026-08-21 00:57:43]   158/775    20.4% · Michael Olise            Segundo atacante           b1  -1104.10 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:22
+[2026-08-21 00:57:43]   159/775    20.5% · John O Shea              Lateral ofensivo           b1  -1399.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:22
+[2026-08-21 00:57:43]   160/775    20.6% · John O Shea              Meia central armador       b1  -1316.40 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:43]   161/775    20.8% · John O Shea              Volante de construção      b1  -1378.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:43]   162/775    20.9% · John O Shea              Volante de contenção       b1  -1376.90 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:43]   163/775    21.0% · John O Shea              Zagueiro de saída          b1  -1238.70 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:43]   164/775    21.2% · Patrick Kluivert         Centroavante fixo          b1  -1094.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:43]   165/775    21.3% · Patrick Kluivert         Centroavante móvel         b1  -1340.60 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:43]   166/775    21.4% · Patrick Kluivert         Falso nove                 b1  -1460.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:21
+[2026-08-21 00:57:43]   167/775    21.5% · Daniele Massaro          Centroavante fixo          b1   -938.50 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   168/775    21.7% · Daniele Massaro          Centroavante móvel         b1  -1116.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   169/775    21.8% · Daniele Massaro          Falso nove                 b1  -1341.10 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   170/775    21.9% · Rodrigo De Paul          Meia central armador       b1  -1239.60 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   171/775    22.1% · Rodrigo De Paul          Meia central de chegada    b1  -1165.00 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   172/775    22.2% · Rodrigo De Paul          Meia de lado por dentro    b1  -1295.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   173/775    22.3% · Rodrigo De Paul          Ponta finalizadora         b1  -1284.70 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   174/775    22.5% · Rodrigo De Paul          Segundo atacante           b1  -1323.00 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:20
+[2026-08-21 00:57:43]   175/775    22.6% · Rodrigo De Paul          Volante de contenção       b1  -1330.70 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   176/775    22.7% · Ruben Dias               Zagueiro de combate        b1  -1395.90 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   177/775    22.8% · Ruben Dias               Zagueiro de saída          b1  -1355.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   178/775    23.0% · Aleksandar Pavlovic      Meia central armador       b1  -1520.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   179/775    23.1% · Aleksandar Pavlovic      Volante de construção      b1  -1545.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   180/775    23.2% · Aleksandar Pavlovic      Zagueiro de saída          b1  -1409.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   181/775    23.4% · Aleksandar Pavlovic      Volante de contenção       b1  -1450.40 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   182/775    23.5% · Levi Colwill             Zagueiro de combate        b1  -1423.40 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   183/775    23.6% · Levi Colwill             Lateral ofensivo           b1  -1431.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:19
+[2026-08-21 00:57:43]   184/775    23.7% · Levi Colwill             Zagueiro de saída          b1  -1382.00 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   185/775    23.9% · Romeo Lavia              Meia central armador       b1  -1476.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   186/775    24.0% · Romeo Lavia              Volante de construção      b1  -1425.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   187/775    24.1% · Romeo Lavia              Volante de contenção       b1  -1447.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   188/775    24.3% · Jamie Gittens            Meia de lado por dentro    b1  -1332.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   189/775    24.4% · Jamie Gittens            Ponta criadora             b1  -1286.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   190/775    24.5% · Jamie Gittens            Ponta finalizadora         b1  -1234.70 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   191/775    24.6% · Joao Gomes               Meia central armador       b1  -1366.70 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   192/775    24.8% · Joao Gomes               Meia central de chegada    b1  -1438.10 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:18
+[2026-08-21 00:57:43]   193/775    24.9% · Joao Gomes               Meia ofensivo armador      b1  -1572.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   194/775    25.0% · Joao Gomes               Volante de construção      b1  -1408.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   195/775    25.2% · Giovanni Di Lorenzo      Lateral defensivo          b1  -1274.60 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   196/775    25.3% · Giovanni Di Lorenzo      Lateral ofensivo           b1  -1118.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   197/775    25.4% · Giovanni Di Lorenzo      Meia de lado por dentro    b1  -1380.80 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   198/775    25.5% · Giovanni Di Lorenzo      Zagueiro de saída          b1  -1294.30 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   199/775    25.7% · Alejandro Grimaldo       Lateral defensivo          b1  -1409.20 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   200/775    25.8% · Alejandro Grimaldo       Lateral ofensivo           b1  -1171.60 ·  0.0s  | decorrido 00:00:05 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   201/775    25.9% · Alejandro Grimaldo       Meia de lado por dentro    b1  -1341.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   202/775    26.1% · Alejandro Grimaldo       Ponta finalizadora         b1  -1229.90 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:17
+[2026-08-21 00:57:43]   203/775    26.2% · Maghnes Akliouche        Meia central armador       b1  -1184.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   204/775    26.3% · Maghnes Akliouche        Meia de lado por dentro    b1  -1450.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   205/775    26.5% · Maghnes Akliouche        Meia de lado por fora      b1  -1363.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   206/775    26.6% · Maghnes Akliouche        Meia ofensivo armador      b1  -1406.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   207/775    26.7% · Mamadou Sarr             Zagueiro de combate        b1  -1483.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   208/775    26.8% · Maghnes Akliouche        Ponta criadora             b1  -1409.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   209/775    27.0% · Mamadou Sarr             Zagueiro de saída          b1  -1436.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   210/775    27.1% · Bryan Cristante          Meia central armador       b1  -1299.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   211/775    27.2% · Bryan Cristante          Meia ofensivo armador      b1  -1509.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   212/775    27.4% · Bryan Cristante          Volante de construção      b1  -1368.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   213/775    27.5% · Bryan Cristante          Volante de contenção       b1  -1423.90 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:43]   214/775    27.6% · Bryan Cristante          Zagueiro de saída          b1  -1342.90 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   215/775    27.7% · Gianluca Mancini         Zagueiro de combate        b1  -1327.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   216/775    27.9% · Gianluca Mancini         Volante de contenção       b1  -1516.90 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   217/775    28.0% · Gianluca Mancini         Zagueiro de saída          b1  -1279.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   218/775    28.1% · A. Buongiorno            Lateral ofensivo           b1  -1435.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   219/775    28.3% · A. Buongiorno            Meia de lado por dentro    b1  -1614.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   220/775    28.4% · A. Buongiorno            Zagueiro de combate        b1  -1374.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   221/775    28.5% · A. Buongiorno            Zagueiro de saída          b1  -1329.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   222/775    28.6% · Guglielmo Vicario        Goleiro defensivo          b1  -1112.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   223/775    28.8% · Guglielmo Vicario        Goleiro ofensivo           b1  -1113.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   224/775    28.9% · Raoul Bellanova          Lateral defensivo          b1  -1392.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   225/775    29.0% · Raoul Bellanova          Lateral ofensivo           b1  -1407.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:15
+[2026-08-21 00:57:43]   226/775    29.2% · Raoul Bellanova          Meia de lado por dentro    b1  -1443.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:43]   227/775    29.3% · Andrea Cambiaso          Lateral defensivo          b1  -1432.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:43]   228/775    29.4% · Andrea Cambiaso          Lateral ofensivo           b1  -1201.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:43]   229/775    29.5% · Andrea Cambiaso          Meia de lado por dentro    b1  -1395.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:43]   230/775    29.7% · Oussama Lamlaoui         Centroavante fixo          b1  -1342.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:43]   231/775    29.8% · Oussama Lamlaoui         Centroavante móvel         b1  -1367.90 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:43]   232/775    29.9% · Dean Henderson           Goleiro defensivo          b1  -1112.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:43]   233/775    30.1% · Oussama Lamlaoui         Falso nove                 b1  -1562.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:44]   234/775    30.2% · Dean Henderson           Goleiro ofensivo           b1  -1113.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:44]   235/775    30.3% · Donyell Malen            Centroavante móvel         b1  -1286.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:44]   236/775    30.5% · Donyell Malen            Meia de lado por dentro    b1  -1538.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:44]   237/775    30.6% · Donyell Malen            Ponta criadora             b1  -1372.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:44]   238/775    30.7% · Donyell Malen            Ponta finalizadora         b1  -1472.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:44]   239/775    30.8% · Benoit Badiashile        Zagueiro de combate        b1  -1432.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:14
+[2026-08-21 00:57:44]   240/775    31.0% · Benoit Badiashile        Zagueiro de saída          b1  -1394.30 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   241/775    31.1% · Dario Essugo             Volante de construção      b1  -1407.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   242/775    31.2% · Dario Essugo             Meia central de chegada    b1  -1455.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   243/775    31.4% · Fran Garcia              Lateral defensivo          b1  -1340.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   244/775    31.5% · Dario Essugo             Volante de contenção       b1  -1374.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   245/775    31.6% · Fran Garcia              Lateral ofensivo           b1  -1135.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   246/775    31.7% · Fran Garcia              Meia de lado por dentro    b1  -1240.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   247/775    31.9% · Fran Garcia              Ponta finalizadora         b1  -1281.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   248/775    32.0% · Arthur Atta              Meia central armador       b1  -1434.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   249/775    32.1% · Arthur Atta              Meia central de chegada    b1  -1486.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   250/775    32.3% · Arthur Atta              Meia de lado por dentro    b1  -1555.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   251/775    32.4% · Arthur Atta              Ponta finalizadora         b1  -1412.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   252/775    32.5% · Arthur Atta              Segundo atacante           b1  -1499.30 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   253/775    32.6% · Arthur Atta              Volante de contenção       b1  -1506.30 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   254/775    32.8% · Afonso Moreira           Centroavante móvel         b1  -1171.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:13
+[2026-08-21 00:57:44]   255/775    32.9% · Afonso Moreira           Meia de lado por fora      b1  -1449.70 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   256/775    33.0% · Afonso Moreira           Ponta criadora             b1  -1473.90 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   257/775    33.2% · Afonso Moreira           Ponta finalizadora         b1  -1401.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   258/775    33.3% · Samuele Ricci            Meia central armador       b1  -1389.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   259/775    33.4% · Samuele Ricci            Meia ofensivo armador      b1  -1436.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   260/775    33.5% · Samuele Ricci            Volante de construção      b1  -1487.30 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   261/775    33.7% · Robert Sanchez           Goleiro defensivo          b1  -1111.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   262/775    33.8% · Samuele Ricci            Volante de contenção       b1  -1378.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   263/775    33.9% · Robert Sanchez           Goleiro ofensivo           b1  -1113.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   264/775    34.1% · Liam Delap               Centroavante fixo          b1  -1439.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   265/775    34.2% · Liam Delap               Centroavante móvel         b1  -1497.60 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   266/775    34.3% · Liam Delap               Meia de lado por dentro    b1  -1605.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   267/775    34.5% · Liam Delap               Falso nove                 b1  -1614.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   268/775    34.6% · Bazoumana Toure          Centroavante móvel         b1  -1323.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   269/775    34.7% · Liam Delap               Ponta finalizadora         b1  -1524.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   270/775    34.8% · Bazoumana Toure          Meia de lado por dentro    b1  -1479.70 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   271/775    35.0% · Bazoumana Toure          Ponta criadora             b1  -1423.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   272/775    35.1% · Bazoumana Toure          Ponta finalizadora         b1  -1447.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:12
+[2026-08-21 00:57:44]   273/775    35.2% · Pascal Struijk           Lateral ofensivo           b1  -1484.80 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   274/775    35.4% · Pascal Struijk           Zagueiro de combate        b1  -1420.00 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   275/775    35.5% · Pascal Struijk           Volante de contenção       b1  -1538.30 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   276/775    35.6% · Pascal Struijk           Zagueiro de saída          b1  -1379.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   277/775    35.7% · Loum Tchaouna            Centroavante móvel         b1  -1353.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   278/775    35.9% · Loum Tchaouna            Meia ofensivo armador      b1  -1524.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   279/775    36.0% · Loum Tchaouna            Meia de lado por dentro    b1  -1532.10 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   280/775    36.1% · Loum Tchaouna            Ponta finalizadora         b1  -1510.50 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   281/775    36.3% · Loum Tchaouna            Ponta criadora             b1  -1506.20 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   282/775    36.4% · Tarik Muharemovic        Zagueiro de combate        b1  -1483.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:44]   283/775    36.5% · Tarik Muharemovic        Zagueiro de saída          b1  -1421.40 ·  0.0s  | decorrido 00:00:06 · media 0.0 s/linha · falta ~00:00:11
+[2026-08-21 00:57:47]   284/775    36.6% · Eden Hazard              Centroavante móvel         b1    366.80 ·  2.8s  | decorrido 00:00:09 · media 0.0 s/linha · falta ~00:00:16
+[2026-08-21 00:57:52]   285/775    36.8% · Eden Hazard              Meia de lado por dentro    b1    382.80 ·  7.7s  | decorrido 00:00:14 · media 0.0 s/linha · falta ~00:00:24
+[2026-08-21 00:57:52]   286/775    36.9% · Eden Hazard              Meia ofensivo armador      b1    348.20 ·  5.6s  | decorrido 00:00:14 · media 0.1 s/linha · falta ~00:00:25
+[2026-08-21 00:57:55]   287/775    37.0% · Eden Hazard              Ponta finalizadora         b1    355.20 ·  2.8s  | decorrido 00:00:17 · media 0.1 s/linha · falta ~00:00:30
+[2026-08-21 00:57:57]   288/775    37.2% · Eden Hazard              Ponta criadora             b1    385.20 ·  5.6s  | decorrido 00:00:19 · media 0.1 s/linha · falta ~00:00:33
+[2026-08-21 00:57:57]   289/775    37.3% · Paolo Maldini            Lateral ofensivo           b1    294.40 ·  2.3s  | decorrido 00:00:20 · media 0.1 s/linha · falta ~00:00:33
+[2026-08-21 00:57:57]   290/775    37.4% · Paolo Maldini            Zagueiro de combate        b1    356.70 ·  0.0s  | decorrido 00:00:20 · media 0.1 s/linha · falta ~00:00:33
+[2026-08-21 00:57:57]   291/775    37.5% · Paolo Maldini            Zagueiro de saída          b1    379.70 ·  0.0s  | decorrido 00:00:20 · media 0.1 s/linha · falta ~00:00:33
+[2026-08-21 00:57:58]   292/775    37.7% · Diego Costa              Centroavante fixo          b1    346.50 ·  0.1s  | decorrido 00:00:20 · media 0.1 s/linha · falta ~00:00:33
+[2026-08-21 00:57:59]   293/775    37.8% · Diego Costa              Centroavante móvel         b1    288.60 ·  1.1s  | decorrido 00:00:21 · media 0.1 s/linha · falta ~00:00:35
+[2026-08-21 00:58:00]   294/775    37.9% · Paolo Maldini            Meia de lado por dentro    b1   -358.20 ·  2.9s  | decorrido 00:00:22 · media 0.1 s/linha · falta ~00:00:37
+[2026-08-21 00:58:00]   295/775    38.1% · Alessandro Nesta         Zagueiro de combate        b1    334.10 ·  0.0s  | decorrido 00:00:22 · media 0.1 s/linha · falta ~00:00:37
+[2026-08-21 00:58:00]   296/775    38.2% · Alessandro Nesta         Zagueiro de saída          b1    357.00 ·  0.0s  | decorrido 00:00:22 · media 0.1 s/linha · falta ~00:00:36
+[2026-08-21 00:58:00]   297/775    38.3% · Gary Cahill              Zagueiro de combate        b1    181.80 ·  0.0s  | decorrido 00:00:22 · media 0.1 s/linha · falta ~00:00:36
+[2026-08-21 00:58:00]   298/775    38.5% · Gary Cahill              Zagueiro de saída          b1    276.40 ·  0.0s  | decorrido 00:00:22 · media 0.1 s/linha · falta ~00:00:36
+[2026-08-21 00:58:00]   299/775    38.6% · Luis Suarez              Centroavante fixo          b1     15.80 ·  0.1s  | decorrido 00:00:22 · media 0.1 s/linha · falta ~00:00:36
+[2026-08-21 00:58:01]   300/775    38.7% · Diego Costa              Falso nove                 b1    142.20 ·  2.2s  | decorrido 00:00:23 · media 0.1 s/linha · falta ~00:00:37
+[2026-08-21 00:58:01]   301/775    38.8% · Luis Suarez              Centroavante móvel         b1    261.60 ·  1.2s  | decorrido 00:00:24 · media 0.1 s/linha · falta ~00:00:37
+[2026-08-21 00:58:04]   302/775    39.0% · Rui Costa                Meia central armador       b1    314.80 ·  2.5s  | decorrido 00:00:26 · media 0.1 s/linha · falta ~00:00:41
+[2026-08-21 00:58:05]   303/775    39.1% · Luis Suarez              Falso nove                 b1    230.20 ·  3.9s  | decorrido 00:00:27 · media 0.1 s/linha · falta ~00:00:42
+[2026-08-21 00:58:07]   304/775    39.2% · Rui Costa                Meia de lado por dentro    b1     74.00 ·  2.8s  | decorrido 00:00:29 · media 0.1 s/linha · falta ~00:00:45
+[2026-08-21 00:58:09]   305/775    39.4% · Rui Costa                Meia ofensivo armador      b1    288.70 ·  4.2s  | decorrido 00:00:31 · media 0.1 s/linha · falta ~00:00:48
+[2026-08-21 00:58:13]   306/775    39.5% · Rui Costa                Segundo atacante           b1    191.10 ·  6.1s  | decorrido 00:00:35 · media 0.1 s/linha · falta ~00:00:54
+[2026-08-21 00:58:13]   307/775    39.6% · Thibaut Courtois         Goleiro defensivo          b1    -11.80 ·  0.0s  | decorrido 00:00:35 · media 0.1 s/linha · falta ~00:00:54
+[2026-08-21 00:58:13]   308/775    39.7% · Thibaut Courtois         Goleiro ofensivo           b1     68.50 ·  0.0s  | decorrido 00:00:35 · media 0.1 s/linha · falta ~00:00:53
+[2026-08-21 00:58:22]   309/775    39.9% · Usami Takashi            Centroavante móvel         b1    239.70 ·  9.0s  | decorrido 00:00:44 · media 0.1 s/linha · falta ~00:01:07
+[2026-08-21 00:58:30]   310/775    40.0% · Rui Costa                Volante de contenção       b1   -728.80 · 20.9s  | decorrido 00:00:52 · media 0.2 s/linha · falta ~00:01:18
+[2026-08-21 00:58:57]   311/775    40.1% · Usami Takashi            Ponta finalizadora         b1    319.00 · 27.0s  | decorrido 00:01:19 · media 0.3 s/linha · falta ~00:01:58
+[2026-08-21 00:59:17]   312/775    40.3% · Usami Takashi            Meia ofensivo armador      b1    279.60 · 55.4s  | decorrido 00:01:39 · media 0.3 s/linha · falta ~00:02:28
+[2026-08-21 00:59:20]   313/775    40.4% · Jay-Jay Okocha           Centroavante móvel         b1    115.20 ·  2.5s  | decorrido 00:01:42 · media 0.3 s/linha · falta ~00:02:31
+[2026-08-21 00:59:49]   314/775    40.5% · Jay-Jay Okocha           Meia central armador       b1    395.20 · 29.7s  | decorrido 00:02:12 · media 0.4 s/linha · falta ~00:03:13
+[2026-08-21 01:00:53]   315/775    40.6% · Jay-Jay Okocha           Meia de lado por dentro    b1    358.20 · 63.7s  | decorrido 00:03:15 · media 0.6 s/linha · falta ~00:04:45
+[2026-08-21 01:01:29]   316/775    40.8% · Jay-Jay Okocha           Meia ofensivo armador      b1    346.00 · 35.4s  | decorrido 00:03:51 · media 0.7 s/linha · falta ~00:05:35
+[2026-08-21 01:02:51]   317/775    40.9% · Jay-Jay Okocha           Ponta criadora             b1    374.20 · 82.2s  | decorrido 00:05:13 · media 1.0 s/linha · falta ~00:07:32
+[2026-08-21 01:03:41]   318/775    41.0% · Usami Takashi            Segundo atacante           b1    333.30 · 283.8s  | decorrido 00:06:03 · media 1.1 s/linha · falta ~00:08:42
+[2026-08-21 01:03:44]   319/775    41.2% · Nwankwo Kanu             Centroavante fixo          b1    267.60 ·  2.9s  | decorrido 00:06:06 · media 1.1 s/linha · falta ~00:08:43
+[2026-08-21 01:03:54]   320/775    41.3% · Nwankwo Kanu             Centroavante móvel         b1    220.00 · 10.6s  | decorrido 00:06:16 · media 1.2 s/linha · falta ~00:08:55
+[2026-08-21 01:04:05]   321/775    41.4% · Jay-Jay Okocha           Segundo atacante           b1    384.20 · 74.4s  | decorrido 00:06:27 · media 1.2 s/linha · falta ~00:09:08
+[2026-08-21 01:04:25]   322/775    41.5% · Nwankwo Kanu             Falso nove                 b1    204.30 · 31.2s  | decorrido 00:06:48 · media 1.3 s/linha · falta ~00:09:34
+[2026-08-21 01:04:27]   323/775    41.7% · Nwankwo Kanu             Meia ofensivo armador      b1   -105.00 · 21.6s  | decorrido 00:06:49 · media 1.3 s/linha · falta ~00:09:33
+[2026-08-21 01:04:29]   324/775    41.8% · Lionel Messi             Centroavante fixo          b1   -151.90 ·  3.8s  | decorrido 00:06:51 · media 1.3 s/linha · falta ~00:09:33
+[2026-08-21 01:04:43]   325/775    41.9% · Lionel Messi             Centroavante móvel         b1    252.00 · 16.3s  | decorrido 00:07:05 · media 1.3 s/linha · falta ~00:09:49
+[2026-08-21 01:05:19]   326/775    42.1% · Lionel Messi             Meia de lado por dentro    b1    193.70 · 36.4s  | decorrido 00:07:42 · media 1.4 s/linha · falta ~00:10:36
+[2026-08-21 01:06:35]   327/775    42.2% · Lionel Messi             Meia ofensivo armador      b1    334.90 · 75.5s  | decorrido 00:08:57 · media 1.6 s/linha · falta ~00:12:16
+[2026-08-21 01:06:45]   328/775    42.3% · Lionel Messi             Ponta finalizadora         b1    187.80 · 10.1s  | decorrido 00:09:07 · media 1.7 s/linha · falta ~00:12:26
+[2026-08-21 01:06:49]   329/775    42.5% · Lamine Yamal             Centroavante móvel         b1    214.70 ·  3.9s  | decorrido 00:09:11 · media 1.7 s/linha · falta ~00:12:27
+[2026-08-21 01:07:29]   330/775    42.6% · Lionel Messi             Falso nove                 b1    344.10 · 180.1s  | decorrido 00:09:52 · media 1.8 s/linha · falta ~00:13:18
+[2026-08-21 01:08:45]   331/775    42.7% · Lamine Yamal             Meia de lado por dentro    b1    340.80 · 115.9s  | decorrido 00:11:07 · media 2.0 s/linha · falta ~00:14:55
+[2026-08-21 01:09:19]   332/775    42.8% · Lamine Yamal             Ponta criadora             b1    366.50 · 109.8s  | decorrido 00:11:41 · media 2.1 s/linha · falta ~00:15:36
+[2026-08-21 01:09:20]   333/775    43.0% · Vinicius Junior          Centroavante móvel         b1    238.70 ·  0.7s  | decorrido 00:11:42 · media 2.1 s/linha · falta ~00:15:32
+[2026-08-21 01:09:22]   334/775    43.1% · Vinicius Junior          Meia de lado por fora      b1     26.70 ·  2.5s  | decorrido 00:11:45 · media 2.1 s/linha · falta ~00:15:31
+[2026-08-21 01:09:25]   335/775    43.2% · Vinicius Junior          Meia ofensivo armador      b1   -101.30 ·  2.3s  | decorrido 00:11:47 · media 2.1 s/linha · falta ~00:15:29
+[2026-08-21 01:09:29]   336/775    43.4% · Lamine Yamal             Ponta finalizadora         b1    322.00 · 43.8s  | decorrido 00:11:51 · media 2.1 s/linha · falta ~00:15:29
+[2026-08-21 01:09:29]   337/775    43.5% · Vinicius Junior          Ponta criadora             b1    230.90 ·  4.5s  | decorrido 00:11:51 · media 2.1 s/linha · falta ~00:15:25
+[2026-08-21 01:09:30]   338/775    43.6% · Joao Neves               Meia central armador       b1    222.40 ·  1.1s  | decorrido 00:11:52 · media 2.1 s/linha · falta ~00:15:21
+[2026-08-21 01:09:31]   339/775    43.7% · Vinicius Junior          Ponta finalizadora         b1    249.20 ·  2.6s  | decorrido 00:11:53 · media 2.1 s/linha · falta ~00:15:18
+[2026-08-21 01:09:36]   340/775    43.9% · Joao Neves               Meia ofensivo armador      b1    -37.40 ·  4.6s  | decorrido 00:11:58 · media 2.1 s/linha · falta ~00:15:19
+[2026-08-21 01:09:36]   341/775    44.0% · Joao Neves               Meia central de chegada    b1    315.80 ·  5.6s  | decorrido 00:11:58 · media 2.1 s/linha · falta ~00:15:14
+[2026-08-21 01:09:41]   342/775    44.1% · Joao Neves               Volante de construção      b1    141.00 ·  5.0s  | decorrido 00:12:03 · media 2.1 s/linha · falta ~00:15:16
+[2026-08-21 01:09:54]   343/775    44.3% · Dominik Szoboszlai       Meia central armador       b1    174.60 · 13.2s  | decorrido 00:12:16 · media 2.1 s/linha · falta ~00:15:27
+[2026-08-21 01:10:39]   344/775    44.4% · Dominik Szoboszlai       Lateral ofensivo           b1    233.00 · 63.4s  | decorrido 00:13:01 · media 2.3 s/linha · falta ~00:16:19
+[2026-08-21 01:10:53]   345/775    44.5% · Dominik Szoboszlai       Meia central de chegada    b1    244.70 · 58.8s  | decorrido 00:13:15 · media 2.3 s/linha · falta ~00:16:31
+[2026-08-21 01:11:11]   346/775    44.6% · Dominik Szoboszlai       Meia ofensivo armador      b1     99.90 · 18.6s  | decorrido 00:13:34 · media 2.4 s/linha · falta ~00:16:49
+[2026-08-21 01:11:18]   347/775    44.8% · Dominik Szoboszlai       Ponta finalizadora         b1     83.30 ·  6.7s  | decorrido 00:13:40 · media 2.4 s/linha · falta ~00:16:52
+[2026-08-21 01:11:56]   348/775    44.9% · Dominik Szoboszlai       Meia de lado por fora      b1    173.10 · 76.3s  | decorrido 00:14:18 · media 2.5 s/linha · falta ~00:17:33
+[2026-08-21 01:12:07]   349/775    45.0% · Lionel Messi             Centroavante móvel         b1    179.10 · 11.1s  | decorrido 00:14:29 · media 2.5 s/linha · falta ~00:17:41
+[2026-08-21 01:12:40]   350/775    45.2% · Lionel Messi             Meia de lado por dentro    b1    153.50 · 32.9s  | decorrido 00:15:02 · media 2.6 s/linha · falta ~00:18:15
+[2026-08-21 01:13:03]   351/775    45.3% · Dominik Szoboszlai       Volante de construção      b1     96.90 · 105.4s  | decorrido 00:15:26 · media 2.6 s/linha · falta ~00:18:38
+[2026-08-21 01:13:14]   352/775    45.4% · Lionel Messi             Ponta finalizadora         b1    181.00 · 10.4s  | decorrido 00:15:36 · media 2.7 s/linha · falta ~00:18:45
+[2026-08-21 01:13:50]   353/775    45.5% · Lionel Messi             Meia ofensivo armador      b1    290.40 · 70.5s  | decorrido 00:16:12 · media 2.8 s/linha · falta ~00:19:22
+[2026-08-21 01:14:21]   354/775    45.7% · Lionel Messi             Segundo atacante           b1    267.00 · 67.2s  | decorrido 00:16:43 · media 2.8 s/linha · falta ~00:19:53
+[2026-08-21 01:15:16]   355/775    45.8% · James Maddison           Meia de lado por dentro    b1    241.80 · 54.6s  | decorrido 00:17:38 · media 3.0 s/linha · falta ~00:20:52
+[2026-08-21 01:15:36]   356/775    45.9% · James Maddison           Meia central armador       b1    368.00 · 105.5s  | decorrido 00:17:58 · media 3.0 s/linha · falta ~00:21:09
+[2026-08-21 01:16:47]   357/775    46.1% · James Maddison           Ponta criadora             b1    282.30 · 71.6s  | decorrido 00:19:09 · media 3.2 s/linha · falta ~00:22:26
+[2026-08-21 01:17:23]   358/775    46.2% · James Maddison           Meia ofensivo armador      b1    361.80 · 127.4s  | decorrido 00:19:45 · media 3.3 s/linha · falta ~00:23:01
+[2026-08-21 01:17:24]   359/775    46.3% · Adrien Rabiot            Meia central armador       b1     22.60 ·  1.4s  | decorrido 00:19:47 · media 3.3 s/linha · falta ~00:22:55
+[2026-08-21 01:17:30]   360/775    46.5% · Adrien Rabiot            Meia central de chegada    b1    227.90 ·  5.7s  | decorrido 00:19:52 · media 3.3 s/linha · falta ~00:22:55
+[2026-08-21 01:17:35]   361/775    46.6% · Adrien Rabiot            Meia de lado por fora      b1     11.90 ·  4.5s  | decorrido 00:19:57 · media 3.3 s/linha · falta ~00:22:53
+[2026-08-21 01:17:37]   362/775    46.7% · Adrien Rabiot            Meia ofensivo armador      b1   -164.90 ·  2.8s  | decorrido 00:20:00 · media 3.3 s/linha · falta ~00:22:49
+[2026-08-21 01:17:46]   363/775    46.8% · Adrien Rabiot            Volante de construção      b1    174.20 ·  8.8s  | decorrido 00:20:08 · media 3.3 s/linha · falta ~00:22:52
+[2026-08-21 01:17:46]   364/775    47.0% · Nishikawa Shusaku        Goleiro defensivo          b1    200.10 ·  0.0s  | decorrido 00:20:08 · media 3.3 s/linha · falta ~00:22:45
+[2026-08-21 01:17:46]   365/775    47.1% · Nishikawa Shusaku        Goleiro ofensivo           b1    221.90 ·  0.0s  | decorrido 00:20:08 · media 3.3 s/linha · falta ~00:22:38
+[2026-08-21 01:18:37]   366/775    47.2% · James Maddison           Segundo atacante           b1    333.00 · 109.4s  | decorrido 00:20:59 · media 3.4 s/linha · falta ~00:23:27
+[2026-08-21 01:18:56]   367/775    47.4% · Shibasaki Gaku           Meia central armador       b1    372.20 · 69.2s  | decorrido 00:21:18 · media 3.5 s/linha · falta ~00:23:41
+[2026-08-21 01:20:02]   368/775    47.5% · Shibasaki Gaku           Meia de lado por dentro    b1    -48.30 · 66.9s  | decorrido 00:22:25 · media 3.7 s/linha · falta ~00:24:47
+[2026-08-21 01:21:21]   369/775    47.6% · Shibasaki Gaku           Meia ofensivo armador      b1    284.90 · 78.4s  | decorrido 00:23:43 · media 3.9 s/linha · falta ~00:26:06
+[2026-08-21 01:21:38]   370/775    47.7% · Shibasaki Gaku           Meia central de chegada    b1    322.80 · 181.9s  | decorrido 00:24:01 · media 3.9 s/linha · falta ~00:26:17
+[2026-08-21 01:21:38]   371/775    47.9% · Iker Casillas            Goleiro defensivo          b1    191.40 ·  0.0s  | decorrido 00:24:01 · media 3.9 s/linha · falta ~00:26:09
+[2026-08-21 01:21:39]   372/775    48.0% · Iker Casillas            Goleiro ofensivo           b1    231.70 ·  0.0s  | decorrido 00:24:01 · media 3.9 s/linha · falta ~00:26:01
+[2026-08-21 01:21:39]   373/775    48.1% · Samuel Eto o             Centroavante fixo          b1    -84.20 ·  0.2s  | decorrido 00:24:01 · media 3.9 s/linha · falta ~00:25:53
+[2026-08-21 01:21:40]   374/775    48.3% · Samuel Eto o             Centroavante móvel         b1    294.20 ·  0.9s  | decorrido 00:24:02 · media 3.9 s/linha · falta ~00:25:46
+[2026-08-21 01:21:42]   375/775    48.4% · Samuel Eto o             Falso nove                 b1    101.00 ·  2.4s  | decorrido 00:24:04 · media 3.9 s/linha · falta ~00:25:41
+[2026-08-21 01:21:45]   376/775    48.5% · Samuel Eto o             Meia de lado por dentro    b1    -42.10 ·  3.0s  | decorrido 00:24:07 · media 3.9 s/linha · falta ~00:25:36
+[2026-08-21 01:21:48]   377/775    48.6% · Samuel Eto o             Meia ofensivo armador      b1   -411.40 ·  2.4s  | decorrido 00:24:10 · media 3.8 s/linha · falta ~00:25:30
+[2026-08-21 01:21:49]   378/775    48.8% · Samuel Eto o             Ponta finalizadora         b1    149.70 ·  1.5s  | decorrido 00:24:11 · media 3.8 s/linha · falta ~00:25:24
+[2026-08-21 01:21:54]   379/775    48.9% · Nico Paz                 Centroavante móvel         b1     92.00 ·  4.9s  | decorrido 00:24:16 · media 3.8 s/linha · falta ~00:25:21
+[2026-08-21 01:22:47]   380/775    49.0% · Nico Paz                 Meia central de chegada    b1    121.40 · 52.9s  | decorrido 00:25:09 · media 4.0 s/linha · falta ~00:26:09
+[2026-08-21 01:23:14]   381/775    49.2% · Nico Paz                 Meia de lado por dentro    b1     50.70 · 26.6s  | decorrido 00:25:36 · media 4.0 s/linha · falta ~00:26:28
+[2026-08-21 01:23:43]   382/775    49.3% · Nico Paz                 Meia ofensivo armador      b1    -68.30 · 29.2s  | decorrido 00:26:05 · media 4.1 s/linha · falta ~00:26:50
+[2026-08-21 01:24:40]   383/775    49.4% · Nico Paz                 Segundo atacante           b1    131.00 · 57.4s  | decorrido 00:27:02 · media 4.2 s/linha · falta ~00:27:40
+[2026-08-21 01:26:29]   384/775    49.5% · Nico Paz                 Volante de contenção       b1   -620.80 · 109.4s  | decorrido 00:28:52 · media 4.5 s/linha · falta ~00:29:23
+[2026-08-21 01:26:54]   385/775    49.7% · Aleksandar Pavlovic      Meia central armador       b1      7.10 · 24.9s  | decorrido 00:29:17 · media 4.6 s/linha · falta ~00:29:39
+[2026-08-21 01:27:51]   386/775    49.8% · Aleksandar Pavlovic      Volante de construção      b1    116.00 · 56.9s  | decorrido 00:30:14 · media 4.7 s/linha · falta ~00:30:28
+[2026-08-21 01:28:22]   387/775    49.9% · Aleksandar Pavlovic      Volante de contenção       b1     79.80 · 31.0s  | decorrido 00:30:45 · media 4.8 s/linha · falta ~00:30:49
+[2026-08-21 01:28:23]   388/775    50.1% · Aleksandar Pavlovic      Zagueiro de saída          b1     30.50 ·  0.2s  | decorrido 00:30:45 · media 4.8 s/linha · falta ~00:30:40
+[2026-08-21 01:28:24]   389/775    50.2% · Frenkie de Jong          Meia central armador       b1    204.70 ·  1.5s  | decorrido 00:30:46 · media 4.7 s/linha · falta ~00:30:32
+[2026-08-21 01:28:29]   390/775    50.3% · Frenkie de Jong          Meia central de chegada    b1    176.40 ·  4.6s  | decorrido 00:30:51 · media 4.7 s/linha · falta ~00:30:27
+[2026-08-21 01:28:32]   391/775    50.5% · Frenkie de Jong          Meia ofensivo armador      b1     20.80 ·  3.3s  | decorrido 00:30:54 · media 4.7 s/linha · falta ~00:30:21
+[2026-08-21 01:28:45]   392/775    50.6% · Frenkie de Jong          Volante de construção      b1   -313.50 · 13.5s  | decorrido 00:31:08 · media 4.8 s/linha · falta ~00:30:25
+[2026-08-21 01:28:46]   393/775    50.7% · Frenkie de Jong          Zagueiro de saída          b1   -896.60 ·  0.7s  | decorrido 00:31:08 · media 4.8 s/linha · falta ~00:30:16
+[2026-08-21 01:28:46]   394/775    50.8% · Lautaro Martinez         Centroavante fixo          b1   -173.10 ·  0.1s  | decorrido 00:31:09 · media 4.7 s/linha · falta ~00:30:07
+[2026-08-21 01:28:47]   395/775    51.0% · Lautaro Martinez         Centroavante móvel         b1     83.80 ·  0.8s  | decorrido 00:31:09 · media 4.7 s/linha · falta ~00:29:58
+[2026-08-21 01:28:50]   396/775    51.1% · Lautaro Martinez         Falso nove                 b1    -18.80 ·  3.3s  | decorrido 00:31:13 · media 4.7 s/linha · falta ~00:29:52
+[2026-08-21 01:28:51]   397/775    51.2% · Ibrahima Konate          Zagueiro de combate        b1    -35.00 ·  0.2s  | decorrido 00:31:13 · media 4.7 s/linha · falta ~00:29:43
+[2026-08-21 01:28:51]   398/775    51.4% · Ibrahima Konate          Zagueiro de saída          b1    111.20 ·  0.2s  | decorrido 00:31:13 · media 4.7 s/linha · falta ~00:29:34
+[2026-08-21 01:29:25]   399/775    51.5% · Shibasaki Gaku           Volante de construção      b1    285.40 · 483.7s  | decorrido 00:31:47 · media 4.8 s/linha · falta ~00:29:57
+[2026-08-21 01:30:24]   400/775    51.6% · Sandro Tonali            Meia central de chegada    b1    292.20 · 93.4s  | decorrido 00:32:46 · media 4.9 s/linha · falta ~00:30:43
+[2026-08-21 01:30:59]   401/775    51.7% · Sandro Tonali            Volante de contenção       b1    169.70 · 34.9s  | decorrido 00:33:21 · media 5.0 s/linha · falta ~00:31:06
+[2026-08-21 01:31:05]   402/775    51.9% · Matheus Cunha            Centroavante móvel         b1    240.80 ·  6.4s  | decorrido 00:33:28 · media 5.0 s/linha · falta ~00:31:03
+[2026-08-21 01:31:16]   403/775    52.0% · Sandro Tonali            Volante de construção      b1    296.20 · 111.4s  | decorrido 00:33:38 · media 5.0 s/linha · falta ~00:31:03
+[2026-08-21 01:31:42]   404/775    52.1% · Matheus Cunha            Meia central de chegada    b1     82.00 · 36.2s  | decorrido 00:34:04 · media 5.1 s/linha · falta ~00:31:17
+[2026-08-21 01:31:48]   405/775    52.3% · Matheus Cunha            Meia de lado por dentro    b1    150.70 · 32.0s  | decorrido 00:34:10 · media 5.1 s/linha · falta ~00:31:13
+[2026-08-21 01:32:00]   406/775    52.4% · Matheus Cunha            Ponta finalizadora         b1    184.30 · 12.2s  | decorrido 00:34:22 · media 5.1 s/linha · falta ~00:31:14
+[2026-08-21 01:32:12]   407/775    52.5% · Matheus Cunha            Meia de lado por fora      b1    103.40 · 30.2s  | decorrido 00:34:34 · media 5.1 s/linha · falta ~00:31:15
+[2026-08-21 01:32:19]   408/775    52.6% · Antoine Semenyo          Centroavante móvel         b1    179.80 ·  7.0s  | decorrido 00:34:41 · media 5.1 s/linha · falta ~00:31:12
+[2026-08-21 01:32:56]   409/775    52.8% · Antoine Semenyo          Meia de lado por dentro    b1     22.10 · 36.8s  | decorrido 00:35:18 · media 5.2 s/linha · falta ~00:31:35
+[2026-08-21 01:33:04]   410/775    52.9% · Matheus Cunha            Segundo atacante           b1    213.30 · 64.1s  | decorrido 00:35:27 · media 5.2 s/linha · falta ~00:31:33
+[2026-08-21 01:33:19]   411/775    53.0% · Antoine Semenyo          Meia ofensivo armador      b1   -276.70 · 23.2s  | decorrido 00:35:41 · media 5.2 s/linha · falta ~00:31:36
+[2026-08-21 01:33:39]   412/775    53.2% · Antoine Semenyo          Ponta finalizadora         b1     87.50 · 20.1s  | decorrido 00:36:01 · media 5.2 s/linha · falta ~00:31:44
+[2026-08-21 01:33:39]   413/775    53.3% · Jan Paul van Hecke       Zagueiro de combate        b1    -37.00 ·  0.2s  | decorrido 00:36:01 · media 5.2 s/linha · falta ~00:31:34
+[2026-08-21 01:33:39]   414/775    53.4% · Jan Paul van Hecke       Zagueiro de saída          b1    110.20 ·  0.2s  | decorrido 00:36:02 · media 5.2 s/linha · falta ~00:31:25
+[2026-08-21 01:33:44]   415/775    53.5% · Cole Palmer              Centroavante móvel         b1    210.00 ·  5.0s  | decorrido 00:36:07 · media 5.2 s/linha · falta ~00:31:19
+[2026-08-21 01:33:58]   416/775    53.7% · Cole Palmer              Meia central armador       b1      7.50 · 13.2s  | decorrido 00:36:20 · media 5.2 s/linha · falta ~00:31:21
+[2026-08-21 01:34:07]   417/775    53.8% · Antoine Semenyo          Ponta criadora             b1     -5.20 · 62.9s  | decorrido 00:36:29 · media 5.3 s/linha · falta ~00:31:20
+[2026-08-21 01:34:27]   418/775    53.9% · Cole Palmer              Meia de lado por dentro    b1    106.40 · 29.8s  | decorrido 00:36:50 · media 5.3 s/linha · falta ~00:31:27
+[2026-08-21 01:34:30]   419/775    54.1% · Cole Palmer              Meia ofensivo armador      b1    144.70 · 22.4s  | decorrido 00:36:52 · media 5.3 s/linha · falta ~00:31:19
+[2026-08-21 01:35:20]   420/775    54.2% · Cole Palmer              Ponta criadora             b1    223.10 · 52.3s  | decorrido 00:37:42 · media 5.4 s/linha · falta ~00:31:52
+[2026-08-21 01:35:20]   421/775    54.3% · Nick Woltemade           Centroavante fixo          b1   -212.30 ·  0.5s  | decorrido 00:37:42 · media 5.4 s/linha · falta ~00:31:42
+[2026-08-21 01:35:23]   422/775    54.5% · Nick Woltemade           Centroavante móvel         b1    -55.80 ·  2.9s  | decorrido 00:37:45 · media 5.4 s/linha · falta ~00:31:35
+[2026-08-21 01:35:39]   423/775    54.6% · Nick Woltemade           Falso nove                 b1    -82.10 · 15.8s  | decorrido 00:38:01 · media 5.4 s/linha · falta ~00:31:38
+[2026-08-21 01:35:48]   424/775    54.7% · Cole Palmer              Segundo atacante           b1    205.30 · 78.0s  | decorrido 00:38:10 · media 5.4 s/linha · falta ~00:31:36
+[2026-08-21 01:35:49]   425/775    54.8% · Mohamed Salah            Centroavante móvel         b1    220.80 ·  0.8s  | decorrido 00:38:11 · media 5.4 s/linha · falta ~00:31:26
+[2026-08-21 01:35:51]   426/775    55.0% · Mohamed Salah            Meia de lado por dentro    b1    -51.40 ·  2.4s  | decorrido 00:38:13 · media 5.4 s/linha · falta ~00:31:19
+[2026-08-21 01:35:53]   427/775    55.1% · Mohamed Salah            Meia ofensivo armador      b1   -374.90 ·  1.8s  | decorrido 00:38:15 · media 5.4 s/linha · falta ~00:31:10
+[2026-08-21 01:35:55]   428/775    55.2% · Mohamed Salah            Ponta criadora             b1     63.80 ·  2.4s  | decorrido 00:38:17 · media 5.4 s/linha · falta ~00:31:02
+[2026-08-21 01:35:55]   429/775    55.4% · Nick Woltemade           Meia ofensivo armador      b1   -341.00 · 16.6s  | decorrido 00:38:18 · media 5.4 s/linha · falta ~00:30:53
+[2026-08-21 01:35:55]   430/775    55.5% · Omar Marmoush            Centroavante fixo          b1   -361.10 ·  0.1s  | decorrido 00:38:18 · media 5.3 s/linha · falta ~00:30:43
+[2026-08-21 01:35:56]   431/775    55.6% · Omar Marmoush            Centroavante móvel         b1    196.10 ·  0.3s  | decorrido 00:38:18 · media 5.3 s/linha · falta ~00:30:34
+[2026-08-21 01:35:56]   432/775    55.7% · Mohamed Salah            Ponta finalizadora         b1    104.90 ·  1.2s  | decorrido 00:38:19 · media 5.3 s/linha · falta ~00:30:25
+[2026-08-21 01:35:57]   433/775    55.9% · Omar Marmoush            Meia de lado por dentro    b1    -41.20 ·  1.1s  | decorrido 00:38:20 · media 5.3 s/linha · falta ~00:30:16
+[2026-08-21 01:35:58]   434/775    56.0% · Omar Marmoush            Ponta finalizadora         b1    117.30 ·  0.4s  | decorrido 00:38:20 · media 5.3 s/linha · falta ~00:30:07
+[2026-08-21 01:35:58]   435/775    56.1% · Omar Marmoush            Falso nove                 b1     89.50 ·  2.2s  | decorrido 00:38:20 · media 5.3 s/linha · falta ~00:29:58
+[2026-08-21 01:35:58]   436/775    56.3% · P. E. Aubameyang         Centroavante fixo          b1    -18.90 ·  0.1s  | decorrido 00:38:20 · media 5.3 s/linha · falta ~00:29:48
+[2026-08-21 01:35:59]   437/775    56.4% · P. E. Aubameyang         Centroavante móvel         b1    234.70 ·  0.5s  | decorrido 00:38:21 · media 5.3 s/linha · falta ~00:29:39
+[2026-08-21 01:36:00]   438/775    56.5% · P. E. Aubameyang         Ponta finalizadora         b1     59.40 ·  1.2s  | decorrido 00:38:22 · media 5.3 s/linha · falta ~00:29:31
+[2026-08-21 01:36:00]   439/775    56.6% · Ollie Watkins            Centroavante fixo          b1   -142.20 ·  0.1s  | decorrido 00:38:22 · media 5.2 s/linha · falta ~00:29:22
+[2026-08-21 01:36:01]   440/775    56.8% · Ollie Watkins            Centroavante móvel         b1     79.50 ·  0.8s  | decorrido 00:38:23 · media 5.2 s/linha · falta ~00:29:13
+[2026-08-21 01:36:01]   441/775    56.9% · P. E. Aubameyang         Falso nove                 b1    -72.10 ·  3.1s  | decorrido 00:38:23 · media 5.2 s/linha · falta ~00:29:04
+[2026-08-21 01:36:03]   442/775    57.0% · Ollie Watkins            Falso nove                 b1   -252.70 ·  2.3s  | decorrido 00:38:25 · media 5.2 s/linha · falta ~00:28:57
+[2026-08-21 01:36:03]   443/775    57.2% · Ollie Watkins            Meia de lado por dentro    b1   -296.30 ·  2.3s  | decorrido 00:38:26 · media 5.2 s/linha · falta ~00:28:48
+[2026-08-21 01:36:03]   444/775    57.3% · Marc Guehi               Zagueiro de combate        b1    -13.10 ·  0.0s  | decorrido 00:38:26 · media 5.2 s/linha · falta ~00:28:39
+[2026-08-21 01:36:03]   445/775    57.4% · Marc Guehi               Zagueiro de saída          b1    111.30 ·  0.0s  | decorrido 00:38:26 · media 5.2 s/linha · falta ~00:28:30
+[2026-08-21 01:36:04]   446/775    57.5% · Ollie Watkins            Ponta finalizadora         b1   -106.40 ·  0.7s  | decorrido 00:38:26 · media 5.2 s/linha · falta ~00:28:21
+[2026-08-21 01:36:28]   447/775    57.7% · Granit Xhaka             Meia central armador       b1     90.00 · 24.4s  | decorrido 00:38:50 · media 5.2 s/linha · falta ~00:28:30
+[2026-08-21 01:36:59]   448/775    57.8% · Granit Xhaka             Lateral ofensivo           b1     97.10 · 55.7s  | decorrido 00:39:21 · media 5.3 s/linha · falta ~00:28:43
+[2026-08-21 01:37:12]   449/775    57.9% · Granit Xhaka             Meia central de chegada    b1    212.10 · 44.0s  | decorrido 00:39:34 · media 5.3 s/linha · falta ~00:28:44
+[2026-08-21 01:37:22]   450/775    58.1% · Granit Xhaka             Meia ofensivo armador      b1   -176.80 · 23.0s  | decorrido 00:39:44 · media 5.3 s/linha · falta ~00:28:42
+[2026-08-21 01:37:58]   451/775    58.2% · N Golo Kante             Meia central de chegada    b1    272.60 · 36.2s  | decorrido 00:40:21 · media 5.4 s/linha · falta ~00:28:59
+[2026-08-21 01:38:40]   452/775    58.3% · N Golo Kante             Volante de construção      b1    245.50 · 41.8s  | decorrido 00:41:02 · media 5.4 s/linha · falta ~00:29:19
+[2026-08-21 01:38:53]   453/775    58.5% · Granit Xhaka             Volante de construção      b1    205.30 · 100.5s  | decorrido 00:41:15 · media 5.5 s/linha · falta ~00:29:19
+[2026-08-21 01:38:53]   454/775    58.6% · Bart Verbruggen          Goleiro defensivo          b1    -84.40 ·  0.0s  | decorrido 00:41:15 · media 5.5 s/linha · falta ~00:29:10
+[2026-08-21 01:38:53]   455/775    58.7% · Bart Verbruggen          Goleiro ofensivo           b1     13.20 ·  0.0s  | decorrido 00:41:15 · media 5.4 s/linha · falta ~00:29:00
+[2026-08-21 01:38:58]   456/775    58.8% · Nico O Reilly            Lateral defensivo          b1   -263.90 ·  5.0s  | decorrido 00:41:20 · media 5.4 s/linha · falta ~00:28:55
+[2026-08-21 01:39:33]   457/775    59.0% · N Golo Kante             Volante de contenção       b1    264.90 · 53.0s  | decorrido 00:41:55 · media 5.5 s/linha · falta ~00:29:10
+[2026-08-21 01:40:13]   458/775    59.1% · Nico O Reilly            Meia central armador       b1     68.00 · 39.5s  | decorrido 00:42:35 · media 5.6 s/linha · falta ~00:29:28
+[2026-08-21 01:40:47]   459/775    59.2% · Nico O Reilly            Lateral ofensivo           b1    202.20 · 109.1s  | decorrido 00:43:09 · media 5.6 s/linha · falta ~00:29:42
+[2026-08-21 01:41:25]   460/775    59.4% · Nico O Reilly            Meia de lado por dentro    b1    -13.40 · 72.3s  | decorrido 00:43:47 · media 5.7 s/linha · falta ~00:29:59
+[2026-08-21 01:41:47]   461/775    59.5% · Lucas Bergvall           Meia central armador       b1     -8.50 · 22.0s  | decorrido 00:44:09 · media 5.7 s/linha · falta ~00:30:04
+[2026-08-21 01:42:19]   462/775    59.6% · Nico O Reilly            Meia ofensivo armador      b1   -128.00 · 91.9s  | decorrido 00:44:41 · media 5.8 s/linha · falta ~00:30:16
+[2026-08-21 01:43:08]   463/775    59.7% · Lucas Bergvall           Meia central de chegada    b1    179.60 · 80.6s  | decorrido 00:45:30 · media 5.9 s/linha · falta ~00:30:39
+[2026-08-21 01:43:21]   464/775    59.9% · Lucas Bergvall           Meia ofensivo armador      b1   -167.40 · 62.5s  | decorrido 00:45:43 · media 5.9 s/linha · falta ~00:30:39
+[2026-08-21 01:43:21]   465/775    60.0% · Luka Vuskovic            Zagueiro de combate        b1   -133.40 ·  0.2s  | decorrido 00:45:44 · media 5.9 s/linha · falta ~00:30:29
+[2026-08-21 01:43:21]   466/775    60.1% · Luka Vuskovic            Zagueiro de saída          b1     40.60 ·  0.2s  | decorrido 00:45:44 · media 5.9 s/linha · falta ~00:30:19
+[2026-08-21 01:43:22]   467/775    60.3% · Pedro Neto               Centroavante móvel         b1     51.80 ·  0.3s  | decorrido 00:45:44 · media 5.9 s/linha · falta ~00:30:10
+[2026-08-21 01:43:28]   468/775    60.4% · Pedro Neto               Meia de lado por dentro    b1     74.40 ·  6.0s  | decorrido 00:45:50 · media 5.9 s/linha · falta ~00:30:04
+[2026-08-21 01:43:31]   469/775    60.5% · Pedro Neto               Meia ofensivo armador      b1   -279.80 ·  3.5s  | decorrido 00:45:53 · media 5.9 s/linha · falta ~00:29:56
+[2026-08-21 01:43:35]   470/775    60.6% · Pedro Neto               Ponta criadora             b1     99.90 ·  4.1s  | decorrido 00:45:58 · media 5.9 s/linha · falta ~00:29:49
+[2026-08-21 01:43:37]   471/775    60.8% · Pedro Neto               Ponta finalizadora         b1    114.70 ·  2.0s  | decorrido 00:45:59 · media 5.9 s/linha · falta ~00:29:41
+[2026-08-21 01:43:37]   472/775    60.9% · Reece James              Lateral defensivo          b1   -350.90 ·  0.2s  | decorrido 00:46:00 · media 5.8 s/linha · falta ~00:29:31
+[2026-08-21 01:43:39]   473/775    61.0% · Reece James              Lateral ofensivo           b1     25.50 ·  1.7s  | decorrido 00:46:01 · media 5.8 s/linha · falta ~00:29:23
+[2026-08-21 01:43:41]   474/775    61.2% · Reece James              Meia de lado por dentro    b1   -261.40 ·  2.0s  | decorrido 00:46:03 · media 5.8 s/linha · falta ~00:29:15
+[2026-08-21 01:43:42]   475/775    61.3% · Reece James              Volante de contenção       b1   -288.60 ·  1.3s  | decorrido 00:46:05 · media 5.8 s/linha · falta ~00:29:06
+[2026-08-21 01:43:43]   476/775    61.4% · Reece James              Zagueiro de saída          b1   -377.20 ·  0.1s  | decorrido 00:46:05 · media 5.8 s/linha · falta ~00:28:56
+[2026-08-21 01:43:43]   477/775    61.5% · Jamal Musiala            Meia central armador       b1     40.70 ·  0.7s  | decorrido 00:46:05 · media 5.8 s/linha · falta ~00:28:47
+[2026-08-21 01:43:46]   478/775    61.7% · Jamal Musiala            Meia de lado por dentro    b1     98.40 ·  2.9s  | decorrido 00:46:08 · media 5.8 s/linha · falta ~00:28:40
+[2026-08-21 01:43:48]   479/775    61.8% · Jamal Musiala            Meia ofensivo armador      b1    -15.90 ·  1.6s  | decorrido 00:46:10 · media 5.8 s/linha · falta ~00:28:31
+[2026-08-21 01:43:52]   480/775    61.9% · Jamal Musiala            Ponta criadora             b1    129.20 ·  4.2s  | decorrido 00:46:14 · media 5.8 s/linha · falta ~00:28:25
+[2026-08-21 01:43:55]   481/775    62.1% · Jamal Musiala            Segundo atacante           b1    177.30 ·  3.1s  | decorrido 00:46:17 · media 5.8 s/linha · falta ~00:28:17
+[2026-08-21 01:44:10]   482/775    62.2% · Jamal Musiala            Volante de contenção       b1   -823.20 · 15.4s  | decorrido 00:46:33 · media 5.8 s/linha · falta ~00:28:17
+[2026-08-21 01:44:11]   483/775    62.3% · Ademola Lookman          Centroavante móvel         b1     66.40 ·  0.5s  | decorrido 00:46:33 · media 5.8 s/linha · falta ~00:28:08
+[2026-08-21 01:44:16]   484/775    62.5% · Ademola Lookman          Meia de lado por dentro    b1    163.60 ·  4.8s  | decorrido 00:46:38 · media 5.8 s/linha · falta ~00:28:02
+[2026-08-21 01:44:18]   485/775    62.6% · Ademola Lookman          Meia ofensivo armador      b1   -168.90 ·  1.9s  | decorrido 00:46:40 · media 5.8 s/linha · falta ~00:27:54
+[2026-08-21 01:44:20]   486/775    62.7% · Ademola Lookman          Ponta finalizadora         b1    235.90 ·  2.0s  | decorrido 00:46:42 · media 5.8 s/linha · falta ~00:27:46
+[2026-08-21 01:44:23]   487/775    62.8% · Ademola Lookman          Segundo atacante           b1    128.60 ·  3.5s  | decorrido 00:46:45 · media 5.8 s/linha · falta ~00:27:39
+[2026-08-21 01:44:34]   488/775    63.0% · Alejandro Grimaldo       Lateral defensivo          b1    -70.90 · 11.1s  | decorrido 00:46:56 · media 5.8 s/linha · falta ~00:27:36
+[2026-08-21 01:45:26]   489/775    63.1% · Lucas Bergvall           Volante de construção      b1     34.70 · 138.2s  | decorrido 00:47:48 · media 5.9 s/linha · falta ~00:27:57
+[2026-08-21 01:46:01]   490/775    63.2% · Alejandro Grimaldo       Meia de lado por dentro    b1     45.30 · 35.4s  | decorrido 00:48:23 · media 5.9 s/linha · falta ~00:28:08
+[2026-08-21 01:46:10]   491/775    63.4% · Alejandro Grimaldo       Ponta finalizadora         b1    107.20 ·  9.1s  | decorrido 00:48:32 · media 5.9 s/linha · falta ~00:28:04
+[2026-08-21 01:46:24]   492/775    63.5% · Andrey Santos            Meia central armador       b1   -115.70 · 13.8s  | decorrido 00:48:46 · media 5.9 s/linha · falta ~00:28:03
+[2026-08-21 01:46:49]   493/775    63.6% · Alejandro Grimaldo       Lateral ofensivo           b1    274.00 · 134.5s  | decorrido 00:49:11 · media 6.0 s/linha · falta ~00:28:08
+[2026-08-21 01:46:54]   494/775    63.7% · Andrey Santos            Meia central de chegada    b1    134.40 · 29.7s  | decorrido 00:49:16 · media 6.0 s/linha · falta ~00:28:01
+[2026-08-21 01:47:21]   495/775    63.9% · Andrey Santos            Meia ofensivo armador      b1   -253.30 · 32.7s  | decorrido 00:49:44 · media 6.0 s/linha · falta ~00:28:08
+[2026-08-21 01:47:22]   496/775    64.0% · Pau Torres               Zagueiro de combate        b1   -179.50 ·  0.1s  | decorrido 00:49:44 · media 6.0 s/linha · falta ~00:27:58
+[2026-08-21 01:47:22]   497/775    64.1% · Pau Torres               Zagueiro de saída          b1     -3.10 ·  0.2s  | decorrido 00:49:44 · media 6.0 s/linha · falta ~00:27:49
+[2026-08-21 01:47:22]   498/775    64.3% · Tyrick Mitchell          Lateral defensivo          b1    225.70 ·  0.3s  | decorrido 00:49:44 · media 6.0 s/linha · falta ~00:27:40
+[2026-08-21 01:47:41]   499/775    64.4% · Andrey Santos            Volante de construção      b1     -6.20 · 47.0s  | decorrido 00:50:03 · media 6.0 s/linha · falta ~00:27:41
+[2026-08-21 01:47:54]   500/775    64.5% · Tyrick Mitchell          Lateral ofensivo           b1    184.30 · 31.5s  | decorrido 00:50:16 · media 6.0 s/linha · falta ~00:27:38
+[2026-08-21 01:47:56]   501/775    64.6% · Iliman Ndiaye            Centroavante móvel         b1    189.90 ·  2.0s  | decorrido 00:50:18 · media 6.0 s/linha · falta ~00:27:30
+[2026-08-21 01:48:09]   502/775    64.8% · Tyrick Mitchell          Meia de lado por dentro    b1   -587.00 · 28.3s  | decorrido 00:50:31 · media 6.0 s/linha · falta ~00:27:28
+[2026-08-21 01:48:26]   503/775    64.9% · Iliman Ndiaye            Meia de lado por fora      b1     63.90 · 16.9s  | decorrido 00:50:48 · media 6.1 s/linha · falta ~00:27:28
+[2026-08-21 01:48:27]   504/775    65.0% · Iliman Ndiaye            Meia de lado por dentro    b1    157.80 · 31.4s  | decorrido 00:50:49 · media 6.1 s/linha · falta ~00:27:19
+[2026-08-21 01:48:37]   505/775    65.2% · Iliman Ndiaye            Ponta finalizadora         b1    205.70 · 10.7s  | decorrido 00:50:59 · media 6.1 s/linha · falta ~00:27:15
+[2026-08-21 01:48:41]   506/775    65.3% · Thiago Alcantara         Meia central armador       b1    372.80 ·  4.7s  | decorrido 00:51:04 · media 6.1 s/linha · falta ~00:27:08
+[2026-08-21 01:48:50]   507/775    65.4% · Thiago Alcantara         Meia central de chegada    b1    261.60 ·  8.9s  | decorrido 00:51:12 · media 6.1 s/linha · falta ~00:27:04
+[2026-08-21 01:48:55]   508/775    65.5% · Thiago Alcantara         Meia ofensivo armador      b1    242.10 ·  4.7s  | decorrido 00:51:17 · media 6.1 s/linha · falta ~00:26:57
+[2026-08-21 01:49:07]   509/775    65.7% · Thiago Alcantara         Volante de construção      b1     65.70 · 12.1s  | decorrido 00:51:29 · media 6.1 s/linha · falta ~00:26:54
+[2026-08-21 01:49:07]   510/775    65.8% · Unai Simon               Goleiro defensivo          b1   -223.80 ·  0.0s  | decorrido 00:51:29 · media 6.1 s/linha · falta ~00:26:45
+[2026-08-21 01:49:07]   511/775    65.9% · Unai Simon               Goleiro ofensivo           b1   -102.50 ·  0.0s  | decorrido 00:51:29 · media 6.0 s/linha · falta ~00:26:36
+[2026-08-21 01:49:08]   512/775    66.1% · Mikel Oyarzabal          Centroavante fixo          b1   -381.50 ·  0.5s  | decorrido 00:51:30 · media 6.0 s/linha · falta ~00:26:27
+[2026-08-21 01:49:08]   513/775    66.2% · Mikel Oyarzabal          Centroavante móvel         b1     19.10 ·  0.6s  | decorrido 00:51:30 · media 6.0 s/linha · falta ~00:26:18
+[2026-08-21 01:49:15]   514/775    66.3% · Mikel Oyarzabal          Falso nove                 b1     88.60 ·  6.8s  | decorrido 00:51:37 · media 6.0 s/linha · falta ~00:26:12
+[2026-08-21 01:49:17]   515/775    66.5% · Mikel Oyarzabal          Meia central armador       b1     52.70 ·  2.2s  | decorrido 00:51:39 · media 6.0 s/linha · falta ~00:26:04
+[2026-08-21 01:49:20]   516/775    66.6% · Mikel Oyarzabal          Meia de lado por dentro    b1    -58.60 ·  3.4s  | decorrido 00:51:43 · media 6.0 s/linha · falta ~00:25:57
+[2026-08-21 01:49:25]   517/775    66.7% · Mikel Oyarzabal          Meia ofensivo armador      b1    -70.90 ·  5.0s  | decorrido 00:51:48 · media 6.0 s/linha · falta ~00:25:51
+[2026-08-21 01:49:26]   518/775    66.8% · Mikel Oyarzabal          Ponta finalizadora         b1   -109.70 ·  1.0s  | decorrido 00:51:49 · media 6.0 s/linha · falta ~00:25:42
+[2026-08-21 01:49:40]   519/775    67.0% · Jordan Henderson         Meia central armador       b1     43.60 · 13.8s  | decorrido 00:52:02 · media 6.0 s/linha · falta ~00:25:40
+[2026-08-21 01:49:47]   520/775    67.1% · Iliman Ndiaye            Segundo atacante           b1    162.60 · 79.9s  | decorrido 00:52:09 · media 6.0 s/linha · falta ~00:25:34
+[2026-08-21 01:50:11]   521/775    67.2% · Jordan Henderson         Meia ofensivo armador      b1   -254.20 · 30.7s  | decorrido 00:52:33 · media 6.1 s/linha · falta ~00:25:37
+[2026-08-21 01:50:28]   522/775    67.4% · Jordan Henderson         Volante de contenção       b1    129.60 · 17.6s  | decorrido 00:52:51 · media 6.1 s/linha · falta ~00:25:36
+[2026-08-21 01:50:29]   523/775    67.5% · Jordan Henderson         Zagueiro de saída          b1    -36.80 ·  0.1s  | decorrido 00:52:51 · media 6.1 s/linha · falta ~00:25:28
+[2026-08-21 01:50:29]   524/775    67.6% · Nicolas Tagliafico       Lateral defensivo          b1    -14.00 ·  0.2s  | decorrido 00:52:51 · media 6.1 s/linha · falta ~00:25:19
+[2026-08-21 01:50:34]   525/775    67.7% · Jordan Henderson         Volante de construção      b1    165.00 · 46.7s  | decorrido 00:52:56 · media 6.1 s/linha · falta ~00:25:12
+[2026-08-21 01:51:49]   526/775    67.9% · Nicolas Tagliafico       Meia de lado por dentro    b1   -276.20 · 75.8s  | decorrido 00:54:12 · media 6.2 s/linha · falta ~00:25:39
+[2026-08-21 01:51:50]   527/775    68.0% · Nicolas Tagliafico       Zagueiro de saída          b1     -1.40 ·  0.1s  | decorrido 00:54:12 · media 6.2 s/linha · falta ~00:25:30
+[2026-08-21 01:51:55]   528/775    68.1% · Gustavo Gomez            Lateral ofensivo           b1   -545.20 ·  5.6s  | decorrido 00:54:17 · media 6.2 s/linha · falta ~00:25:24
+[2026-08-21 01:51:55]   529/775    68.3% · Gustavo Gomez            Zagueiro de combate        b1      2.90 ·  0.2s  | decorrido 00:54:18 · media 6.2 s/linha · falta ~00:25:15
+[2026-08-21 01:51:56]   530/775    68.4% · Gustavo Gomez            Zagueiro de saída          b1    154.60 ·  0.2s  | decorrido 00:54:18 · media 6.1 s/linha · falta ~00:25:06
+[2026-08-21 01:52:08]   531/775    68.5% · Marten de Roon           Meia central armador       b1   -207.80 · 11.9s  | decorrido 00:54:30 · media 6.2 s/linha · falta ~00:25:02
+[2026-08-21 01:52:17]   532/775    68.6% · Nicolas Tagliafico       Lateral ofensivo           b1    185.70 · 108.4s  | decorrido 00:54:39 · media 6.2 s/linha · falta ~00:24:58
+[2026-08-21 01:52:32]   533/775    68.8% · Marten de Roon           Volante de contenção       b1    107.20 · 14.8s  | decorrido 00:54:54 · media 6.2 s/linha · falta ~00:24:55
+[2026-08-21 01:52:32]   534/775    68.9% · Marten de Roon           Zagueiro de saída          b1     75.00 ·  0.2s  | decorrido 00:54:54 · media 6.2 s/linha · falta ~00:24:47
+[2026-08-21 01:52:33]   535/775    69.0% · Ante Budimir             Centroavante fixo          b1     82.30 ·  0.5s  | decorrido 00:54:55 · media 6.2 s/linha · falta ~00:24:38
+[2026-08-21 01:52:36]   536/775    69.2% · Ante Budimir             Centroavante móvel         b1   -292.60 ·  3.5s  | decorrido 00:54:58 · media 6.2 s/linha · falta ~00:24:30
+[2026-08-21 01:52:39]   537/775    69.3% · Marten de Roon           Volante de construção      b1     22.30 · 31.2s  | decorrido 00:55:01 · media 6.1 s/linha · falta ~00:24:23
+[2026-08-21 01:52:39]   538/775    69.4% · Malo Gusto               Lateral defensivo          b1    -83.30 ·  0.7s  | decorrido 00:55:02 · media 6.1 s/linha · falta ~00:24:14
+[2026-08-21 01:53:04]   539/775    69.5% · Ante Budimir             Falso nove                 b1   -502.70 · 27.7s  | decorrido 00:55:26 · media 6.2 s/linha · falta ~00:24:16
+[2026-08-21 01:53:43]   540/775    69.7% · Malo Gusto               Meia de lado por dentro    b1    -91.50 · 38.6s  | decorrido 00:56:05 · media 6.2 s/linha · falta ~00:24:24
+[2026-08-21 01:53:47]   541/775    69.8% · Andreas Schjelderup      Centroavante móvel         b1     15.70 ·  4.4s  | decorrido 00:56:09 · media 6.2 s/linha · falta ~00:24:17
+[2026-08-21 01:54:05]   542/775    69.9% · Malo Gusto               Lateral ofensivo           b1    257.80 · 86.1s  | decorrido 00:56:28 · media 6.3 s/linha · falta ~00:24:16
+[2026-08-21 01:54:24]   543/775    70.1% · Andreas Schjelderup      Meia central armador       b1   -180.20 · 37.2s  | decorrido 00:56:46 · media 6.3 s/linha · falta ~00:24:15
+[2026-08-21 01:54:54]   544/775    70.2% · Andreas Schjelderup      Meia ofensivo armador      b1   -105.30 · 29.5s  | decorrido 00:57:16 · media 6.3 s/linha · falta ~00:24:19
+[2026-08-21 01:54:58]   545/775    70.3% · Andreas Schjelderup      Meia de lado por dentro    b1     84.40 · 52.6s  | decorrido 00:57:20 · media 6.3 s/linha · falta ~00:24:12
+[2026-08-21 01:55:19]   546/775    70.5% · Andreas Schjelderup      Ponta finalizadora         b1    182.20 · 20.8s  | decorrido 00:57:41 · media 6.3 s/linha · falta ~00:24:11
+[2026-08-21 01:56:02]   547/775    70.6% · Andreas Schjelderup      Ponta criadora             b1    210.70 · 68.0s  | decorrido 00:58:24 · media 6.4 s/linha · falta ~00:24:20
+[2026-08-21 01:56:16]   548/775    70.7% · Renato Veiga             Lateral ofensivo           b1   -244.30 · 14.1s  | decorrido 00:58:38 · media 6.4 s/linha · falta ~00:24:17
+[2026-08-21 01:56:25]   549/775    70.8% · Renato Veiga             Meia central armador       b1   -723.40 ·  9.6s  | decorrido 00:58:48 · media 6.4 s/linha · falta ~00:24:12
+[2026-08-21 01:56:28]   550/775    71.0% · Renato Veiga             Volante de contenção       b1   -137.20 ·  2.8s  | decorrido 00:58:50 · media 6.4 s/linha · falta ~00:24:04
+[2026-08-21 01:56:28]   551/775    71.1% · Renato Veiga             Zagueiro de combate        b1   -230.80 ·  0.2s  | decorrido 00:58:51 · media 6.4 s/linha · falta ~00:23:55
+[2026-08-21 01:56:29]   552/775    71.2% · Renato Veiga             Zagueiro de saída          b1    -23.70 ·  0.2s  | decorrido 00:58:51 · media 6.4 s/linha · falta ~00:23:46
+[2026-08-21 01:56:29]   553/775    71.4% · Pio Esposito             Centroavante fixo          b1    -26.70 ·  0.3s  | decorrido 00:58:51 · media 6.4 s/linha · falta ~00:23:37
+[2026-08-21 01:56:33]   554/775    71.5% · Pio Esposito             Centroavante móvel         b1    -92.90 ·  4.3s  | decorrido 00:58:55 · media 6.4 s/linha · falta ~00:23:30
+[2026-08-21 01:56:53]   555/775    71.6% · Pio Esposito             Falso nove                 b1   -345.50 · 20.2s  | decorrido 00:59:16 · media 6.4 s/linha · falta ~00:23:29
+[2026-08-21 01:56:58]   556/775    71.7% · Pio Esposito             Ponta finalizadora         b1   -376.80 ·  4.2s  | decorrido 00:59:20 · media 6.4 s/linha · falta ~00:23:22
+[2026-08-21 01:56:58]   557/775    71.9% · Marc Guiu                Centroavante fixo          b1   -258.00 ·  0.1s  | decorrido 00:59:20 · media 6.4 s/linha · falta ~00:23:13
+[2026-08-21 01:56:58]   558/775    72.0% · Marc Guiu                Centroavante móvel         b1      4.60 ·  0.4s  | decorrido 00:59:20 · media 6.4 s/linha · falta ~00:23:04
+[2026-08-21 01:56:59]   559/775    72.1% · Marc Guiu                Falso nove                 b1   -169.30 ·  1.5s  | decorrido 00:59:22 · media 6.4 s/linha · falta ~00:22:56
+[2026-08-21 01:56:59]   560/775    72.3% · Jordan Pickford          Goleiro defensivo          b1   -139.00 ·  0.0s  | decorrido 00:59:22 · media 6.4 s/linha · falta ~00:22:47
+[2026-08-21 01:56:59]   561/775    72.4% · Jordan Pickford          Goleiro ofensivo           b1    -32.50 ·  0.0s  | decorrido 00:59:22 · media 6.3 s/linha · falta ~00:22:38
+[2026-08-21 01:57:00]   562/775    72.5% · Andrew Robertson         Lateral defensivo          b1   -255.70 ·  0.1s  | decorrido 00:59:22 · media 6.3 s/linha · falta ~00:22:30
+[2026-08-21 01:57:03]   563/775    72.6% · Andrew Robertson         Lateral ofensivo           b1    107.20 ·  3.7s  | decorrido 00:59:25 · media 6.3 s/linha · falta ~00:22:22
+[2026-08-21 01:57:07]   564/775    72.8% · Andrew Robertson         Meia de lado por dentro    b1   -307.80 ·  3.8s  | decorrido 00:59:29 · media 6.3 s/linha · falta ~00:22:15
+[2026-08-21 01:57:08]   565/775    72.9% · Leandro Trossard         Centroavante móvel         b1     75.10 ·  0.9s  | decorrido 00:59:30 · media 6.3 s/linha · falta ~00:22:07
+[2026-08-21 01:57:09]   566/775    73.0% · Leandro Trossard         Meia de lado por dentro    b1    -62.10 ·  1.4s  | decorrido 00:59:32 · media 6.3 s/linha · falta ~00:21:58
+[2026-08-21 01:57:11]   567/775    73.2% · Leandro Trossard         Meia ofensivo armador      b1   -186.10 ·  1.6s  | decorrido 00:59:33 · media 6.3 s/linha · falta ~00:21:50
+[2026-08-21 01:57:13]   568/775    73.3% · Leandro Trossard         Ponta criadora             b1     35.10 ·  2.6s  | decorrido 00:59:36 · media 6.3 s/linha · falta ~00:21:43
+[2026-08-21 01:57:14]   569/775    73.4% · Leandro Trossard         Ponta finalizadora         b1     51.90 ·  0.9s  | decorrido 00:59:37 · media 6.3 s/linha · falta ~00:21:35
+[2026-08-21 01:57:14]   570/775    73.5% · Jan Paul van Hecke       Zagueiro de combate        b1   -139.40 ·  0.0s  | decorrido 00:59:37 · media 6.3 s/linha · falta ~00:21:26
+[2026-08-21 01:57:14]   571/775    73.7% · Jan Paul van Hecke       Zagueiro de saída          b1     31.20 ·  0.0s  | decorrido 00:59:37 · media 6.3 s/linha · falta ~00:21:17
+[2026-08-21 01:57:15]   572/775    73.8% · Manu Kone                Meia central armador       b1   -129.20 ·  1.0s  | decorrido 00:59:38 · media 6.3 s/linha · falta ~00:21:09
+[2026-08-21 01:57:18]   573/775    73.9% · Manu Kone                Meia central de chegada    b1     62.40 ·  2.9s  | decorrido 00:59:41 · media 6.2 s/linha · falta ~00:21:02
+[2026-08-21 01:57:21]   574/775    74.1% · Manu Kone                Meia ofensivo armador      b1   -260.10 ·  2.2s  | decorrido 00:59:43 · media 6.2 s/linha · falta ~00:20:54
+[2026-08-21 01:57:27]   575/775    74.2% · Manu Kone                Volante de construção      b1   -192.50 ·  6.0s  | decorrido 00:59:49 · media 6.2 s/linha · falta ~00:20:48
+[2026-08-21 01:57:29]   576/775    74.3% · Alex Iwobi               Meia central armador       b1    -57.60 ·  2.1s  | decorrido 00:59:51 · media 6.2 s/linha · falta ~00:20:40
+[2026-08-21 01:57:34]   577/775    74.5% · Alex Iwobi               Meia de lado por dentro    b1   -208.20 ·  5.8s  | decorrido 00:59:57 · media 6.2 s/linha · falta ~00:20:34
+[2026-08-21 01:57:39]   578/775    74.6% · Alex Iwobi               Meia ofensivo armador      b1   -295.80 ·  4.3s  | decorrido 01:00:01 · media 6.2 s/linha · falta ~00:20:27
+[2026-08-21 01:57:45]   579/775    74.7% · Alex Iwobi               Ponta criadora             b1   -162.90 ·  5.9s  | decorrido 01:00:07 · media 6.2 s/linha · falta ~00:20:21
+[2026-08-21 01:57:47]   580/775    74.8% · Alex Iwobi               Ponta finalizadora         b1   -176.50 ·  2.9s  | decorrido 01:00:10 · media 6.2 s/linha · falta ~00:20:13
+[2026-08-21 01:57:50]   581/775    75.0% · Calvin Bassey            Lateral ofensivo           b1   -207.60 ·  3.0s  | decorrido 01:00:13 · media 6.2 s/linha · falta ~00:20:06
+[2026-08-21 01:57:55]   582/775    75.1% · Calvin Bassey            Meia de lado por dentro    b1   -784.90 ·  4.7s  | decorrido 01:00:17 · media 6.2 s/linha · falta ~00:19:59
+[2026-08-21 01:57:55]   583/775    75.2% · Calvin Bassey            Zagueiro de combate        b1   -226.40 ·  0.0s  | decorrido 01:00:17 · media 6.2 s/linha · falta ~00:19:51
+[2026-08-21 01:57:55]   584/775    75.4% · Calvin Bassey            Zagueiro de saída          b1    -62.10 ·  0.0s  | decorrido 01:00:17 · media 6.2 s/linha · falta ~00:19:43
+[2026-08-21 01:57:59]   585/775    75.5% · Christos Tzolis          Centroavante móvel         b1     27.80 ·  3.5s  | decorrido 01:00:21 · media 6.2 s/linha · falta ~00:19:36
+[2026-08-21 01:58:42]   586/775    75.6% · Christos Tzolis          Meia de lado por dentro    b1     41.90 · 43.5s  | decorrido 01:01:04 · media 6.3 s/linha · falta ~00:19:42
+[2026-08-21 01:59:08]   587/775    75.7% · Christos Tzolis          Meia ofensivo armador      b1    -53.90 · 26.2s  | decorrido 01:01:31 · media 6.3 s/linha · falta ~00:19:42
+[2026-08-21 01:59:51]   588/775    75.9% · Christos Tzolis          Ponta criadora             b1    115.40 · 43.0s  | decorrido 01:02:14 · media 6.4 s/linha · falta ~00:19:47
+[2026-08-21 02:00:11]   589/775    76.0% · Christos Tzolis          Ponta finalizadora         b1     85.10 · 19.4s  | decorrido 01:02:33 · media 6.4 s/linha · falta ~00:19:45
+[2026-08-21 02:00:32]   590/775    76.1% · Jeremy Jacquet           Lateral ofensivo           b1   -378.60 · 21.2s  | decorrido 01:02:54 · media 6.4 s/linha · falta ~00:19:43
+[2026-08-21 02:00:32]   591/775    76.3% · Jeremy Jacquet           Zagueiro de combate        b1    -62.30 ·  0.2s  | decorrido 01:02:55 · media 6.4 s/linha · falta ~00:19:35
+[2026-08-21 02:00:33]   592/775    76.4% · Jeremy Jacquet           Zagueiro de saída          b1     76.50 ·  0.2s  | decorrido 01:02:55 · media 6.4 s/linha · falta ~00:19:27
+[2026-08-21 02:02:34]   593/775    76.5% · Marco Palestra           Lateral ofensivo           b1    189.00 · 121.3s  | decorrido 01:04:56 · media 6.6 s/linha · falta ~00:19:55
+[2026-08-21 02:03:09]   594/775    76.6% · Marco Palestra           Meia de lado por dentro    b1   -121.40 · 35.3s  | decorrido 01:05:31 · media 6.6 s/linha · falta ~00:19:58
+[2026-08-21 02:04:10]   595/775    76.8% · Marco Palestra           Meia de lado por fora      b1    -42.60 · 60.6s  | decorrido 01:06:32 · media 6.7 s/linha · falta ~00:20:07
+[2026-08-21 02:04:12]   596/775    76.9% · Andreas Schjelderup      Volante de contenção       b1   -854.00 · 532.9s  | decorrido 01:06:34 · media 6.7 s/linha · falta ~00:19:59
+[2026-08-21 02:04:47]   597/775    77.0% · Marco Palestra           Ponta criadora             b1   -241.50 · 37.1s  | decorrido 01:07:09 · media 6.7 s/linha · falta ~00:20:01
+[2026-08-21 02:05:07]   598/775    77.2% · Johan Manzambi           Meia central de chegada    b1     18.20 · 54.9s  | decorrido 01:07:29 · media 6.8 s/linha · falta ~00:19:58
+[2026-08-21 02:05:32]   599/775    77.3% · Johan Manzambi           Meia de lado por dentro    b1     59.40 · 45.4s  | decorrido 01:07:55 · media 6.8 s/linha · falta ~00:19:57
+[2026-08-21 02:05:34]   600/775    77.4% · Johan Manzambi           Meia ofensivo armador      b1   -158.20 · 27.3s  | decorrido 01:07:56 · media 6.8 s/linha · falta ~00:19:49
+[2026-08-21 02:05:46]   601/775    77.5% · Johan Manzambi           Ponta finalizadora         b1     90.80 · 13.5s  | decorrido 01:08:08 · media 6.8 s/linha · falta ~00:19:43
+[2026-08-21 02:06:34]   602/775    77.7% · Johan Manzambi           Segundo atacante           b1     92.30 · 60.4s  | decorrido 01:08:57 · media 6.9 s/linha · falta ~00:19:48
+[2026-08-21 02:06:35]   603/775    77.8% · Nordi Mukiele            Lateral defensivo          b1    120.60 ·  0.2s  | decorrido 01:08:57 · media 6.9 s/linha · falta ~00:19:40
+[2026-08-21 02:06:48]   604/775    77.9% · Nordi Mukiele            Lateral ofensivo           b1     97.50 · 13.2s  | decorrido 01:09:10 · media 6.9 s/linha · falta ~00:19:35
+[2026-08-21 02:07:22]   605/775    78.1% · Nordi Mukiele            Meia de lado por dentro    b1   -507.80 · 34.4s  | decorrido 01:09:45 · media 6.9 s/linha · falta ~00:19:35
+[2026-08-21 02:07:23]   606/775    78.2% · Nordi Mukiele            Zagueiro de saída          b1    144.70 ·  0.2s  | decorrido 01:09:45 · media 6.9 s/linha · falta ~00:19:27
+[2026-08-21 02:07:23]   607/775    78.3% · Caoimhin Kelleher        Goleiro defensivo          b1     -1.00 ·  0.0s  | decorrido 01:09:45 · media 6.9 s/linha · falta ~00:19:18
+[2026-08-21 02:07:23]   608/775    78.5% · Caoimhin Kelleher        Goleiro ofensivo           b1     69.00 ·  0.0s  | decorrido 01:09:45 · media 6.9 s/linha · falta ~00:19:09
+[2026-08-21 02:07:23]   609/775    78.6% · Mounir Chouiar           Centroavante móvel         b1    -30.90 ·  0.3s  | decorrido 01:09:45 · media 6.9 s/linha · falta ~00:19:00
+[2026-08-21 02:07:26]   610/775    78.7% · Mounir Chouiar           Meia central de chegada    b1    -11.30 ·  2.9s  | decorrido 01:09:48 · media 6.9 s/linha · falta ~00:18:52
+[2026-08-21 02:07:27]   611/775    78.8% · Mounir Chouiar           Meia de lado por dentro    b1    -34.20 ·  1.7s  | decorrido 01:09:50 · media 6.9 s/linha · falta ~00:18:44
+[2026-08-21 02:07:29]   612/775    79.0% · Mounir Chouiar           Meia ofensivo armador      b1   -172.90 ·  1.9s  | decorrido 01:09:52 · media 6.8 s/linha · falta ~00:18:36
+[2026-08-21 02:07:30]   613/775    79.1% · Mounir Chouiar           Ponta finalizadora         b1    -10.90 ·  0.7s  | decorrido 01:09:52 · media 6.8 s/linha · falta ~00:18:28
+[2026-08-21 02:07:33]   614/775    79.2% · Mounir Chouiar           Segundo atacante           b1     58.80 ·  3.1s  | decorrido 01:09:55 · media 6.8 s/linha · falta ~00:18:20
+[2026-08-21 02:07:34]   615/775    79.4% · Ramiro Vaca              Meia central armador       b1     -3.50 ·  0.6s  | decorrido 01:09:56 · media 6.8 s/linha · falta ~00:18:11
+[2026-08-21 02:07:35]   616/775    79.5% · Ramiro Vaca              Meia de lado por dentro    b1    -74.00 ·  1.2s  | decorrido 01:09:57 · media 6.8 s/linha · falta ~00:18:03
+[2026-08-21 02:07:38]   617/775    79.6% · Ramiro Vaca              Meia ofensivo armador      b1   -141.60 ·  3.2s  | decorrido 01:10:00 · media 6.8 s/linha · falta ~00:17:55
+[2026-08-21 02:07:38]   618/775    79.7% · Ramiro Vaca              Ponta finalizadora         b1    -63.20 ·  0.3s  | decorrido 01:10:01 · media 6.8 s/linha · falta ~00:17:47
+[2026-08-21 02:07:40]   619/775    79.9% · Ramiro Vaca              Segundo atacante           b1     45.30 ·  1.2s  | decorrido 01:10:02 · media 6.8 s/linha · falta ~00:17:39
+[2026-08-21 02:07:51]   620/775    80.0% · Ramiro Vaca              Volante de contenção       b1   -784.60 · 11.3s  | decorrido 01:10:13 · media 6.8 s/linha · falta ~00:17:33
+[2026-08-21 02:07:51]   621/775    80.1% · Mohamed Boulacsout       Lateral defensivo          b1   -356.90 ·  0.4s  | decorrido 01:10:14 · media 6.8 s/linha · falta ~00:17:25
+[2026-08-21 02:08:00]   622/775    80.3% · Mohamed Boulacsout       Lateral ofensivo           b1    130.20 ·  8.8s  | decorrido 01:10:22 · media 6.8 s/linha · falta ~00:17:18
+[2026-08-21 02:08:01]   623/775    80.4% · Mohamed Boulacsout       Meia central armador       b1    -68.30 ·  1.2s  | decorrido 01:10:24 · media 6.8 s/linha · falta ~00:17:10
+[2026-08-21 02:08:05]   624/775    80.5% · Mohamed Boulacsout       Meia de lado por dentro    b1   -123.50 ·  3.4s  | decorrido 01:10:27 · media 6.8 s/linha · falta ~00:17:03
+[2026-08-21 02:08:08]   625/775    80.6% · Mohamed Boulacsout       Meia ofensivo armador      b1   -293.50 ·  3.0s  | decorrido 01:10:30 · media 6.8 s/linha · falta ~00:16:55
+[2026-08-21 02:08:09]   626/775    80.8% · Mohamed Boulacsout       Ponta finalizadora         b1   -112.40 ·  1.2s  | decorrido 01:10:31 · media 6.8 s/linha · falta ~00:16:47
+[2026-08-21 02:08:13]   627/775    80.9% · Mohamed Boulacsout       Volante de contenção       b1   -313.80 ·  3.8s  | decorrido 01:10:35 · media 6.8 s/linha · falta ~00:16:39
+[2026-08-21 02:08:13]   628/775    81.0% · Anas Bach                Lateral defensivo          b1   -271.90 ·  0.2s  | decorrido 01:10:35 · media 6.7 s/linha · falta ~00:16:31
+[2026-08-21 02:08:21]   629/775    81.2% · Anas Bach                Lateral ofensivo           b1    137.60 ·  7.6s  | decorrido 01:10:43 · media 6.7 s/linha · falta ~00:16:24
+[2026-08-21 02:08:22]   630/775    81.3% · Anas Bach                Meia central armador       b1   -175.50 ·  1.5s  | decorrido 01:10:44 · media 6.7 s/linha · falta ~00:16:16
+[2026-08-21 02:08:26]   631/775    81.4% · Anas Bach                Meia de lado por dentro    b1   -157.90 ·  3.9s  | decorrido 01:10:48 · media 6.7 s/linha · falta ~00:16:09
+[2026-08-21 02:08:29]   632/775    81.5% · Anas Bach                Volante de contenção       b1   -182.80 ·  3.1s  | decorrido 01:10:51 · media 6.7 s/linha · falta ~00:16:02
+[2026-08-21 02:08:29]   633/775    81.7% · Anas Bach                Zagueiro de saída          b1   -315.10 ·  0.0s  | decorrido 01:10:51 · media 6.7 s/linha · falta ~00:15:53
+[2026-08-21 02:08:40]   634/775    81.8% · Daniel Munoz             Lateral ofensivo           b1    166.50 · 10.5s  | decorrido 01:11:02 · media 6.7 s/linha · falta ~00:15:47
+[2026-08-21 02:08:43]   635/775    81.9% · Daniel Munoz             Meia de lado por dentro    b1   -381.80 ·  3.6s  | decorrido 01:11:06 · media 6.7 s/linha · falta ~00:15:40
+[2026-08-21 02:08:49]   636/775    82.1% · Daniel Munoz             Meia de lado por fora      b1   -133.40 ·  5.8s  | decorrido 01:11:11 · media 6.7 s/linha · falta ~00:15:33
+[2026-08-21 02:08:50]   637/775    82.2% · Daniel Munoz             Ponta finalizadora         b1   -373.40 ·  1.1s  | decorrido 01:11:12 · media 6.7 s/linha · falta ~00:15:25
+[2026-08-21 02:08:50]   638/775    82.3% · Daniel Munoz             Zagueiro de saída          b1    -91.80 ·  0.0s  | decorrido 01:11:13 · media 6.7 s/linha · falta ~00:15:17
+[2026-08-21 02:08:54]   639/775    82.5% · James Rodriguez          Centroavante móvel         b1    -64.40 ·  3.3s  | decorrido 01:11:16 · media 6.7 s/linha · falta ~00:15:10
+[2026-08-21 02:09:10]   640/775    82.6% · James Rodriguez          Meia central armador       b1    107.80 · 16.7s  | decorrido 01:11:32 · media 6.7 s/linha · falta ~00:15:05
+[2026-08-21 02:09:41]   641/775    82.7% · James Rodriguez          Meia de lado por dentro    b1     24.90 · 30.8s  | decorrido 01:12:03 · media 6.7 s/linha · falta ~00:15:03
+[2026-08-21 02:10:15]   642/775    82.8% · James Rodriguez          Meia ofensivo armador      b1    131.80 · 34.5s  | decorrido 01:12:38 · media 6.8 s/linha · falta ~00:15:02
+[2026-08-21 02:10:22]   643/775    83.0% · James Rodriguez          Ponta finalizadora         b1     30.20 ·  6.8s  | decorrido 01:12:44 · media 6.8 s/linha · falta ~00:14:56
+[2026-08-21 02:11:10]   644/775    83.1% · James Rodriguez          Segundo atacante           b1     95.50 · 48.2s  | decorrido 01:13:33 · media 6.9 s/linha · falta ~00:14:57
+[2026-08-21 02:11:11]   645/775    83.2% · Vladimir Coufal          Lateral defensivo          b1    -88.50 ·  0.8s  | decorrido 01:13:33 · media 6.8 s/linha · falta ~00:14:49
+[2026-08-21 02:11:46]   646/775    83.4% · Vladimir Coufal          Lateral ofensivo           b1     99.90 · 34.6s  | decorrido 01:14:08 · media 6.9 s/linha · falta ~00:14:48
+[2026-08-21 02:12:25]   647/775    83.5% · Vladimir Coufal          Meia de lado por dentro    b1   -389.30 · 38.7s  | decorrido 01:14:47 · media 6.9 s/linha · falta ~00:14:47
+[2026-08-21 02:12:26]   648/775    83.6% · Samuel Chukwueze         Centroavante móvel         b1    -43.60 ·  1.6s  | decorrido 01:14:48 · media 6.9 s/linha · falta ~00:14:39
+[2026-08-21 02:12:29]   649/775    83.7% · Samuel Chukwueze         Meia de lado por fora      b1   -247.60 ·  3.2s  | decorrido 01:14:52 · media 6.9 s/linha · falta ~00:14:32
+[2026-08-21 02:12:32]   650/775    83.9% · Samuel Chukwueze         Meia ofensivo armador      b1   -413.30 ·  2.6s  | decorrido 01:14:54 · media 6.9 s/linha · falta ~00:14:24
+[2026-08-21 02:12:37]   651/775    84.0% · Samuel Chukwueze         Ponta criadora             b1     -1.80 ·  4.6s  | decorrido 01:14:59 · media 6.9 s/linha · falta ~00:14:17
+[2026-08-21 02:12:39]   652/775    84.1% · Samuel Chukwueze         Ponta finalizadora         b1     79.80 ·  2.5s  | decorrido 01:15:01 · media 6.9 s/linha · falta ~00:14:09
+[2026-08-21 02:12:41]   653/775    84.3% · Raphael Onyedika         Meia central armador       b1   -260.70 ·  1.8s  | decorrido 01:15:03 · media 6.9 s/linha · falta ~00:14:01
+[2026-08-21 02:12:44]   654/775    84.4% · Raphael Onyedika         Volante de construção      b1   -133.30 ·  3.2s  | decorrido 01:15:06 · media 6.9 s/linha · falta ~00:13:53
+[2026-08-21 02:12:46]   655/775    84.5% · Raphael Onyedika         Volante de contenção       b1    -10.40 ·  1.9s  | decorrido 01:15:08 · media 6.9 s/linha · falta ~00:13:46
+[2026-08-21 02:12:46]   656/775    84.6% · Raphael Onyedika         Zagueiro de saída          b1     55.60 ·  0.1s  | decorrido 01:15:08 · media 6.9 s/linha · falta ~00:13:37
+[2026-08-21 02:12:46]   657/775    84.8% · Sadio Mane               Centroavante móvel         b1    -10.60 ·  0.4s  | decorrido 01:15:09 · media 6.9 s/linha · falta ~00:13:29
+[2026-08-21 02:12:49]   658/775    84.9% · Sadio Mane               Meia de lado por dentro    b1   -204.20 ·  2.9s  | decorrido 01:15:12 · media 6.9 s/linha · falta ~00:13:22
+[2026-08-21 02:12:51]   659/775    85.0% · Sadio Mane               Meia ofensivo armador      b1   -485.40 ·  1.8s  | decorrido 01:15:13 · media 6.8 s/linha · falta ~00:13:14
+[2026-08-21 02:12:54]   660/775    85.2% · Sadio Mane               Ponta criadora             b1   -153.20 ·  2.6s  | decorrido 01:15:16 · media 6.8 s/linha · falta ~00:13:06
+[2026-08-21 02:12:55]   661/775    85.3% · Sadio Mane               Ponta finalizadora         b1    -30.60 ·  0.8s  | decorrido 01:15:17 · media 6.8 s/linha · falta ~00:12:59
+[2026-08-21 02:12:57]   662/775    85.4% · Ramy Bensebaini          Lateral ofensivo           b1   -286.80 ·  2.7s  | decorrido 01:15:19 · media 6.8 s/linha · falta ~00:12:51
+[2026-08-21 02:13:00]   663/775    85.5% · Ramy Bensebaini          Meia de lado por dentro    b1   -827.80 ·  2.5s  | decorrido 01:15:22 · media 6.8 s/linha · falta ~00:12:43
+[2026-08-21 02:13:00]   664/775    85.7% · Ramy Bensebaini          Zagueiro de combate        b1   -364.00 ·  0.0s  | decorrido 01:15:22 · media 6.8 s/linha · falta ~00:12:36
+[2026-08-21 02:13:00]   665/775    85.8% · Ramy Bensebaini          Zagueiro de saída          b1   -123.20 ·  0.0s  | decorrido 01:15:22 · media 6.8 s/linha · falta ~00:12:28
+[2026-08-21 02:13:00]   666/775    85.9% · Ismaila Sarr             Centroavante móvel         b1     17.30 ·  0.5s  | decorrido 01:15:23 · media 6.8 s/linha · falta ~00:12:20
+[2026-08-21 02:13:04]   667/775    86.1% · Ismaila Sarr             Meia central de chegada    b1     47.20 ·  3.4s  | decorrido 01:15:26 · media 6.8 s/linha · falta ~00:12:12
+[2026-08-21 02:13:06]   668/775    86.2% · Ismaila Sarr             Meia de lado por dentro    b1     75.20 ·  2.3s  | decorrido 01:15:28 · media 6.8 s/linha · falta ~00:12:05
+[2026-08-21 02:13:08]   669/775    86.3% · Ismaila Sarr             Meia ofensivo armador      b1    -85.50 ·  1.9s  | decorrido 01:15:30 · media 6.8 s/linha · falta ~00:11:57
+[2026-08-21 02:13:09]   670/775    86.5% · Ismaila Sarr             Ponta finalizadora         b1    182.50 ·  0.9s  | decorrido 01:15:31 · media 6.8 s/linha · falta ~00:11:50
+[2026-08-21 02:13:13]   671/775    86.6% · Ismaila Sarr             Segundo atacante           b1     73.90 ·  4.0s  | decorrido 01:15:35 · media 6.8 s/linha · falta ~00:11:42
+[2026-08-21 02:13:13]   672/775    86.7% · Brahim Diaz              Centroavante móvel         b1   -133.20 ·  0.6s  | decorrido 01:15:36 · media 6.8 s/linha · falta ~00:11:35
+[2026-08-21 02:13:17]   673/775    86.8% · Brahim Diaz              Meia de lado por dentro    b1      4.80 ·  3.7s  | decorrido 01:15:39 · media 6.7 s/linha · falta ~00:11:28
+[2026-08-21 02:13:22]   674/775    87.0% · Brahim Diaz              Meia ofensivo armador      b1   -137.20 ·  4.5s  | decorrido 01:15:44 · media 6.7 s/linha · falta ~00:11:20
+[2026-08-21 02:13:26]   675/775    87.1% · Brahim Diaz              Ponta criadora             b1    -65.00 ·  4.6s  | decorrido 01:15:49 · media 6.7 s/linha · falta ~00:11:13
+[2026-08-21 02:13:28]   676/775    87.2% · Brahim Diaz              Ponta finalizadora         b1     -6.60 ·  2.0s  | decorrido 01:15:51 · media 6.7 s/linha · falta ~00:11:06
+[2026-08-21 02:13:31]   677/775    87.4% · Rayan Ait-Nouri          Lateral defensivo          b1   -504.30 ·  2.6s  | decorrido 01:15:53 · media 6.7 s/linha · falta ~00:10:59
+[2026-08-21 02:13:38]   678/775    87.5% · Rayan Ait-Nouri          Lateral ofensivo           b1     29.30 ·  7.4s  | decorrido 01:16:01 · media 6.7 s/linha · falta ~00:10:52
+[2026-08-21 02:13:42]   679/775    87.6% · Rayan Ait-Nouri          Meia de lado por dentro    b1   -149.70 ·  3.4s  | decorrido 01:16:04 · media 6.7 s/linha · falta ~00:10:45
+[2026-08-21 02:13:43]   680/775    87.7% · Ismael Saibari           Centroavante móvel         b1    -47.30 ·  1.5s  | decorrido 01:16:05 · media 6.7 s/linha · falta ~00:10:37
+[2026-08-21 02:13:45]   681/775    87.9% · Ismael Saibari           Meia central armador       b1   -306.60 ·  1.6s  | decorrido 01:16:07 · media 6.7 s/linha · falta ~00:10:30
+[2026-08-21 02:13:48]   682/775    88.0% · Ismael Saibari           Meia de lado por dentro    b1   -100.90 ·  2.9s  | decorrido 01:16:10 · media 6.7 s/linha · falta ~00:10:23
+[2026-08-21 02:13:50]   683/775    88.1% · Ismael Saibari           Meia ofensivo armador      b1   -255.00 ·  2.7s  | decorrido 01:16:13 · media 6.7 s/linha · falta ~00:10:15
+[2026-08-21 02:13:55]   684/775    88.3% · Ismael Saibari           Ponta criadora             b1   -118.70 ·  4.9s  | decorrido 01:16:18 · media 6.7 s/linha · falta ~00:10:09
+[2026-08-21 02:14:01]   685/775    88.4% · Ismael Saibari           Segundo atacante           b1    -46.20 ·  5.5s  | decorrido 01:16:23 · media 6.7 s/linha · falta ~00:10:02
+[2026-08-21 02:14:18]   686/775    88.5% · Ismael Saibari           Volante de contenção       b1   -721.10 · 17.2s  | decorrido 01:16:40 · media 6.7 s/linha · falta ~00:09:56
+[2026-08-21 02:14:18]   687/775    88.6% · Moussa Kone              Centroavante fixo          b1   -299.20 ·  0.1s  | decorrido 01:16:40 · media 6.7 s/linha · falta ~00:09:49
+[2026-08-21 02:14:19]   688/775    88.8% · Moussa Kone              Centroavante móvel         b1    -39.20 ·  0.5s  | decorrido 01:16:41 · media 6.7 s/linha · falta ~00:09:41
+[2026-08-21 02:14:23]   689/775    88.9% · Moussa Kone              Falso nove                 b1   -323.30 ·  4.8s  | decorrido 01:16:46 · media 6.7 s/linha · falta ~00:09:34
+[2026-08-21 02:14:25]   690/775    89.0% · Moussa Kone              Meia de lado por dentro    b1   -475.80 ·  2.2s  | decorrido 01:16:48 · media 6.7 s/linha · falta ~00:09:27
+[2026-08-21 02:14:26]   691/775    89.2% · Moussa Kone              Ponta finalizadora         b1   -283.70 ·  0.6s  | decorrido 01:16:48 · media 6.7 s/linha · falta ~00:09:20
+[2026-08-21 02:14:28]   692/775    89.3% · Ismael Benktib           Meia central armador       b1   -109.50 ·  1.5s  | decorrido 01:16:50 · media 6.7 s/linha · falta ~00:09:12
+[2026-08-21 02:14:30]   693/775    89.4% · Ismael Benktib           Meia central de chegada    b1     73.00 ·  2.4s  | decorrido 01:16:52 · media 6.7 s/linha · falta ~00:09:05
+[2026-08-21 02:14:33]   694/775    89.5% · Ismael Benktib           Meia ofensivo armador      b1   -352.20 ·  2.8s  | decorrido 01:16:55 · media 6.7 s/linha · falta ~00:08:58
+[2026-08-21 02:14:37]   695/775    89.7% · Ismael Benktib           Volante de construção      b1    -21.50 ·  4.7s  | decorrido 01:17:00 · media 6.6 s/linha · falta ~00:08:51
+[2026-08-21 02:14:40]   696/775    89.8% · Mohammad Abu Zraiq       Meia de lado por dentro    b1   -186.70 ·  2.4s  | decorrido 01:17:02 · media 6.6 s/linha · falta ~00:08:44
+[2026-08-21 02:14:41]   697/775    89.9% · Mohammad Abu Zraiq       Meia ofensivo armador      b1   -499.00 ·  1.6s  | decorrido 01:17:04 · media 6.6 s/linha · falta ~00:08:37
+[2026-08-21 02:14:45]   698/775    90.1% · Mohammad Abu Zraiq       Ponta criadora             b1   -150.10 ·  3.2s  | decorrido 01:17:07 · media 6.6 s/linha · falta ~00:08:30
+[2026-08-21 02:14:47]   699/775    90.2% · Mohammad Abu Zraiq       Ponta finalizadora         b1    -32.80 ·  1.9s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:08:23
+[2026-08-21 02:14:47]   700/775    90.3% · Guilherme Ferreira       Zagueiro de combate        b1   -273.00 ·  0.0s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:08:15
+[2026-08-21 02:14:47]   701/775    90.5% · Guilherme Ferreira       Zagueiro de saída          b1    -84.50 ·  0.0s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:08:08
+[2026-08-21 02:14:47]   702/775    90.6% · Mehdi Benabid            Goleiro defensivo          b1   -300.80 ·  0.0s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:08:01
+[2026-08-21 02:14:47]   703/775    90.7% · Mehdi Benabid            Goleiro ofensivo           b1   -177.90 ·  0.0s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:07:54
+[2026-08-21 02:14:47]   704/775    90.8% · Marouane Louadni         Zagueiro de combate        b1   -169.40 ·  0.1s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:07:46
+[2026-08-21 02:14:47]   705/775    91.0% · Marouane Louadni         Zagueiro de saída          b1     12.40 ·  0.0s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:07:39
+[2026-08-21 02:14:47]   706/775    91.1% · Juan Foyth               Lateral defensivo          b1   -173.10 ·  0.0s  | decorrido 01:17:09 · media 6.6 s/linha · falta ~00:07:32
+[2026-08-21 02:14:49]   707/775    91.2% · Juan Foyth               Lateral ofensivo           b1   -236.40 ·  2.2s  | decorrido 01:17:11 · media 6.6 s/linha · falta ~00:07:25
+[2026-08-21 02:14:55]   708/775    91.4% · Juan Foyth               Meia de lado por dentro    b1   -840.70 ·  6.3s  | decorrido 01:17:17 · media 6.6 s/linha · falta ~00:07:18
+[2026-08-21 02:14:55]   709/775    91.5% · Juan Foyth               Zagueiro de saída          b1   -139.90 ·  0.0s  | decorrido 01:17:17 · media 6.5 s/linha · falta ~00:07:11
+[2026-08-21 02:14:57]   710/775    91.6% · Jordan Henderson         Meia central armador       b1   -140.10 ·  1.7s  | decorrido 01:17:19 · media 6.5 s/linha · falta ~00:07:04
+[2026-08-21 02:15:01]   711/775    91.7% · Jordan Henderson         Meia ofensivo armador      b1   -406.00 ·  4.0s  | decorrido 01:17:23 · media 6.5 s/linha · falta ~00:06:57
+[2026-08-21 02:15:08]   712/775    91.9% · Jordan Henderson         Volante de construção      b1    -48.80 ·  7.4s  | decorrido 01:17:31 · media 6.5 s/linha · falta ~00:06:51
+[2026-08-21 02:15:11]   713/775    92.0% · Jordan Henderson         Volante de contenção       b1   -158.70 ·  2.3s  | decorrido 01:17:33 · media 6.5 s/linha · falta ~00:06:44
+[2026-08-21 02:15:11]   714/775    92.1% · Jordan Henderson         Zagueiro de saída          b1   -300.00 ·  0.0s  | decorrido 01:17:33 · media 6.5 s/linha · falta ~00:06:37
+[2026-08-21 02:15:14]   715/775    92.3% · Frank Onyeka             Meia central armador       b1   -209.70 ·  3.2s  | decorrido 01:17:36 · media 6.5 s/linha · falta ~00:06:30
+[2026-08-21 02:15:17]   716/775    92.4% · Frank Onyeka             Meia central de chegada    b1     76.10 ·  3.1s  | decorrido 01:17:39 · media 6.5 s/linha · falta ~00:06:23
+[2026-08-21 02:15:22]   717/775    92.5% · Frank Onyeka             Meia ofensivo armador      b1   -326.60 ·  5.5s  | decorrido 01:17:45 · media 6.5 s/linha · falta ~00:06:17
+[2026-08-21 02:15:30]   718/775    92.6% · Frank Onyeka             Volante de construção      b1   -186.40 ·  7.3s  | decorrido 01:17:52 · media 6.5 s/linha · falta ~00:06:10
+[2026-08-21 02:15:33]   719/775    92.8% · Fisayo Dele-Bashiru      Centroavante móvel         b1    -11.80 ·  3.0s  | decorrido 01:17:55 · media 6.5 s/linha · falta ~00:06:04
+[2026-08-21 02:15:35]   720/775    92.9% · Fisayo Dele-Bashiru      Meia central armador       b1   -130.90 ·  2.2s  | decorrido 01:17:57 · media 6.5 s/linha · falta ~00:05:57
+[2026-08-21 02:15:40]   721/775    93.0% · Fisayo Dele-Bashiru      Meia central de chegada    b1     32.50 ·  5.3s  | decorrido 01:18:02 · media 6.5 s/linha · falta ~00:05:50
+[2026-08-21 02:15:43]   722/775    93.2% · Fisayo Dele-Bashiru      Meia de lado por dentro    b1   -199.20 ·  3.0s  | decorrido 01:18:05 · media 6.5 s/linha · falta ~00:05:43
+[2026-08-21 02:15:46]   723/775    93.3% · Fisayo Dele-Bashiru      Segundo atacante           b1   -170.70 ·  3.2s  | decorrido 01:18:09 · media 6.5 s/linha · falta ~00:05:37
+[2026-08-21 02:16:07]   724/775    93.4% · Fisayo Dele-Bashiru      Volante de contenção       b1   -677.00 · 20.0s  | decorrido 01:18:29 · media 6.5 s/linha · falta ~00:05:31
+[2026-08-21 02:16:10]   725/775    93.5% · Amano Jun                Meia central armador       b1   -286.90 ·  3.4s  | decorrido 01:18:32 · media 6.5 s/linha · falta ~00:05:25
+[2026-08-21 02:16:14]   726/775    93.7% · Amano Jun                Meia de lado por dentro    b1   -278.10 ·  4.1s  | decorrido 01:18:36 · media 6.5 s/linha · falta ~00:05:18
+[2026-08-21 02:16:17]   727/775    93.8% · Amano Jun                Meia ofensivo armador      b1   -195.40 ·  3.1s  | decorrido 01:18:39 · media 6.5 s/linha · falta ~00:05:11
+[2026-08-21 02:16:21]   728/775    93.9% · Amano Jun                Ponta criadora             b1   -129.90 ·  3.4s  | decorrido 01:18:43 · media 6.5 s/linha · falta ~00:05:04
+[2026-08-21 02:16:25]   729/775    94.1% · Amano Jun                Segundo atacante           b1   -138.40 ·  4.7s  | decorrido 01:18:48 · media 6.5 s/linha · falta ~00:04:58
+[2026-08-21 02:16:58]   730/775    94.2% · Amano Jun                Volante de contenção       b1   -895.20 · 32.8s  | decorrido 01:19:20 · media 6.5 s/linha · falta ~00:04:53
+[2026-08-21 02:17:03]   731/775    94.3% · Mae Hiroyuki             Meia central de chegada    b1      1.50 ·  5.3s  | decorrido 01:19:26 · media 6.5 s/linha · falta ~00:04:46
+[2026-08-21 02:17:11]   732/775    94.5% · Mae Hiroyuki             Meia de lado por fora      b1    -62.00 ·  8.1s  | decorrido 01:19:34 · media 6.5 s/linha · falta ~00:04:40
+[2026-08-21 02:17:17]   733/775    94.6% · Mae Hiroyuki             Meia ofensivo armador      b1   -206.90 ·  5.0s  | decorrido 01:19:39 · media 6.5 s/linha · falta ~00:04:33
+[2026-08-21 02:17:29]   734/775    94.7% · Mae Hiroyuki             Volante de construção      b1   -307.10 · 12.5s  | decorrido 01:19:51 · media 6.5 s/linha · falta ~00:04:27
+[2026-08-21 02:17:35]   735/775    94.8% · Mae Hiroyuki             Volante de contenção       b1   -421.20 ·  6.0s  | decorrido 01:19:57 · media 6.5 s/linha · falta ~00:04:21
+[2026-08-21 02:17:35]   736/775    95.0% · Schmidt Daniel           Goleiro defensivo          b1   -606.80 ·  0.0s  | decorrido 01:19:57 · media 6.5 s/linha · falta ~00:04:14
+[2026-08-21 02:17:35]   737/775    95.1% · Schmidt Daniel           Goleiro ofensivo           b1   -530.20 ·  0.1s  | decorrido 01:19:57 · media 6.5 s/linha · falta ~00:04:07
+[2026-08-21 02:17:38]   738/775    95.2% · Bright Osayi-Samuel      Lateral defensivo          b1   -245.30 ·  3.2s  | decorrido 01:20:01 · media 6.5 s/linha · falta ~00:04:00
+[2026-08-21 02:17:42]   739/775    95.4% · Bright Osayi-Samuel      Lateral ofensivo           b1    -11.60 ·  3.8s  | decorrido 01:20:04 · media 6.5 s/linha · falta ~00:03:54
+[2026-08-21 02:17:48]   740/775    95.5% · Bright Osayi-Samuel      Meia de lado por dentro    b1   -293.90 ·  5.5s  | decorrido 01:20:10 · media 6.5 s/linha · falta ~00:03:47
+[2026-08-21 02:17:50]   741/775    95.6% · Bright Osayi-Samuel      Ponta finalizadora         b1   -137.70 ·  2.2s  | decorrido 01:20:12 · media 6.5 s/linha · falta ~00:03:40
+[2026-08-21 02:17:51]   742/775    95.7% · Johan Manzambi           Volante de contenção       b1   -681.30 · 725.1s  | decorrido 01:20:13 · media 6.5 s/linha · falta ~00:03:34
+[2026-08-21 02:17:54]   743/775    95.9% · Higuchi Yuta             Meia central armador       b1    123.40 ·  3.4s  | decorrido 01:20:16 · media 6.5 s/linha · falta ~00:03:27
+[2026-08-21 02:18:05]   744/775    96.0% · Higuchi Yuta             Meia central de chegada    b1     50.30 · 11.2s  | decorrido 01:20:28 · media 6.5 s/linha · falta ~00:03:21
+[2026-08-21 02:18:11]   745/775    96.1% · Higuchi Yuta             Meia de lado por dentro    b1   -172.30 ·  5.1s  | decorrido 01:20:33 · media 6.5 s/linha · falta ~00:03:14
+[2026-08-21 02:18:15]   746/775    96.3% · Higuchi Yuta             Meia ofensivo armador      b1      4.10 ·  4.8s  | decorrido 01:20:38 · media 6.5 s/linha · falta ~00:03:08
+[2026-08-21 02:18:18]   747/775    96.4% · Higuchi Yuta             Ponta finalizadora         b1   -176.70 ·  2.3s  | decorrido 01:20:40 · media 6.5 s/linha · falta ~00:03:01
+[2026-08-21 02:18:27]   748/775    96.5% · Higuchi Yuta             Lateral ofensivo           b1   -128.90 · 37.2s  | decorrido 01:20:49 · media 6.5 s/linha · falta ~00:02:55
+[2026-08-21 02:18:34]   749/775    96.6% · Tachibanada Kento        Lateral ofensivo           b1    -81.20 ·  6.4s  | decorrido 01:20:56 · media 6.5 s/linha · falta ~00:02:48
+[2026-08-21 02:18:41]   750/775    96.8% · Tachibanada Kento        Meia central de chegada    b1    -10.20 ·  7.6s  | decorrido 01:21:03 · media 6.5 s/linha · falta ~00:02:42
+[2026-08-21 02:18:52]   751/775    96.9% · Tachibanada Kento        Meia ofensivo armador      b1   -368.40 · 11.1s  | decorrido 01:21:14 · media 6.5 s/linha · falta ~00:02:35
+[2026-08-21 02:19:03]   752/775    97.0% · Tachibanada Kento        Volante de construção      b1     77.70 · 11.1s  | decorrido 01:21:26 · media 6.5 s/linha · falta ~00:02:29
+[2026-08-21 02:19:08]   753/775    97.2% · Tachibanada Kento        Volante de contenção       b1     -5.30 ·  4.8s  | decorrido 01:21:30 · media 6.5 s/linha · falta ~00:02:22
+[2026-08-21 02:19:08]   754/775    97.3% · Nishikawa Konosuke       Goleiro defensivo          b1   -500.90 ·  0.1s  | decorrido 01:21:30 · media 6.5 s/linha · falta ~00:02:16
+[2026-08-21 02:19:08]   755/775    97.4% · Nishikawa Konosuke       Goleiro ofensivo           b1   -373.60 ·  0.1s  | decorrido 01:21:31 · media 6.5 s/linha · falta ~00:02:09
+[2026-08-21 02:19:09]   756/775    97.5% · Suzuki Kaito             Zagueiro de combate        b1   -448.40 ·  0.4s  | decorrido 01:21:31 · media 6.5 s/linha · falta ~00:02:02
+[2026-08-21 02:19:09]   757/775    97.7% · Suzuki Kaito             Zagueiro de saída          b1   -257.10 ·  0.2s  | decorrido 01:21:31 · media 6.5 s/linha · falta ~00:01:56
+[2026-08-21 02:19:09]   758/775    97.8% · Kawano Takashi           Zagueiro de combate        b1   -393.10 ·  0.1s  | decorrido 01:21:31 · media 6.5 s/linha · falta ~00:01:49
+[2026-08-21 02:19:09]   759/775    97.9% · Kawano Takashi           Zagueiro de saída          b1   -160.80 ·  0.0s  | decorrido 01:21:31 · media 6.4 s/linha · falta ~00:01:43
+[2026-08-21 02:19:12]   760/775    98.1% · Yamada Fuki              Meia central armador       b1   -409.60 ·  2.6s  | decorrido 01:21:34 · media 6.4 s/linha · falta ~00:01:36
+[2026-08-21 02:19:16]   761/775    98.2% · Yamada Fuki              Meia de lado por dentro    b1   -405.00 ·  4.9s  | decorrido 01:21:39 · media 6.4 s/linha · falta ~00:01:30
+[2026-08-21 02:19:21]   762/775    98.3% · Yamada Fuki              Meia de lado por fora      b1   -416.50 ·  4.7s  | decorrido 01:21:43 · media 6.4 s/linha · falta ~00:01:23
+[2026-08-21 02:19:25]   763/775    98.5% · Yamada Fuki              Meia ofensivo armador      b1   -495.90 ·  4.3s  | decorrido 01:21:48 · media 6.4 s/linha · falta ~00:01:17
+[2026-08-21 02:19:30]   764/775    98.6% · Yamada Fuki              Ponta criadora             b1   -323.60 ·  4.4s  | decorrido 01:21:52 · media 6.4 s/linha · falta ~00:01:10
+[2026-08-21 02:19:31]   765/775    98.7% · Nemoto Kenta             Zagueiro de combate        b1   -161.40 ·  1.0s  | decorrido 01:21:53 · media 6.4 s/linha · falta ~00:01:04
+[2026-08-21 02:19:32]   766/775    98.8% · Nemoto Kenta             Zagueiro de saída          b1    -22.90 ·  0.7s  | decorrido 01:21:54 · media 6.4 s/linha · falta ~00:00:57
+[2026-08-21 02:19:33]   767/775    99.0% · Yamanouchi Yusei         Lateral defensivo          b1   -372.70 ·  1.7s  | decorrido 01:21:55 · media 6.4 s/linha · falta ~00:00:51
+[2026-08-21 02:19:36]   768/775    99.1% · Higuchi Yuta             Volante de construção      b1   -330.90 · 78.6s  | decorrido 01:21:59 · media 6.4 s/linha · falta ~00:00:44
+[2026-08-21 02:19:42]   769/775    99.2% · Yamanouchi Yusei         Meia de lado por dentro    b1   -599.40 ·  5.7s  | decorrido 01:22:04 · media 6.4 s/linha · falta ~00:00:38
+[2026-08-21 02:19:42]   770/775    99.4% · Yamanouchi Yusei         Lateral ofensivo           b1   -127.00 ·  9.2s  | decorrido 01:22:05 · media 6.4 s/linha · falta ~00:00:31
+[2026-08-21 02:19:43]   771/775    99.5% · Yamanouchi Yusei         Zagueiro de saída          b1   -374.50 ·  1.0s  | decorrido 01:22:05 · media 6.4 s/linha · falta ~00:00:25
+[2026-08-21 02:19:45]   772/775    99.6% · Shimamoto Yudai          Meia central armador       b1   -231.30 ·  2.8s  | decorrido 01:22:07 · media 6.4 s/linha · falta ~00:00:19
+[2026-08-21 02:19:48]   773/775    99.7% · Shimamoto Yudai          Meia central de chegada    b1    -64.50 ·  5.3s  | decorrido 01:22:11 · media 6.4 s/linha · falta ~00:00:12
+[2026-08-21 02:19:50]   774/775    99.9% · Shimamoto Yudai          Meia ofensivo armador      b1   -327.70 ·  5.2s  | decorrido 01:22:13 · media 6.4 s/linha · falta ~00:00:06
+[2026-08-21 02:20:07]   775/775   100.0% · Shimamoto Yudai          Volante de construção      b1   -433.30 · 19.0s  | decorrido 01:22:30 · media 6.4 s/linha · falta ~00:00:00
