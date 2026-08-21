@@ -185,10 +185,11 @@ def converte(j, T):
     orc = max(0, 2 * lc - 2)
     dt  = data_do_datapack(j.get('datapackId'))
     b1, b2 = j.get('boostId') or 0, j.get('boostId2') or 0
-    if dt and dt < CORTE_SL:
-        sl = [0, 0]
-    else:
-        sl = [0 if b1 else 1, 0 if b2 else 1]
+    # Ausencia de boostId NAO prova vaga livre. A vaga so sera aberta depois
+    # que o coletor especifico trouxer o marcador VAGA, ou por confirmacao no
+    # jogo. Ate la o motor recebe [0,0] e falha fechado.
+    sl = [0, 0]
+    vaga_estado = 'confirmada_sem_vaga' if (dt and dt < CORTE_SL) else 'desconhecida'
 
     sec = []
     for a in (j.get('additionalPositions') or []):
@@ -219,6 +220,9 @@ def converte(j, T):
         'base': list((j.get('stats') or {}).values()),
         'fab': fab, 'falta': pool, 'raras': [],
         'nm': None, 'sl': sl,
+        'vaga_estado': vaga_estado,
+        'vaga_confirmada': vaga_estado != 'desconhecida',
+        'vaga_livre_confirmada': False,
         'dt': dt, 'levelCap': lc,
         'boostId': b1, 'boostId2': b2,
         'origem_ficha': 'efhub',

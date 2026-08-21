@@ -108,8 +108,8 @@ for c in cards:
         continue
     if c.get('nm'):
         continue                                    # resolvido
-    if not (c.get('sl') and c['sl'][1] == 1):
-        continue                                    # nem vaga tem
+    if c.get('vaga_estado') != 'desconhecida':
+        continue                                    # vaga ja foi respondida
     bid = c.get('boostId') or 0
     try:
         bid = int(bid)

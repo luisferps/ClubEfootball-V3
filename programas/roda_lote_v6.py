@@ -56,6 +56,7 @@ if _MEU_LUGAR in _sys.path:
 _sys.path.insert(0, _MEU_LUGAR)          # `programas` vem PRIMEIRO
 # --------------------------------------------------------------------------
 import json, os, re, sys, time, collections, datetime
+from vaga_impeto import normaliza_vaga
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 os.chdir(_CASA or os.path.dirname(os.path.abspath(__file__)))
@@ -247,6 +248,8 @@ def _recarrega_cards_da_base():
     """A fonte unica: dados/base_unica.json e mais nada."""
     import fonte_unica
     _W['BASE'] = fonte_unica.carrega_base()
+    for _card in _W['BASE'].values():
+        normaliza_vaga(_card)
     _W['mtime'] = _mtime_das_fontes()
 
 
@@ -300,6 +303,11 @@ def _recarrega_cards():
                     base[b] = c
         except Exception:
             pass
+
+    # Defesa do executor/lote: mesmo uma base antiga com sl=[0,1] nao abre
+    # candidato se nao carregar a confirmacao rastreavel da vaga.
+    for c in base.values():
+        normaliza_vaga(c)
 
     _W['BASE'] = base
     _W['mtime'] = _mtime_das_fontes()

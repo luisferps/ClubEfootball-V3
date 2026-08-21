@@ -48,6 +48,11 @@ def acha_a_pasta_do_sistema(inicio):
     for _ in range(4):
         if os.path.exists(os.path.join(p, 'config.txt')):
             return p
+        # O pacote excepcional nao leva credenciais. Ainda assim, ele e uma
+        # casa valida quando conserva a pasta de dados e a fonte unica.
+        if (os.path.isdir(os.path.join(p, 'dados')) and
+                os.path.exists(os.path.join(p, 'FONTE-UNICA.txt'))):
+            return p
         pai = os.path.dirname(p)
         if pai == p:
             break
@@ -57,7 +62,7 @@ def acha_a_pasta_do_sistema(inicio):
 
 CASA = acha_a_pasta_do_sistema(AQUI)
 if not CASA:
-    print('nao achei o config.txt subindo a partir de %s' % AQUI)
+    print('nao achei a pasta do sistema subindo a partir de %s' % AQUI)
     raise SystemExit(1)
 os.chdir(CASA)
 for _d in (AQUI, CASA):
@@ -65,6 +70,7 @@ for _d in (AQUI, CASA):
         sys.path.insert(0, _d)
 
 from funcao_nativa import funcao_nativa, familia, normaliza, SA_FAMILIA
+from vaga_impeto import normaliza_vaga
 
 def pausa(msg='Enter para fechar...'):
     """Nao trava quando o .bat chama sem teclado."""
@@ -116,6 +122,7 @@ def main():
     fila, fora, adiada, sem_pool = [], [], [], []
     for b, regs in base.items():
         c = max(regs, key=lambda x: x.get('orc') or 0)
+        normaliza_vaga(c)
         orc = c.get('orc') or 0
         if not orc and b in LC:
             orc = 2 * int(LC[b]) - 2
@@ -226,7 +233,8 @@ def main():
                   # ⛔ `estilo_ativa` e o que a tela usa para separar ATIVA de
                   #    BASICA no modal. E medido: o estilo do card ativa aqui?
                   'estilo_ativa': not _basica,
-                  'lancamento': b in LANCA, 'box': CAMPANHA.get(b)}
+                  'lancamento': b in LANCA, 'box': CAMPANHA.get(b),
+                  'vaga_livre_confirmada': bool(c.get('vaga_livre_confirmada'))}
             if _basica and _pool_vazio:
                 _r['por_que_adiada'] = 'basica nova de carta com pool vazio'
                 adiada.append(_r)

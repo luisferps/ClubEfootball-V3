@@ -84,7 +84,8 @@ for c in N:
     b = str(c['id']).split('@')[0]
     if b in tem:
         fora.append((b, c.get('nome'), 'ja estava no cards.json')); continue
-    if isinstance(c.get('sl'), list) and any(x == 0 for x in c['sl']) and not c.get('nm'):
+    tem_impeto_nativo = bool(c.get('boostId') or c.get('boostId2') or c.get('impeto_tem'))
+    if tem_impeto_nativo and not c.get('nm'):
         fora.append((b, c.get('nome'), 'impeto de fabrica sem o nm — nota sairia subestimada'))
         continue
     if not c.get('base') or len(c['base']) != 26:

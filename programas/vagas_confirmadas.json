@@ -1,0 +1,11 @@
+{
+  "regra": "Confirmacoes feitas diretamente no jogo. Somente estado=vaga_livre habilita candidato hipotetico no motor.",
+  "confirmacoes": {
+    "105880691466019": {
+      "estado": "sem_vaga",
+      "nome": "Mohamed Salah",
+      "box": "CAF Africa Cup of Nations Selection 13 Aug '26",
+      "como": "confirmado no jogo em 20/08/2026: nenhum impeto e nenhuma vaga livre"
+    }
+  }
+}

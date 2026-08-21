@@ -61,6 +61,7 @@ from equacao import (MB, MBK, ACCU, ATTRS_EF, POS, AM, TABM, mult_de, _mult, _mu
                      nivel_max_barra)
 from regua import (DEG, K, TETO_PUN, VMAX, pts_table, pts_regua, notaDe,
                    nota_por_tabela, tabela_com_buff)
+from vaga_impeto import pode_testar_impeto
 
 # =========================================================================
 # 05/08/2026 — QUAL TABELA O DP MAXIMIZA.
@@ -117,9 +118,14 @@ class Card:
         _tb = pts_table if globals().get('TABELA_DP') == 'bussola' else pts_regua
         self.tab = {i: _tb(a, p) for i, (a, p) in self.R.items()}
         self.pes = set(self.R)
-        sl = c.get('sl') or [0, 0]
-        self.L  = [x for x in CAT if x[1] == 0 and any(i in self.pes for i, _ in x[2])] if sl[0] else []
-        self.Rr = [x for x in CAT if x[1] == 1 and any(i in self.pes for i, _ in x[2])] if sl[1] else []
+        # `sl` antigo nao e mais prova de vaga. A ausencia de booster ja gerou
+        # falsos [0,1] e fez o motor inventar impeto, atributos e nota. Somente
+        # a confirmacao rastreavel abre a lista de candidatos hipoteticos.
+        vaga_livre = pode_testar_impeto(c)
+        self.L = []
+        self.Rr = ([x for x in CAT if x[1] == 1
+                    and any(i in self.pes for i, _ in x[2])]
+                   if vaga_livre else [])
         self.nm = expand(c.get('nm'))
         self.vb = {i: _multv(np.minimum(99, self.base[i] + np.arange(26)), self.m) for i in self.R}
         # CONSERTO DA BUSSOLA (04/08): a escada de BASE+BARRAS por nivel. E dela

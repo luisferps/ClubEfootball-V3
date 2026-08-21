@@ -156,6 +156,9 @@ NAO_E_DADO = {
     'impeto_de_onde':        'DERIVADO do impeto',
     'impeto_nativo':         'DERIVADO do impeto',
     'vagas_livres':          'DERIVADO do impeto',
+    'vaga_estado':           'estado seguro derivado da confirmacao da vaga',
+    'vaga_confirmada':       'metadado da confirmacao da vaga',
+    'vaga_livre_confirmada': 'autorizacao derivada para o motor',
     'boostId':               'o id cru do impeto na ficha — o impeto ja tem estado proprio',
     'boostId2':              'o id cru do impeto na ficha — o impeto ja tem estado proprio',
 }
@@ -165,6 +168,8 @@ IMPETO_SITUACAO = {
     'tem ímpeto':             'valor',
     'sem ímpeto e sem vaga':  'nao_se_aplica',   # carta velha: o jogo nao da. NAO e falta.
     'vaga livre — A COLETAR': 'nao_sei',         # ESTA sim e falta de verdade
+    'vaga não confirmada — A COLETAR': 'nao_sei',
+    'uma vaga vazia — CONFERIDO': 'nao_se_aplica',
 }
 
 FONTE_VAZIA = {'nao preenchido', 'nenhuma', '', None}

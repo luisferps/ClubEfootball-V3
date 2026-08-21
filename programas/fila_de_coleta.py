@@ -218,7 +218,8 @@ CAMPOS = {
 # campos calculados a partir do impeto: nao se pede a ninguem
 for k in ('impeto_quantos', 'impeto_tem', 'impeto_nomes',
           'impeto_condicional', 'impeto_efeito', 'impeto_soma', 'impeto_situacao',
-          'impeto_de_onde'):
+          'impeto_de_onde', 'vaga_estado', 'vaga_confirmada',
+          'vaga_livre_confirmada'):
     CAMPOS[k] = ('nao_sei', ['derivado'], 'medido', 'calculado a partir do impeto')
 
 # ⛔ vazio aqui e a BOA noticia: nenhum codigo de impeto ficou sem traducao.
@@ -240,12 +241,16 @@ DERIVA_DE = {
     'impeto_soma': 'impeto', 'impeto_situacao': 'impeto', 'impeto_de_onde': 'impeto',
     'impeto_nativo': 'impeto', 'nm': 'impeto', 'nx': 'impeto', 'nmn': 'impeto',
     'boostId': 'impeto', 'boostId2': 'impeto', 'vagas_livres': 'sl',
+    'vaga_estado': 'vaga', 'vaga_confirmada': 'vaga',
+    'vaga_livre_confirmada': 'vaga',
 }
 
 IMPETO_SITUACAO = {
     'tem ímpeto':             'valor',
     'sem ímpeto e sem vaga':  'nao_se_aplica',
     'vaga livre — A COLETAR': 'nao_sei',
+    'vaga não confirmada — A COLETAR': 'nao_sei',
+    'uma vaga vazia — CONFERIDO': 'nao_se_aplica',
 }
 FONTE_VAZIA = {'nao preenchido', 'nenhuma', '', None}
 FONTE_CONFERIDA = 'CONFERIDO'

@@ -57,6 +57,12 @@ def _acha_a_casa(inicio):
 
 _MEU_LUGAR = _os.path.dirname(_os.path.abspath(__file__))
 _CASA = _acha_a_casa(_MEU_LUGAR) or _acha_a_casa(_os.getcwd())
+if not _CASA:
+    _CANDIDATA = _os.path.dirname(_MEU_LUGAR)
+    if _os.path.isdir(_os.path.join(_CANDIDATA, 'dados')):
+        # Pacotes excepcionais nao levam config.txt por seguranca, mas mantem
+        # a mesma estrutura oficial (programas/ + dados/).
+        _CASA = _CANDIDATA
 if _CASA:
     if _os.path.abspath(_os.getcwd()) != _os.path.abspath(_CASA):
         _os.chdir(_CASA)
@@ -74,6 +80,8 @@ import re
 import sys
 from collections import Counter, OrderedDict
 from impeto_alias import carregar_aliases, como_booster
+from vaga_impeto import (ESTADO_DESCONHECIDA, ESTADO_LIVRE,
+                         ESTADO_SEM_VAGA, normaliza_vaga)
 
 # ⛔ 19/08 — a pasta dos DADOS e a CASA (a do config.txt), nao a
 
@@ -134,6 +142,7 @@ efootbase_imp = (ler_json("impeto_efootbase.json", {}) or {}).get("dados") or {}
 # CONFERIDO.json: o que foi checado e fechado. Ganha de toda fonte, inclusive
 # quando a resposta e VAZIO ("esse card nao tem" e resposta, nao buraco).
 conferido_geral = ler_json("CONFERIDO.json", {})
+vagas_confirmadas_arq = ler_json(os.path.join("programas", "vagas_confirmadas.json"), {})
 tecnicos = ler_json("tecnicos.json", {})
 
 # levelcap ja morou em dois lugares na historia do projeto; aceito os dois.
@@ -976,6 +985,26 @@ for _cid, _campos in CONFERIDOS_GERAL.items():
             fonte[_alvo]["_conferido_" + _campo] = _info.get("como", "")
             aplicados_conferido.append((_alvo, _campo, _antes, _info["valor"]))
 
+# A confirmacao da vaga e independente do impeto nativo. Este arquivo e a
+# fonte rastreavel para casos conferidos diretamente no jogo. Nunca se deriva
+# uma vaga livre de boostId=0, de sl antigo ou da ausencia de hexagono.
+VAGAS_CONFIRMADAS = (vagas_confirmadas_arq.get("confirmacoes", {})
+                     if isinstance(vagas_confirmadas_arq, dict) else {})
+for _cid, _info in VAGAS_CONFIRMADAS.items():
+    if not isinstance(_info, dict):
+        continue
+    _estado = str(_info.get("estado") or "").strip().lower()
+    if _estado not in ("vaga_livre", "sem_vaga"):
+        AVISOS.append("CONFIRMACAO DE VAGA INVALIDA: %s = %s" % (_cid, _estado))
+        continue
+    for _alvo in [k for k in registro if str(k).split("@")[0] == str(_cid)]:
+        registro[_alvo]["vaga_estado"] = (ESTADO_LIVRE if _estado == "vaga_livre"
+                                           else ESTADO_SEM_VAGA)
+        registro[_alvo]["vaga_confirmada"] = True
+        registro[_alvo]["vaga_livre_confirmada"] = (_estado == "vaga_livre")
+        fonte.setdefault(_alvo, {})["vaga_estado"] = "programas/vagas_confirmadas.json"
+        fonte[_alvo]["_conferido_vaga"] = _info.get("como", "")
+
 
 conta_impeto = Counter()          # situacao -> quantos (so cards base)
 conta_quantos = Counter()         # 0/1/2 -> quantos (so cards base)
@@ -1015,37 +1044,33 @@ for cid, card in registro.items():
     efeito = " · ".join("%s +%d" % (ATRIBUTOS_26[i], vetor[i])
                         for i in range(26) if vetor[i]) or "sem efeito"
 
-    # ---- A VAGA: a trava da data conserta o sl = [1,1], que nao existe ----
-    sl = card.get("sl")
-    sl = list(sl) if isinstance(sl, (list, tuple)) and len(sl) == 2 else None
+    # ---- A VAGA: falha fechada --------------------------------------------
+    # `sl` nao e fonte. Ele e somente a saida da confirmacao. Ausencia de
+    # booster e resposta vazia nao autorizam candidato hipotetico no motor.
+    antes = card.get("sl")
     data_lanc = data_do_card(cid, card)
-    corrigida = False
-    if sl == [1, 1]:
-        antes = [1, 1]
-        if data_lanc and data_lanc < DATA_DA_TRAVA:
-            sl = [0, 0]
-            motivo = "lancada antes de %s: nao tem vaga nenhuma" % DATA_DA_TRAVA
-        else:
-            # posterior a trava (ou data desconhecida): NUNCA zerar por nao ter
-            # achado impeto — hexagono ausente nao prova nada. Vira a coletar.
-            sl = [0, 1]
-            motivo = ("lancada em %s (depois da trava)" % data_lanc) if data_lanc \
-                else "sem data conhecida: fica com uma vaga, a conferir"
-        card["sl"] = sl
-        corrigida = True
-        fonte.setdefault(cid, {})["sl"] = "corrigido pela trava da data"
-        if eh_card_base:
-            vagas_corrigidas.append((cid, card.get("nome"), antes, sl, data_lanc, motivo))
-
-    vagas_livres = int(sl[1] == 1) if sl else 0   # ⛔ nunca 2: sl[0]=1 nao existe
+    estado_vaga = normaliza_vaga(card)
+    if estado_vaga == ESTADO_DESCONHECIDA and data_lanc and data_lanc < DATA_DA_TRAVA:
+        card["vaga_estado"] = ESTADO_SEM_VAGA
+        card["vaga_confirmada"] = True
+        card["vaga_livre_confirmada"] = False
+        estado_vaga = normaliza_vaga(card)
+        fonte.setdefault(cid, {})["vaga_estado"] = "regra do jogo anterior a %s" % DATA_DA_TRAVA
+    sl = card["sl"]
+    vagas_livres = card["vagas_livres"]
+    fonte.setdefault(cid, {})["sl"] = "derivado de vaga confirmada"
+    if eh_card_base and list(antes or []) != sl:
+        motivo = ("vaga livre explicitamente confirmada" if estado_vaga == ESTADO_LIVRE
+                  else "vaga ausente ou nao confirmada: motor bloqueado")
+        vagas_corrigidas.append((cid, card.get("nome"), antes, sl, data_lanc, motivo))
 
     # ---- a situacao em uma frase ----------------------------------------
     if tem:
         situacao = "tem ímpeto"
-    elif corrigida and sl == [0, 0]:
-        situacao = "vaga impossível — CORRIGIDA"
-    elif vagas_livres:
-        situacao = "vaga livre — A COLETAR"
+    elif estado_vaga == ESTADO_LIVRE:
+        situacao = "uma vaga vazia — CONFERIDO"
+    elif estado_vaga == ESTADO_DESCONHECIDA:
+        situacao = "vaga não confirmada — A COLETAR"
     else:
         situacao = "sem ímpeto e sem vaga"
 
@@ -1065,7 +1090,7 @@ for cid, card in registro.items():
     if eh_card_base:
         conta_impeto[situacao] += 1
         conta_quantos[quantos] += 1
-        if situacao == "vaga livre — A COLETAR":
+        if estado_vaga == ESTADO_DESCONHECIDA:
             a_coletar.append((cid, card.get("nome"), card.get("ovr"), data_lanc))
 
 # quantos impetos condicionais no total (contando os dois de um card com dois)
@@ -1228,7 +1253,7 @@ L.append("  Situação de cada card:")
 for sit, quantos in conta_impeto.most_common():
     L.append("     %-32s %6d" % (sit, quantos))
 L.append("")
-L.append("  Vagas de ímpeto (depois da trava da data):")
+L.append("  Vagas de ímpeto (somente depois de confirmação explícita):")
 dist_vagas = Counter(tuple(c.get("sl") or []) for cid, c in registro.items()
                      if "@" not in str(cid))
 for par, quantos in sorted(dist_vagas.items(), key=lambda x: -x[1]):
@@ -1237,13 +1262,13 @@ com_duas = sum(1 for cid, c in registro.items()
                if "@" not in str(cid) and c.get("vagas_livres", 0) > 1)
 L.append("     cards com 2 vagas livres (nao pode existir): %d" % com_duas)
 L.append("")
-L.append("  VAGAS IMPOSSIVEIS (sl = [1,1]) consertadas pela data: %d" % len(vagas_corrigidas))
+L.append("  SL ANTIGO NORMALIZADO PELA CONFIRMAÇÃO: %d" % len(vagas_corrigidas))
 for cid, nome, antes, depois, dl, motivo in vagas_corrigidas[:40]:
     L.append("     %-16s %-26s %s -> %s  (%s)" % (cid, (nome or "?")[:26], antes, depois, motivo))
 if len(vagas_corrigidas) > 40:
     L.append("     ... e mais %d (a lista inteira esta na base_unica.json)" % (len(vagas_corrigidas) - 40))
 L.append("")
-L.append("  A COLETAR (vaga livre de verdade, falta o dado): %d cards" % len(a_coletar))
+L.append("  VAGA AINDA NÃO CONFIRMADA — A COLETAR: %d cards" % len(a_coletar))
 L.append("     lista completa em IMPETO-A-COLETAR.txt")
 if nao_decompostos:
     L.append("")
@@ -1468,15 +1493,15 @@ else:
     with open(destino_txt, "w", encoding="utf-8") as f:
         f.write(relatorio + "\n")
     # ---- a lista do que falta coletar ------------------------------------
-    # Sao os cards com vaga livre de verdade e sem o dado do impeto. Vaga vazia
-    # NAO prova que o card nao tem impeto: prova que ninguem foi olhar ainda.
+    # Sao os cards cuja existencia de vaga ainda nao foi confirmada. Uma
+    # resposta vazia/ausente NAO vira vaga livre: fica pendente e fechada.
     C = []
     C.append("ÍMPETO — O QUE FALTA COLETAR")
     C.append("=" * 78)
     C.append("")
-    C.append("Estes %d cards tem UMA vaga de ímpeto livre e a base ainda nao sabe" % len(a_coletar))
-    C.append("qual ímpeto esta la (ou se esta vazia mesmo). Hexágono ausente nao")
-    C.append("prova nada — por isso eles ficam AQUI em vez de virar zero na base.")
+    C.append("Estes %d cards ainda NAO tem a existência da vaga confirmada." % len(a_coletar))
+    C.append("Resposta ausente e hexágono não reconhecido não provam vaga livre.")
+    C.append("Por isso ficam AQUI e fechados para candidatos hipotéticos no motor.")
     C.append("")
     C.append("O BOTAO QUE TRAZ ESSE DADO (nesta ordem, duplo clique):")
     C.append("   1) COLETAR-EFSCOUT.bat        -> baixa o ímpeto de cada card do efScout")
