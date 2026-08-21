@@ -985,9 +985,33 @@ for _cid, _campos in CONFERIDOS_GERAL.items():
             fonte[_alvo]["_conferido_" + _campo] = _info.get("como", "")
             aplicados_conferido.append((_alvo, _campo, _antes, _info["valor"]))
 
-# A confirmacao da vaga e independente do impeto nativo. Este arquivo e a
-# fonte rastreavel para casos conferidos diretamente no jogo. Nunca se deriva
-# uma vaga livre de boostId=0, de sl antigo ou da ausencia de hexagono.
+# O eFootBase e somente fallback do eFootballDB: entra quando a fonte primaria
+# nao respondeu e o indice em lote trouxe booster_id=0. A lista e rastreavel e
+# foi validada contra 70 cartas conferidas no jogo. Nunca abre vaga; apenas
+# confirma que o card nao possui vaga livre.
+VAGAS_FALLBACK = (vagas_confirmadas_arq.get("fallback_efootbase", {})
+                  if isinstance(vagas_confirmadas_arq, dict) else {})
+for _cid in (VAGAS_FALLBACK.get("cards", []) if isinstance(VAGAS_FALLBACK, dict) else []):
+    for _alvo in [k for k in registro if str(k).split("@")[0] == str(_cid)]:
+        _card = registro[_alvo]
+        _vaga = _card.get("vaga")
+        if isinstance(_vaga, dict):
+            _vaga = _vaga.get("v")
+        _marcadores = [str(x or "").strip().upper()
+                       for x in (_vaga if isinstance(_vaga, (list, tuple)) else [])
+                       if str(x or "").strip()]
+        _estado_atual = str(_card.get("vaga_estado") or "").strip().lower()
+        if _marcadores or _estado_atual in (ESTADO_LIVRE, ESTADO_SEM_VAGA):
+            continue
+        _card["vaga_estado"] = ESTADO_SEM_VAGA
+        _card["vaga_confirmada"] = True
+        _card["vaga_livre_confirmada"] = False
+        fonte.setdefault(_alvo, {})["vaga_estado"] = "eFootBase fallback: booster_id=0"
+        fonte[_alvo]["_conferido_vaga"] = VAGAS_FALLBACK.get("regra", "")
+
+# A confirmacao manual da vaga e independente do impeto nativo e ganha do
+# fallback. Nunca se deriva uma vaga livre de boostId=0, de sl antigo ou da
+# ausencia de hexagono.
 VAGAS_CONFIRMADAS = (vagas_confirmadas_arq.get("confirmacoes", {})
                      if isinstance(vagas_confirmadas_arq, dict) else {})
 for _cid, _info in VAGAS_CONFIRMADAS.items():
@@ -1004,6 +1028,30 @@ for _cid, _info in VAGAS_CONFIRMADAS.items():
         registro[_alvo]["vaga_livre_confirmada"] = (_estado == "vaga_livre")
         fonte.setdefault(_alvo, {})["vaga_estado"] = "programas/vagas_confirmadas.json"
         fonte[_alvo]["_conferido_vaga"] = _info.get("como", "")
+
+# Os impetos conferidos diretamente no jogo sao a verdade final desta rodada.
+# Este bloco roda DEPOIS de todas as fontes automaticas e sobrescreve qualquer
+# divergencia delas. Assim uma atualizacao do efScout/efHub/eFootBase nao muda
+# silenciosamente o que foi medido e fechado pelo operador.
+IMPETOS_CONFIRMADOS = (vagas_confirmadas_arq.get("impetos_confirmados", {})
+                       if isinstance(vagas_confirmadas_arq, dict) else {})
+for _cid, _info in (IMPETOS_CONFIRMADOS.get("cards", {})
+                    if isinstance(IMPETOS_CONFIRMADOS, dict) else {}).items():
+    if not isinstance(_info, dict):
+        continue
+    _boost_ids = list(_info.get("boostIds") or [])
+    for _alvo in [k for k in registro if str(k).split("@")[0] == str(_cid)]:
+        _card = registro[_alvo]
+        _card["boostId"] = (_boost_ids[0] if _boost_ids else 0)
+        _card["boostId2"] = (_boost_ids[1] if len(_boost_ids) > 1 else 0)
+        _card["nm"] = [list(x) for x in (_info.get("nm") or [])]
+        _card["nx"] = [list(x) for x in (_info.get("nx") or [])]
+        _card["nmn"] = list(_info.get("nmn") or [])
+        _card["impeto_orfao"] = None
+        _marca = fonte.setdefault(_alvo, {})
+        for _campo in ("boostId", "boostId2", "nm", "nx", "nmn", "impeto"):
+            _marca[_campo] = "CONFERIDO NO JOGO — prioridade maxima"
+        _marca["_conferido_impeto"] = _info.get("como", "")
 
 
 conta_impeto = Counter()          # situacao -> quantos (so cards base)
@@ -1144,7 +1192,7 @@ condicionais_total = sum(
 # ⛔ os oito que vem do banco SAIRAM desta lista em 16/08 15h45: este programa
 #    nao os escreve mais, entao nao tem procedencia para declarar. Quem sabe de
 #    onde vieram e o banco, nas colunas metadado_tela_de_onde e visto_na_casca.
-CAMPOS_RASTREADOS = ["impeto", "nm", "sl", "vaga", "corpo", "pe_ruim", "box",
+CAMPOS_RASTREADOS = ["impeto", "nm", "nmn", "boostId", "boostId2", "sl", "vaga", "vaga_estado", "corpo", "pe_ruim", "box",
                      "orc", "base", "fab", "falta", "modelo"]
 for cid, card in registro.items():
     marca = fonte.get(cid, {})
