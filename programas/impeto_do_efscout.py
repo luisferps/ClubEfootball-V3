@@ -3,7 +3,8 @@
 O IMPETO DE FABRICA, PELO efSCOUT — fecha a questao Pirlo x Varane (09/08/2026).
 
 O FORMATO, decodificado nesta sessao:
-   efscout_players.bin = 16 bytes de cabecalho + 39.524 registros de 92 bytes
+   efscout_players.bin = 16 bytes de cabecalho + N registros
+   formatos medidos: 92 bytes (ate 19/08) e 114 bytes (desde 20/08)
    bytes 0..7 do registro ...... id numerico da Konami (u64), o MESMO que a gente usa
    bit 552, 11 bits ............ id do IMPETO DE FABRICA (0 = No Booster)
    o resto e bit-packed e nao foi decodificado — nao precisa
@@ -89,10 +90,22 @@ for p in (BIN, CAT, CARDS):
 
 d = open(BIN, 'rb').read()
 N = struct.unpack_from('<I', d, 0)[0]
-REC, OFF = 92, 16
-if 16 + N * REC != len(d):
-    print('o formato do players.bin mudou (esperava %d bytes, tem %d). PARANDO.'
-          % (16 + N * REC, len(d)))
+OFF = 16
+if N <= 0 or (len(d) - OFF) % N:
+    print('o players.bin nao fecha em registros inteiros '
+          '(cabecalho %d · registros %d · bytes %d). PARANDO.'
+          % (OFF, N, len(d)))
+    raise SystemExit
+REC = (len(d) - OFF) // N
+
+# 20/08/2026: o efScout aumentou cada registro de 92 para 114 bytes. O campo
+# do impeto continuou exatamente no bit 552. Isso foi medido em dez cartas de
+# familias diferentes: as dez voltaram ao id e ao vetor de atributos corretos.
+# Nao aceitamos silenciosamente qualquer tamanho futuro: se a estrutura mudar
+# de novo, o programa para em vez de associar um impeto errado.
+FORMATOS_MEDIDOS = {92: 'formato antigo', 114: 'formato 2026.08.17'}
+if REC not in FORMATOS_MEDIDOS or REC * 8 < BIT + W:
+    print('o formato do players.bin mudou (registro de %d bytes). PARANDO.' % REC)
     raise SystemExit
 
 idx = {}
@@ -118,6 +131,7 @@ print('=' * 72)
 print('  O IMPETO DE FABRICA PELO efSCOUT   %s' % ('(APLICANDO)' if APLICAR else '(SO RELATORIO)'))
 print('=' * 72)
 print('registros no efscout .... %d' % N)
+print('tamanho do registro ..... %d bytes (%s)' % (REC, FORMATOS_MEDIDOS[REC]))
 
 saida, r = {}, collections.Counter()
 for c in C:

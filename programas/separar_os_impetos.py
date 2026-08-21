@@ -60,6 +60,7 @@ Ele traz os 402 impetos do jogo, com id proprio:
 ⛔ Nao escreve no banco. Nao mexe em card nenhum. So le e grava arquivo.
 """
 import json, os, re, sys, collections
+from impeto_alias import carregar_aliases, como_booster
 
 # 16/08 — encoding='utf-8' EXPLICITO em todo open() de texto.
 # Sem ele o Windows usa cp1252 e qualquer acento derruba o programa inteiro.
@@ -117,6 +118,25 @@ def main():
     P('')
     P('[1/5] o catalogo do jogo (efscout_boosters.json)')
     BST = le('efscout_boosters.json')
+
+    # O codigo que vem no card e o id do catalogo efScout sao namespaces
+    # diferentes. Quando o codigo externo ja foi conferido, ele entra como uma
+    # linha adicional do catalogo e segue pela MESMA contraprova do `nm`.
+    por_id = {int(b['id']): b for b in BST}
+    for codigo_externo, alias in carregar_aliases().items():
+        b = como_booster(alias)
+        velho = por_id.get(int(codigo_externo))
+        if velho:
+            assinatura_velha = (bool(velho.get('conditional')),
+                                 sorted(velho.get('stat_modifiers') or []))
+            assinatura_nova = (bool(b.get('conditional')),
+                                sorted(b.get('stat_modifiers') or []))
+            if assinatura_velha != assinatura_nova:
+                raise ValueError('codigo de impeto %s colide entre catalogo e alias'
+                                 % codigo_externo)
+            continue
+        BST.append(b)
+        por_id[int(codigo_externo)] = b
     ids = [b['id'] for b in BST]
     if len(set(ids)) != len(ids):
         P('   ⛔ o id NAO e unico nesta fonte. PARANDO — a chave nao serve.')
@@ -133,8 +153,9 @@ def main():
         # ⚠️ entrada quebrada NA FONTE. Entra no catalogo marcada, para ninguem
         #    "consertar" inventando os atributos que faltam.
         ruim = None
-        if len(atrs) not in (4, 26):
-            ruim = ('a fonte traz %d atributos (o normal e 4, ou 26 no Total Package)'
+        if len(atrs) not in (1, 4, 26):
+            ruim = ('a fonte traz %d atributos (o normal e 4; especiais podem ter 1; '
+                    'ou 26 no Total Package)'
                     % len(atrs))
         elif nivel is not None and niveis != [nivel]:
             ruim = ('o nivel do nome (%s) nao bate com o dos atributos (%s)'
@@ -228,7 +249,7 @@ def main():
     por_nome = collections.defaultdict(list)
     for v in cat.values():
         por_nome[(v['nome_en'], v['nivel'])].append(v)
-        if v['tem_nome_em_portugues']:
+        if v['nome_em_portugues'] == 'valor':
             por_nome[(v['nome'], v['nivel'])].append(v)
     por_conjunto = collections.defaultdict(list)
     for v in cat.values():

@@ -73,6 +73,7 @@ import time
 import re
 import sys
 from collections import Counter, OrderedDict
+from impeto_alias import carregar_aliases, como_booster
 
 # ⛔ 19/08 — a pasta dos DADOS e a CASA (a do config.txt), nao a
 
@@ -168,6 +169,29 @@ for b in (efscout_boosters or []):
     nome = (b.get("name") or "").strip().lower()
     if nome:
         CATALOGO_POR_NOME.setdefault(nome, b)
+
+# O boostId do card e o id do catalogo efScout sao namespaces diferentes.
+# Os aliases entram somente depois de nome, nivel e atributos confirmados.
+IMPETO_ALIASES = carregar_aliases()
+for codigo_externo, alias in IMPETO_ALIASES.items():
+    booster_alias = como_booster(alias)
+    if codigo_externo in CATALOGO:
+        atual = CATALOGO[codigo_externo]
+        identidade_atual = (bool(atual.get("conditional")),
+                            sorted([list(map(int, p)) for p in
+                                    (atual.get("stat_modifiers") or [])]))
+        identidade_alias = (bool(booster_alias.get("conditional")),
+                            sorted(booster_alias["stat_modifiers"]))
+        if identidade_atual != identidade_alias:
+            raise ValueError("codigo de impeto %s colide entre catalogo e alias"
+                             % codigo_externo)
+    else:
+        CATALOGO[codigo_externo] = booster_alias
+    for nome_alias in ([booster_alias.get("name"), booster_alias.get("name_en")] +
+                       list(booster_alias.get("aliases") or [])):
+        nome_alias = (nome_alias or "").strip().lower()
+        if nome_alias:
+            CATALOGO_POR_NOME.setdefault(nome_alias, booster_alias)
 
 
 def vazio(valor):

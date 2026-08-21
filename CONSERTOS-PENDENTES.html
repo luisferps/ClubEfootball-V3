@@ -37,7 +37,7 @@ hr{border:0;border-top:1px solid var(--lr);margin:34px 0}
 <h1><em>ClubEfootball</em> — consertos pendentes</h1>
 <p class="sub">A lista viva. O Luis vai jogando as coisas aqui durante a reforma, e
 <b>nada é consertado na hora</b> — a transformação não para. Quando ela fechar, a gente
-senta em cima desta lista. <b>13 itens</b>, atualizado 20/08/2026 00h45.</p>
+senta em cima desta lista. <b>16 itens</b>, atualizado 20/08/2026.</p>
 
 <div class="card">
 <b>Como cada item é registrado</b>
@@ -622,6 +622,52 @@ que o Luis for encontrando pelo caminho.</p>
 <p>Algumas boxes não trazem a data de lançamento no nome nem no cadastro histórico.
 Essas ficam sem data na tela até a fonte correta ser confirmada; a data de coleta não
 pode ser usada como substituta.</p>
+
+<h2>15 · Trazer o box_por_card histórico do outro computador</h2>
+
+<table>
+<tr><th>quando</th><td>20/08/2026, ~17h05 — lote excepcional das 23 boxes</td></tr>
+<tr><th>de quem é</th><td><b>dados locais / coleta</b></td></tr>
+<tr><th>estado</th><td><span class="est e-nao">pendente do arquivo</span></td></tr>
+</table>
+
+<p class="fala">"Eu tenho ele em outro computador. Faz só o das 23 boxes e vamos seguir;
+põe na fila de pendências pra eu te mandar ele mais tarde."</p>
+
+<p>O processamento excepcional continua com um <code>box_por_card.json</code> temporário,
+contendo somente as 23 boxes deste lote. Quando o arquivo histórico chegar do outro
+computador, ele deve ser incorporado sem apagar as associações novas.</p>
+
+<div class="card"><b>Conferência obrigatória quando o arquivo chegar:</b>
+<ul>
+<li>preservar todas as associações históricas;</li>
+<li>manter as 23 boxes e os 187 cards deste lote;</li>
+<li>registrar divergências em vez de sobrescrever silenciosamente.</li>
+</ul>
+</div>
+
+<h2>16 · Um software único para o fluxo completo de coleta e processamento</h2>
+
+<table>
+<tr><th>quando</th><td>20/08/2026 — após o lote excepcional das 23 boxes</td></tr>
+<tr><th>de quem é</th><td><b>automação / operação</b></td></tr>
+<tr><th>estado</th><td><span class="est e-nao">pendente</span></td></tr>
+</table>
+
+<p>Transformar o fluxo inteiro, da seleção das boxes até o resultado final, em um
+único software com interface. Ele deve coordenar os programas oficiais já existentes,
+sem criar uma segunda coleta nem um segundo motor.</p>
+
+<div class="card"><b>O fluxo único precisa cobrir:</b>
+<ul>
+<li>seleção do lote de boxes e coleta dos cards;</li>
+<li>coleta e conferência dos insumos em todas as fontes;</li>
+<li>unificação da base e relatório do que ainda estiver incompleto;</li>
+<li>execução dos motores de otimização e de bônus somente para os cards completos;</li>
+<li>gravação dos resultados no Supabase pelo processo oficial;</li>
+<li>salvamento de progresso, retomada após interrupção e tratamento de limite HTTP 429.</li>
+</ul>
+</div>
 
 </body>
 </html>

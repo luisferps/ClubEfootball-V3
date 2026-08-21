@@ -136,7 +136,9 @@ def main():
         'color': v.get('color'),
         'defeito_na_fonte': v.get('defeito_na_fonte'),
     } for v in imp]
+    confirmacoes = {}
     m, g = sobe('impeto', linhas, 'id')
+    confirmacoes['impeto'] = (m, g)
     P('   %d mandadas · %d gravadas pelo banco' % (m, g))
 
     # ---------------------------------------------------------------- 2
@@ -149,6 +151,7 @@ def main():
                            'atributo_nome': pt[a] if a < len(pt) else None,
                            'quanto': v.get('nivel')})
     m, g = sobe('impeto_atributo', linhas, 'impeto_id,atributo')
+    confirmacoes['impeto_atributo'] = (m, g)
     P('   %d mandadas · %d gravadas pelo banco' % (m, g))
 
     # ---------------------------------------------------------------- 3
@@ -184,6 +187,7 @@ def main():
                 'conferido': d.get('conferido'),
             })
     m, g = sobe('card_impeto', linhas, 'card_id,ordem')
+    confirmacoes['card_impeto'] = (m, g)
     P('   %d mandadas · %d gravadas pelo banco' % (m, g))
 
     # ---------------------------------------------------------------- conferencia
@@ -197,10 +201,14 @@ def main():
                                                 for v in imp)),
                         ('card_impeto', len(linhas))):
         n = conta(t)
-        bate = (n == esperado)
+        # Estas tabelas guardam o historico inteiro. Em uma rodada parcial, o
+        # total do banco TEM que ser maior que o lote atual. A prova do lote e
+        # `return=representation`: cada POST devolveu todas as linhas mandadas.
+        mandei, gravou = confirmacoes[t]
+        bate = (n >= esperado and mandei == gravou == esperado)
         ok = ok and bate
-        P('   %-18s banco %6s · esperado %6s  %s'
-          % (t, n, esperado, '✅' if bate else '⛔'))
+        P('   %-18s banco %6s · lote %6s/%-6s  %s'
+          % (t, n, gravou, esperado, '✅' if bate else '⛔'))
     P('')
     P('   %s' % ('✅ O BANCO TEM O IMPETO SEPARADO.' if ok
                  else '⛔ ALGUMA TABELA NAO FECHOU. Nao siga — o numero de cima diz qual.'))
