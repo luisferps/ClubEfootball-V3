@@ -350,7 +350,17 @@ JS_DO_BANCO = r"""(function(){
     try{ if (typeof render     === 'function') render(); }catch(e){}
     try{ if (typeof homeRender === 'function') homeRender(); }catch(e){}
     try{ if (typeof desenha    === 'function') desenha(); }catch(e){}
+    /* A camada atual das paginas tambem precisa receber o conjunto completo.
+       Sem esta chamada, Boxes atuais podia conservar percentuais calculados
+       com a primeira leva e mudar a ordem depois de abrir uma ficha. */
+    try{ if (window.t6Painel && window._t6aba) window.t6Painel(window._t6aba); }catch(e){}
     if (_sy > 0) { try{ window.scrollTo(0, _sy); }catch(e){} }
+  }
+  var falhasResto = 0;
+  function tentaResto(){
+    falhasResto++;
+    aviso('finalizando as boxes…');
+    setTimeout(proxima, Math.min(4000, 500 * falhasResto));
   }
   function proxima(){
     if (acabou) { aviso(''); redesenha();
@@ -361,7 +371,8 @@ JS_DO_BANCO = r"""(function(){
     r.setRequestHeader('Authorization', 'Bearer ' + CHAVE);
     r.onload = function(){
       try{
-        if (r.status !== 200) { aviso(''); return; }
+        if (r.status !== 200) { tentaResto(); return; }
+        falhasResto = 0;
         var q = JSON.parse(r.responseText);
         for (var k = 0; k < q.length; k++) _entra(q[k].linha);
         if (q.length < PAGINA) acabou = true;
@@ -377,7 +388,7 @@ JS_DO_BANCO = r"""(function(){
         setTimeout(proxima, 0);
       }catch(e){ aviso(''); }
     };
-    r.onerror = function(){ aviso(''); };
+    r.onerror = tentaResto;
     r.send(null);
   }
   document.addEventListener('DOMContentLoaded', function(){
@@ -1128,9 +1139,20 @@ T6_JS = """
    funcao dele (homeToggle, mtToggle, boxModo). */
 (function(){
   function ver(id){ var e=document.getElementById(id); return !!(e && e.offsetParent!==null); }
+  /* A ficha e uma pagina de detalhe, nao pertence a nenhuma aba principal.
+     Antes ela satisfazia por acidente a regra do Ranking (home e elenco
+     escondidos), deixando Ranking marcado mesmo quando vinha de uma box. */
+  function emFicha(){
+    try{ if(new URLSearchParams(location.search).has('card')) return true; }catch(e){}
+    return !!document.querySelector('.pvwrap,.pvcard,[data-pv-ficha],#pvmodal');
+  }
+  function saiDaFicha(){
+    if(!emFicha()) return;
+    try{ if(typeof fechar==='function') fechar(); }catch(e){}
+  }
   var ABAS=[
     {n:'Inicio',   t:'In\\u00edcio',
-     f:function(){ window._t6abaBox=false; window._t6cc=false;
+     f:function(){ saiDaFicha(); window._t6abaBox=false; window._t6cc=false;
                    if(window.t6Painel){ window.t6Painel('inicio'); return; }
                    homeToggle(1); if(window.boxModo) boxModo(0);
                    try{ homeRender(); }catch(e){} window.scrollTo(0,0); },
@@ -1138,23 +1160,27 @@ T6_JS = """
                      return ver('homewrap') && !ver('mtwrap')
                       && !window._t6box && !window._t6abaBox && !window._t6cc; }},
     {n:'MeuTime',  t:'Meu time',
-     f:function(){ window._t6aba=null; try{ homeToggle(0); }catch(e){}
+     f:function(){ saiDaFicha(); window._t6aba=null; try{ homeToggle(0); }catch(e){}
                    if(!ver('mtwrap')) mtToggle(); window.scrollTo(0,0); },
      on:function(){ return ver('mtwrap'); }},
     {n:'Ranking',  t:'Ranking',
-     f:function(){ window._t6aba=null; if(ver('mtwrap')) mtToggle(); homeToggle(0); window.scrollTo(0,0); },
-     on:function(){ return !ver('homewrap') && !ver('mtwrap'); }},
+     f:function(){ saiDaFicha(); window._t6aba=null; if(ver('mtwrap')) mtToggle(); homeToggle(0); window.scrollTo(0,0); },
+     on:function(){ return !emFicha() && !ver('homewrap') && !ver('mtwrap'); }},
     {n:'BoxAtual', t:'Boxes atuais',
-     f:function(){ window._t6abaBox=true; window._t6cc=false;
-                   if(window.t6Painel){ window.t6Painel('boxatual'); return; }
+     f:function(){ var vinha=emFicha(); saiDaFicha(); window._t6abaBox=true; window._t6cc=false;
+                   if(window.t6Painel){ window._t6aba='boxatual';
+                     if(vinha) setTimeout(function(){ window.t6Painel('boxatual'); },0);
+                     else window.t6Painel('boxatual'); return; }
                    homeToggle(1); if(window.boxModo) boxModo(0);
                    try{ homeRender(); }catch(e){} window.scrollTo(0,0); },
      on:function(){ if(window.T6TELAS) return ver('homewrap') && window._t6aba==='boxatual';
                      return ver('homewrap') && !!window._t6abaBox
                       && !window._t6box && !window._t6cc; }},
     {n:'BoxAnt',   t:'Boxes anteriores',
-     f:function(){ window._t6abaBox=false; window._t6cc=false;
-                   if(window.t6Painel){ window.t6Painel('boxant'); return; }
+     f:function(){ var vinha=emFicha(); saiDaFicha(); window._t6abaBox=false; window._t6cc=false;
+                   if(window.t6Painel){ window._t6aba='boxant';
+                     if(vinha) setTimeout(function(){ window.t6Painel('boxant'); },0);
+                     else window.t6Painel('boxant'); return; }
                    homeToggle(1); if(window.boxModo) boxModo(1); window.scrollTo(0,0); },
      on:function(){ if(window.T6TELAS) return ver('homewrap') && window._t6aba==='boxant';
                      return ver('homewrap') && !!window._t6box && !window._t6cc; }}
@@ -1213,11 +1239,18 @@ T6_JS = """
        Quem apaga de verdade e o CSS com !important la de cima. */
   }
   function pinta(){
+    var rankingLigado=false;
     for(var i=0;i<ABAS.length;i++){
       if(!ABAS[i].el) return;
       var lig=false; try{ lig=!!ABAS[i].on(); }catch(e){}
       ABAS[i].el.className='t6tab'+(lig?' on':'');
+      if(ABAS[i].n==='Ranking' && lig) rankingLigado=true;
     }
+    /* A coluna de filtros pertence exclusivamente ao Ranking. Ela ficava no
+       DOM quando a tela central mudava para Boxes e roubava largura da pagina. */
+    var filtros=document.getElementById('filtros');
+    if(filtros) filtros.style.display=rankingLigado?'':'none';
+    document.documentElement.classList.toggle('t6semlat', !rankingLigado);
   }
   function liga(){ monta(); pinta(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',liga);
@@ -1782,7 +1815,9 @@ T6_JS3 = """
 /* ETAPA 3 · a barra lateral so existe no Ranking. */
 (function(){
   function ver(id){ var e=document.getElementById(id); return !!(e && e.offsetParent!==null); }
-  function aplica(){
+ function aplica(){
+  /* A camada consolidada de telas assume a renderização quando disponível. */
+  if (window.t6TelaBoxes) return;
     var noRanking = !ver('homewrap') && !ver('mtwrap');
     document.documentElement.classList.toggle('t6semlat', !noRanking);
   }

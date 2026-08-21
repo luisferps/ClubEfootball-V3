@@ -121,6 +121,32 @@ def _config():
     return _cfg
 
 
+def fila_marcada():
+    """Chaves que o banco mandou voltar ao motor.
+
+    `feitos.txt` continua sendo a memoria local normal. Esta lista e a excecao
+    deliberada: linha pronta que precisa ser recalculada pela regra vigente.
+    """
+    cfg = _config()
+    url = cfg.get('SUPABASE_URL', '').rstrip('/')
+    key = cfg.get('SUPABASE_KEY', '')
+    if not url or not key:
+        return set()
+    req = urllib.request.Request(
+        '%s/rest/v1/%s?select=card_id,funcao&na_fila=eq.true&limit=10000'
+        % (url, TABELA),
+        headers={'apikey': key, 'Authorization': 'Bearer ' + key,
+                 'Accept': 'application/json'})
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT_LOTE) as resp:
+            dados = json.loads(resp.read().decode('utf-8'))
+        return {'%s|%s' % (str(x['card_id']).split('@')[0], x['funcao'])
+                for x in dados if x.get('card_id') and x.get('funcao')}
+    except Exception as e:
+        print('[fila do banco] nao consegui consultar: %s' % str(e)[:120], flush=True)
+        return set()
+
+
 def _texto_impeto(v):
     if not v:
         return None
@@ -146,6 +172,9 @@ def _linha(x, motor_versao, versao):
         'origem': x.get('origem'), 'estilo': x.get('estilo'),
         'segundos': x.get('segundos'), 'rodado_em': x.get('quando'),
         'versao': versao, 'insumos': x.get('insumos'),
+        # Uma linha que acabou de ser recalculada ja saiu da fila. Sem isto o
+        # upsert preservava `na_fila=true` para sempre no resultado antigo.
+        'na_fila': False,
     }
 
 

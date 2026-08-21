@@ -7,12 +7,33 @@ import os
 import re
 import sys
 
+_CWD_CHAMADA = os.getcwd()
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import telas
+import gera_encaixe
 
 
 def atualiza(caminho):
+    if not os.path.isabs(caminho):
+        caminho = os.path.abspath(os.path.join(_CWD_CHAMADA, caminho))
     texto = open(caminho, encoding='utf-8').read()
+    # O primeiro quadro fica oculto ate a tela oficial terminar de montar. Isso
+    # elimina a piscada mesmo em navegadores que restauram o HTML em duas fases.
+    texto = re.sub(r'\sdata-t6boot(?:=[^\s>]*)?', '', texto, count=1)
+    texto = re.sub(r'<html(?=\s|>)', '<html data-t6boot', texto, count=1)
+    texto = re.sub(r'\s*<style id=T6_TELA_UNICA_BOOT_CSS>.*?</style>\s*', '\n',
+                   texto, flags=re.S)
+    boot_css = ('<style id=T6_TELA_UNICA_BOOT_CSS>'
+                'html[data-t6boot] #filtros,html[data-t6boot] #homewrap{visibility:hidden!important}'
+                '</style>\n')
+    texto = texto.replace('</head>', boot_css + '</head>', 1)
+    # A camada consolidada e a unica autorizada a desenhar as paginas novas.
+    # O sinal precisa existir antes dos scripts antigos, nao apenas no fim do
+    # body; caso contrario a tela velha aparece por um instante e e substituida.
+    texto = re.sub(r'\s*<script id=T6_TELA_UNICA_BOOT>.*?</script>\s*', '\n',
+                   texto, flags=re.S)
+    prelude = '<script id=T6_TELA_UNICA_BOOT>window.T6TELAS=true;</script>\n'
+    texto = texto.replace('</head>', prelude + '</head>', 1)
     bloco = telas.js_telas()
     m = re.fullmatch(r'\s*<script id=TELAS_1808_JS>\s*(.*?)\s*</script>\s*',
                      bloco, flags=re.S)
@@ -29,13 +50,26 @@ def atualiza(caminho):
     marca = '/* O MOTOR DO MOLDE'
     ini = texto.find(marca)
     if ini < 0:
-        raise RuntimeError('nao achei a camada ativa em ' + caminho)
-    fim = texto.find('</script>', ini)
-    if fim < 0:
-        raise RuntimeError('a camada ativa nao tem fechamento em ' + caminho)
-    texto2 = texto[:ini] + miolo + '\n' + texto[fim:]
+        # Previa ja consolidada: a camada antiga nao existe mais. Acrescenta a
+        # fonte compartilhada como bloco proprio no fim, sem depender da casca.
+        texto = re.sub(r'\s*<script id=TELAS_CANONICA>.*?</script>\s*', '\n',
+                       texto, flags=re.S)
+        texto2 = texto.replace('</body>', '<script id=TELAS_CANONICA>\n' + miolo
+                               + '\n</script>\n</body>', 1)
+    else:
+        fim = texto.find('</script>', ini)
+        if fim < 0:
+            raise RuntimeError('a camada ativa nao tem fechamento em ' + caminho)
+        texto2 = texto[:ini] + miolo + '\n' + texto[fim:]
     texto2 = re.sub(r'\s*<script id=TELAS_1808_JS>.*?</script>\s*', '\n',
                     texto2, flags=re.S)
+    # O cabecalho e parte da mesma navegacao da ficha. A previa sem a casca
+    # fonte precisa receber tambem a versao atual da barra; antes, corrigir
+    # `gera_encaixe.py` nao mudava a previa e a regra antiga voltava a vencer.
+    texto2 = re.sub(
+        r'<script(?:\s+id=["\']CLUBEFOOTBALL_1808_JS["\'])?>'
+        r'(?=\s*/\* A CASCA DO TURNO 6).*?</script>',
+        lambda _m: gera_encaixe.T6_JS.strip(), texto2, count=1, flags=re.S)
     # Estilo e comportamento formam uma unica camada. Atualizar apenas o JS
     # deixava o HTML novo obedecendo às larguras antigas, sobretudo no mobile.
     if re.search(r'<style id=TELAS_1808>.*?</style>', texto2, flags=re.S):

@@ -187,6 +187,7 @@ PERUIM_LEGADO = 'pe_ruim.json'          # so para o aviso de que virou legado
 CORPO_JS_LEGADO = os.path.join('encaixe', 'corpo_efhub.js')
 LINHAS = os.path.join('saida_v6', 'linhas.jsonl')
 SAIDA = os.path.join('saida_v6', 'bonus.jsonl')
+SAIDA_POSICAO = os.path.join('saida_v6', 'bonus_posicao.jsonl')
 NAOSEI = 'NAO-SEI.txt'
 
 
@@ -326,11 +327,17 @@ def bonus_do_pe_ruim(ins, uso, prec):
     return round(f[u] * q[p] * teto, 4)
 
 
-def bonus_do_estilo(ins, estilo, funcao):
+def bonus_do_estilo(ins, estilo, funcao, posicao=None):
     pf = (ins['posicao']['posicoes_da_funcao'] or {}).get(funcao)
     pe = (ins['posicao']['onde_o_estilo_liga'] or {}).get(estilo)
     if not pf or not pe:
         return 0.0
+    # A build continua sendo da funcao, mas o estilo liga por POSICAO. O modo
+    # antigo (sem posicao) fica para compatibilidade com a linha principal.
+    # As variantes posicionais usam uma unica posicao e nao misturam CA/SA.
+    if posicao is not None:
+        return (float(ins['parametros']['estilo_ativo'])
+                if posicao in pf and posicao in pe else 0.0)
     for p in pf:
         if p in pe:
             return float(ins['parametros']['estilo_ativo'])
@@ -459,6 +466,7 @@ if not pares:
 print('')
 print('[2/4] calculando')
 saida = []
+saida_posicao = []
 sem_corpo = sem_pe = sem_ia = sem_est = 0
 soma = {'corpo': 0.0, 'pe': 0.0, 'est': 0.0, 'ia': 0.0}
 conta = {'corpo': 0, 'pe': 0, 'est': 0, 'ia': 0}
@@ -511,6 +519,27 @@ for cid, fun, est_linha in pares:
                    if not isinstance(v, (int, float))],
         'corpo_soma': c_soma, 'corpo_pct': c_pct,
         'detalhe': detalhe, 'motor_bonus': MOTOR_BONUS})
+
+    # Somente funcoes cujo estado muda entre as posicoes precisam de variante.
+    # A build (barras/tecnico/impeto/habilidades) nao e duplicada.
+    pf = (ins['posicao']['posicoes_da_funcao'] or {}).get(fun) or []
+    pe = (ins['posicao']['onde_o_estilo_liga'] or {}).get(estilo) or []
+    if len(set(p in pe for p in pf)) > 1:
+        minhas = set()
+        for _k in ('np', 'pos'):
+            if c.get(_k): minhas.add(str(c.get(_k)).strip())
+        for _p in str(c.get('sec') or '').split('/'):
+            if _p.strip(): minhas.add(_p.strip())
+        for _p in pf:
+            if _p not in minhas:
+                continue
+            _be = bonus_do_estilo(ins, estilo, fun, _p)
+            _bt = round(sum(v for v in (b_corpo, b_pe, _be, b_ia)
+                            if isinstance(v, (int, float))), 4)
+            saida_posicao.append({
+                'card_id': cid, 'funcao': fun, 'posicao': _p,
+                'estilo_ativo': bool(_be), 'b_estilo': _be,
+                'b_total': _bt, 'motor_bonus': MOTOR_BONUS})
 print('   %d pares calculados' % len(saida))
 
 # --------------------------------------- 2b) A LISTA DOS "NAO SEI"
@@ -671,6 +700,10 @@ try:
             f.write(json.dumps(x, ensure_ascii=False) + '\n')
     print('   %s  ...  %d linhas' % (SAIDA, len(saida)))
     print('   (e daqui que o gera_encaixe.py le)')
+    with open(SAIDA_POSICAO, 'w', encoding='utf-8') as f:
+        for x in saida_posicao:
+            f.write(json.dumps(x, ensure_ascii=False) + '\n')
+    print('   %s  ...  %d variantes' % (SAIDA_POSICAO, len(saida_posicao)))
 except Exception as e:
     print('   ERRO gravando o %s: %s' % (SAIDA, e))
 
@@ -809,6 +842,11 @@ else:
     resumo.append(('bonus',) + manda(
         'bonus', [dict(x, rodado_em=agora) for x in saida], 'card_id,funcao',
         sem=['faltou', 'corpo_soma', 'corpo_pct', 'detalhe', 'motor_bonus']))
+
+    print('   as variantes por posicao -> bonus_posicao')
+    resumo.append(('bonus_posicao',) + manda(
+        'bonus_posicao', [dict(x, rodado_em=agora) for x in saida_posicao],
+        'card_id,funcao,posicao'))
 
 # ------------------------------------------------------------- o relatorio
 print('')

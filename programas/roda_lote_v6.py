@@ -231,6 +231,7 @@ except Exception:
         junta = staticmethod(lambda *a, **k: None)
         descarrega = staticmethod(lambda: None)
         resumo = staticmethod(lambda: 'grava direto: modulo ausente')
+        fila_marcada = staticmethod(lambda: set())
 
 
 def _mtime_das_fontes():
@@ -766,6 +767,7 @@ def trabalha(r):
     # pelo vals_tela, que ja vem COM o +1 do tecnico escolhido — 99 ali pode ser 98+1
     # (o boost contou) ou 99 travado (nao contou). Sem distinguir, seria chute.
     tecnicos_iguais = []
+    tecnicos_iguais_ids = []
     try:
         pes_t = {r[0] for r in c['arows'] if r[1]}
 
@@ -787,9 +789,13 @@ def trabalha(r):
             outro.discard(None)
             if not ((_bo ^ outro) & pes_t):      # a diferenca so cai onde peso = 0
                 tecnicos_iguais.append(t['nome'])
+                if t.get('id') is not None:
+                    tecnicos_iguais_ids.append(t['id'])
         tecnicos_iguais = sorted(set(tecnicos_iguais))[:5]
+        tecnicos_iguais_ids = sorted(set(tecnicos_iguais_ids))
     except Exception:
         tecnicos_iguais = []
+        tecnicos_iguais_ids = []
 
     arows = c['arows']
     alvo = {a[0]: a[2] for a in arows}
@@ -827,6 +833,7 @@ def trabalha(r):
         'neutras': neutras,
         'vetada_vale': vetada_vale,           # quanto a vetada valeria, e no lugar de quem
         'tecnicos_iguais': tecnicos_iguais,   # outro tecnico, mesma nota exata
+        'tecnicos_iguais_ids': tecnicos_iguais_ids,
         # as tres notas do impeto condicional: a oficial (nivel 1) e o b1 acima;
         # cond['2'] e cond['3'] sao os degraus, cada um com a build INTEIRA.
         'cond': cond,
@@ -921,6 +928,11 @@ def main():
 
     fila = json.load(open(FILA, encoding='utf-8'))
     feitos = carrega_feitos()
+    # A fila oficial de REFACAO fica no banco (`builds.na_fila`). Ela vence o
+    # `feitos.txt`: e justamente uma linha pronta que precisa voltar ao motor.
+    # Nao apaga resultado antigo antes da hora; o upsert troca somente depois
+    # que o novo calculo termina e entao grava `na_fila=false`.
+    marcadas_banco = _gd.fila_marcada()
     n_proc = NUCLEOS
 
     print('=' * 70)
@@ -929,6 +941,7 @@ def main():
     print('inicio ............ %s' % agora())
     print('fila principal .... %d linhas' % len(fila))
     print('ja resolvidas ..... %d' % len(feitos))
+    print('refazer do banco .. %d linhas' % len(marcadas_banco))
     from regua import TETO_PUN
     import motor as _M
     _tam = os.path.getsize(os.path.join(os.path.dirname(os.path.abspath(_M.__file__)), 'motor.py'))
@@ -1020,7 +1033,21 @@ def main():
 
     try:
         # ---------- 1) a fila principal ----------
-        pend = [r for r in fila if chave(r) not in feitos]
+        pend = []
+        achadas_banco = set()
+        for r in fila:
+            k = chave(r)
+            if k not in feitos or k in marcadas_banco:
+                rr = dict(r)
+                if k in marcadas_banco:
+                    rr['refazer'] = True
+                    rr['por_que_refazer'] = 'tecnico antigo sem identificacao matematica segura'
+                    achadas_banco.add(k)
+                pend.append(rr)
+        faltaram = marcadas_banco - achadas_banco
+        if faltaram:
+            print('ATENCAO ........... %d marcadas no banco nao existem na fila_v6.json'
+                  % len(faltaram), flush=True)
 
         # ===== AS MONSTRO VAO PRO FIM DA FILA (ordem do Luis, 08/08) =====
         # "nao tem como pular essa linha e jogar pro final? pra rodar as outras".

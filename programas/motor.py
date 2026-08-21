@@ -706,9 +706,20 @@ def tecnicos_uteis(card, TECS):
     out = []
     for k, v in g.items():
         if not k: continue
-        v = sorted(v, key=lambda x: (-x['tat'], x['nome']))
+        # O que entra na equacao e `m`, nao o numero cru da proficiencia.
+        # E opcional de mesma nota somente quem conserva o MESMO multiplicador;
+        # ter o mesmo boost relevante com uma proficiencia menor nao basta.
+        v = sorted(v, key=lambda x: (-x['m'], -x['tat'], x['nome']))
         r = dict(v[0]); r['boost'] = list(k)
-        r['equivalentes'] = [x['nome'] for x in v]
+        _eq = [x for x in v if x['m'] == r['m']]
+        r['equivalentes'] = sorted(set(x['nome'] for x in _eq))
+        # O nome serve para a tela; o ID e a chave real. Guardar os dois evita
+        # voltar ao problema dos Mourinhos/Beckenbauers com nomes repetidos.
+        r['equivalentes_ids'] = sorted(set(x['id'] for x in _eq
+                                            if x.get('id') is not None))
+        r['equivalentes_tecnicos'] = [
+            {'id': x.get('id'), 'nome': x['nome']} for x in _eq
+        ]
         out.append(r)
     return out
 
@@ -936,7 +947,9 @@ def _melhor_tecnico(card, base, GRUPOS, TU, por_tecnico=False, piso_global=None)
                      # 5 "Jose Mourinho" diferentes. So o nome nao diz qual entrou.
                      'tecnico': t['nome'], 'tecnico_id': t.get('id'),
                      'tat': t['tat'], 'boost': [ATTRS_EF[i] for i in t['boost']],
-                     'tec_equivalentes': t.get('equivalentes', [])}
+                     'tec_equivalentes': t.get('equivalentes', []),
+                     'tec_equivalentes_ids': t.get('equivalentes_ids', []),
+                     'tec_equivalentes_tecnicos': t.get('equivalentes_tecnicos', [])}
                 if por_tecnico and (t['nome'] not in porT or n > porT[t['nome']]['nota']):
                     porT[t['nome']] = r
                 if best is None or n > best['nota']:

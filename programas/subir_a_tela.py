@@ -129,6 +129,24 @@ def manda(tabela, linhas, chave):
     return ok, falha
 
 
+def marca_boxes_anteriores():
+    """Congela cada card e somente depois encerra as boxes que eram atuais."""
+    req = urllib.request.Request(
+        '%s/rest/v1/rpc/congelar_boxes_atuais' % URL,
+        data=b'{}', headers=CAB, method='POST')
+    try:
+        with urllib.request.urlopen(req, timeout=120) as r:
+            retorno = json.loads(r.read().decode('utf-8') or '[]')
+        if retorno:
+            P('   %s boxes encerradas · %s retratos congelados'
+              % (retorno[0].get('boxes_congeladas', 0),
+                 retorno[0].get('retratos_gravados', 0)))
+        return True
+    except Exception as e:
+        P('   ⛔ nao congelei nem encerrei as boxes atuais: %s' % str(e)[:180])
+        return False
+
+
 resumo = []
 P('=' * 74)
 P('  SUBIR O QUE A TELA LE')
@@ -202,6 +220,26 @@ else:
     P('   box que as DUAS listam: %d (ficam as duas, para poder comparar)'
       % len(nomes_ef & nomes_es))
     resumo.append(('campanha',) + manda('campanha', linhas, 'fonte,nome'))
+
+    # O cadastro central e a fonte da tela. As fontes continuam separadas em
+    # `campanha` apenas para auditoria; aqui elas viram uma box unica por nome.
+    por_box = {}
+    data_por_box = {}
+    for x in linhas:
+        nome = x['nome']
+        por_box.setdefault(nome, set()).update(str(i) for i in (x.get('ids') or []))
+        if x.get('quando'):
+            data_por_box[nome] = x['quando']
+
+    P('   sincronizando %d boxes atuais no cadastro central' % len(por_box))
+    if marca_boxes_anteriores():
+        boxes = [{'nome': nome, 'status': 'atual',
+                  'data_lancamento': data_por_box.get(nome),
+                  'data_coleta': AGORA,
+                  'card_ids': sorted(por_box[nome]),
+                  'atualizado_em': AGORA}
+                 for nome in sorted(por_box)]
+        resumo.append(('boxes',) + manda('boxes', boxes, 'nome'))
 
 # ------------------------------------------------------- 4. O TIPO DA CARTA
 P('')
