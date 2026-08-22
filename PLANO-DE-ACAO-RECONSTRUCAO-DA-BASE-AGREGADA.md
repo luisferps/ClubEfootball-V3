@@ -54,3 +54,23 @@ Nenhuma dessas informações será preenchida a partir do eFScout ou dos campos 
 - O Vigia, o coletor do eFootball DB, o Motor Principal e o Motor de bônus serão testados primeiro em um **grupo controlado de cartas**.
 - A ampliação da execução ocorrerá somente após a validação dos resultados desse grupo.
 - O trabalho de design poderá avançar em paralelo à coleta, sem alterar as responsabilidades das fontes nem as regras de gravação definidas acima.
+
+## 7. Preservação integral da coleta e controle de completude
+
+**Complementado em:** 21/08/2026 às 21:47:22 (America/Sao_Paulo, UTC-03:00)
+
+- A coleta completa do **eFootball DB** deverá ser preservada na tabela agregada para **todas as cartas coletadas**, inclusive as que ainda estiverem ausentes do sistema atual.
+- Uma carta ainda ausente do sistema atual entrará com `completo=false` e com status **parcial/incompleto**.
+- Uma carta parcial ou incompleta não poderá aparecer na tela até que o **Vigia** colete os demais campos necessários e a carta passe a atender aos critérios de completude.
+- A restrição de exibição não autoriza descartar os dados já obtidos do eFootball DB; esses dados permanecerão preservados enquanto a coleta da carta é completada.
+
+## 8. Concorrência, retentativas e recuperação de falhas
+
+- O coletor fará poucas requisições em paralelo, mantendo a concorrência controlada.
+- Bloqueios temporários serão tratados com retentativas controladas.
+- Falhas serão registradas para uma nova coleta posterior.
+- O que já tiver sido obtido será preservado mesmo quando outras cartas ou etapas falharem; uma falha não deverá descartar resultados válidos já coletados.
+
+## 9. Limite desta publicação
+
+- Este complemento é exclusivamente documental e não executa coleta nem altera tabelas ou dados do banco.
