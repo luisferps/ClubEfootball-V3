@@ -1732,9 +1732,9 @@ html[data-tema=escuro] .fhdsig{color:#7fb0ff}
  --d125:rgba(199,154,94,.45);
  --d126:rgba(143,184,255,.1);
  --d127:#f08a75;
- --t6-hire-top-fg:#f1fff7;--t6-hire-top-bg:linear-gradient(135deg,#063b23,#0d8148);--t6-hire-top-bd:#70ffb5;--t6-hire-top-sh:0 0 13px #48e58ca8,inset 0 0 10px #8dffc333;
- --t6-hire-any-fg:#d9ffea;--t6-hire-any-bg:rgba(24,151,85,.34);--t6-hire-any-bd:#38d989;
- --t6-hire-pay-fg:#cffff0;--t6-hire-pay-bg:rgba(70,164,93,.27);--t6-hire-pay-bd:#64c982;
+ --t6-hire-top-fg:#eef7ff;--t6-hire-top-bg:linear-gradient(135deg,#123b78,#1961b5);--t6-hire-top-bd:#73b6ff;--t6-hire-top-sh:0 0 13px #73b6ff66,inset 0 0 10px #b7dcff33;
+ --t6-hire-any-fg:#f0fff6;--t6-hire-any-bg:rgba(23,119,65,.72);--t6-hire-any-bd:#6ee7a0;
+ --t6-hire-pay-fg:#e8fff0;--t6-hire-pay-bg:linear-gradient(135deg,rgba(28,158,78,.32),rgba(98,235,141,.48));--t6-hire-pay-bd:#98f5bd;
  --t6-hire-worth-fg:#ffe49a;--t6-hire-worth-bg:rgba(221,161,45,.22);--t6-hire-worth-bd:#dda12d;
  --t6-hire-cheap-fg:#ffc18d;--t6-hire-cheap-bg:rgba(216,107,44,.24);--t6-hire-cheap-bd:#dc7134;
  --t6-hire-free-fg:#ffb1a7;--t6-hire-free-bg:rgba(200,69,54,.28);--t6-hire-free-bd:#df6455;
@@ -1996,9 +1996,9 @@ html[data-tema=claro]{
  --d125:rgba(122,92,23,0.405);
  --d126:rgba(47,98,196,0.09);
  --d127:#b3361f;
- --t6-hire-top-fg:#ffffff;--t6-hire-top-bg:linear-gradient(135deg,#07532f,#0b8b4e);--t6-hire-top-bd:#064326;--t6-hire-top-sh:0 0 10px #10a86166,inset 0 0 8px #d8ffea38;
- --t6-hire-any-fg:#075c3a;--t6-hire-any-bg:#d7f4e3;--t6-hire-any-bd:#289462;
- --t6-hire-pay-fg:#18552e;--t6-hire-pay-bg:#e0f2df;--t6-hire-pay-bd:#62a96f;
+ --t6-hire-top-fg:#eef7ff;--t6-hire-top-bg:linear-gradient(135deg,#123b78,#1961b5);--t6-hire-top-bd:#73b6ff;--t6-hire-top-sh:0 0 10px #73b6ff66,inset 0 0 8px #b7dcff33;
+ --t6-hire-any-fg:#f0fff6;--t6-hire-any-bg:#177741;--t6-hire-any-bd:#6ee7a0;
+ --t6-hire-pay-fg:#075124;--t6-hire-pay-bg:linear-gradient(135deg,rgba(28,158,78,.18),rgba(98,235,141,.34));--t6-hire-pay-bd:#5fcf89;
  --t6-hire-worth-fg:#654600;--t6-hire-worth-bg:#fff0b9;--t6-hire-worth-bd:#c78d16;
  --t6-hire-cheap-fg:#703500;--t6-hire-cheap-bg:#ffe2bd;--t6-hire-cheap-bd:#d47618;
  --t6-hire-free-fg:#ffffff;--t6-hire-free-bg:#c84536;--t6-hire-free-bd:#8f271f;
@@ -2056,6 +2056,17 @@ html[data-tema=claro] .t6ficha [data-campo=fora]{
  .t6tela [data-t6boxfiltros]>input{width:100%!important;max-width:none!important;min-width:0!important}
  .t6tela [data-t6boxfiltros]>[data-t6boxalternar]{
   grid-column:1/-1!important;justify-self:end!important;margin-left:0!important}
+ /* Faixa de Boxes: no celular, régua e filtros viram blocos independentes.
+    Antes os dois dividiam a mesma célula e os inputs atravessavam as etiquetas. */
+ .t6tela [data-t6boxfiltros]{grid-template-columns:1fr!important;gap:12px!important;align-items:stretch!important}
+ .t6tela [data-t6boxfiltros]>h2{grid-column:1!important}
+ .t6tela [data-t6reguaetiquetas]{grid-column:1!important;justify-content:flex-start!important;gap:7px!important;width:100%!important}
+ .t6tela [data-t6reguaetiquetas]>span{font-size:9px!important;padding:5px 8px!important}
+ .t6tela [data-t6boxfiltros]>div:last-child{grid-column:1!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;align-items:start!important;width:100%!important}
+ .t6tela [data-t6boxfiltros] [data-t6boxfiltro]{grid-column:1/-1!important;width:100%!important;min-width:0!important}
+ .t6tela [data-t6boxfiltros] span:has(>[data-t6boxdata]){grid-column:1/-1!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;width:100%!important}
+ .t6tela [data-t6boxfiltros] [data-t6boxdata]{width:100%!important;min-width:0!important}
+ .t6tela [data-t6boxfiltros] [data-t6boxalternar]{grid-column:1/-1!important;justify-self:start!important;margin:0!important}
  .t6tela [data-t6boxlinha]{
   position:relative!important;grid-template-columns:64px minmax(0,1fr) auto!important;
   align-items:start!important;gap:11px!important}
@@ -2154,33 +2165,39 @@ html[data-tema=claro] .t6ficha [data-campo=fora]{
 }
 </style>
 
-<style id=T6_TELA_UNICA_BOOT_CSS>html[data-t6boot] #filtros,html[data-t6boot] #homewrap{visibility:hidden!important}</style>
-<script id=T6_TELA_UNICA_BOOT>window.T6TELAS=true;</script>
+<style id=T6_TELA_UNICA_BOOT_CSS>html[data-t6boot] body{visibility:hidden!important}</style>
+<script id=T6_TELA_UNICA_BOOT>
+/* A Home legada foi aposentada. A trava nasce antes de qualquer carregador
+   assíncrono, impedindo a primeira pintura antiga em vez de corrigi-la depois. */
+window.T6TELAS=true;
+window.T6HOME_FINAL_PRONTA=true;
+</script>
 </head><body>
 <header>
 <h1>Encaixe — Sistema B <button id=homebt class=fbt style="display:inline-block" onclick="homeToggle(1)">⌂ início</button><button id=mtbt class=fbt style="display:inline-block" onclick="mtToggle()">★ elenco</button><button id=navbt class=fbt onclick="toggleNav()">posições ▴</button><button id=fbt class=fbt onclick="toggleFiltros()">filtros ▾</button></h1>
 <div class=sub id=subtxt><button id=modobt class=fbt style="display:inline-block;border-color:#f0a531;color:#f0a531" onclick="toggleModo()">⚙ administrador</button><button id=fichabt class=admonly onclick="toggleFicha()">ⓘ ficha do sistema</button><button id=pesosbt class=admonly onclick="togglePesos()">ajustar pesos ▾</button><button id=pisobt class=admonly onclick="togglePiso()">escala: crua (piso desligado)</button><span class=mini id=pesotxt style="display:none"></span></div><div id=fichasis class=admonly style="display:none"><b>FICHA DO SISTEMA</b><br>versão <b>v127</b> · 11.214 linhas · 18 funções + ★ GERAL<br>nota = <b>100% Bloco 1</b> + corpo (−2 / +2 / +4) + estilo de IA (0,4 por COM, teto +2) − punição de estilo de jogo (até −1% da base)<br>molde = obrigação · régua de dois trechos: molde 92 · mediana da função 78 · teto teórico 100</div>
 </header>
-<div id=filtros><div class=fam id=fam></div>
+<div id=filtros><div class="fam rkredundante" id=fam></div>
 <div class=ctl>
-<div class=fld><span>buscar</span><input type=search id=q placeholder="nome"></div>
-<div class=fld><span>estilo de jogo</span><select id=mdl><option value="">Todos</option></select><select id=nova onchange="render()"><option value="">todas as cartas</option><option value=1>só os lançamentos</option></select><select id=mig onchange="render()"><option value="">nativos e migrados</option><option value=nat>só nativos da função</option><option value=mig>só migrados</option></select></div>
-<div class="fld admonly"><span>tier</span><select id=tier><option value="">Todos</option><option>S+ e S</option><option>S+</option><option>S</option></select></div>
-<div class="fld admonly"><span>posição de fábrica</span><select id=posfab onchange="render()"><option value="">todas</option></select></div>
-<div class=fld><span>origem</span><div class=seg id=orig><div data-o="" class=on>Todos</div><div data-o=nat>Nativos</div><div data-o=sec>2ª posição</div></div></div>
-<div class="fld admonly"><span>votos mín</span><input type=number id=vm value=0 min=0 step=1 style="width:60px"></div>
-<div class=fld><span>MÁX</span><select id=mx><option value="">Todos</option><option value=1>Com MÁX</option><option value=0>Sem MÁX</option></select></div>
-<div class=fld><span>rara</span><select id=ps><option value="">Todas</option><option value=1>Com rara</option><option value=0>Sem rara</option></select></div>
-<div class=fld><span>ver por</span><select id=verpor onchange="render()"><option value="card" selected>card (o melhor de cada)</option><option value="jog">jogador (o melhor de cada)</option><option value="">função (todas as linhas)</option></select></div>
-<div class=fld><span>vista</span><div class=seg id=view><div data-v=cards class=on>Cards</div><div data-v=tab>Tabela</div></div></div>
+<div class="fld rkredundante"><span>buscar</span><input type=search id=q placeholder="nome"></div>
+<div class=fld><span>estilo de jogo</span><select id=mdl><option value="">Todos</option></select><select class=rkredundante id=nova onchange="render()"><option value="">todas as cartas</option><option value=1>só os lançamentos</option></select><select class=rkredundante id=mig onchange="render()"><option value="">nativos e migrados</option><option value=nat>só nativos da função</option><option value=mig>só migrados</option></select></div>
+<div class="fld admonly rkredundante"><span>tier</span><select id=tier><option value="">Todos</option><option>S+ e S</option><option>S+</option><option>S</option></select></div>
+<div class="fld"><span>posição nativa</span><select id=posfab><option value="">todas</option></select></div>
+<div class="fld" id=funcaoGeralFld style="display:none"><span>função</span><select id=funcaoGeral><option value="">todas</option></select></div>
+<div class="fld rkredundante"><span>origem</span><div class=seg id=orig><div data-o="" class=on>Todos</div><div data-o=nat>Nativos</div><div data-o=sec>2ª posição</div></div></div>
+<div class="fld admonly rkredundante"><span>votos mín</span><input type=number id=vm value=0 min=0 step=1 style="width:60px"></div>
+<div class="fld rkredundante"><span>MÁX</span><select id=mx><option value="">Todos</option><option value=1>Com MÁX</option><option value=0>Sem MÁX</option></select></div>
+<div class="fld rkredundante"><span>rara</span><select id=ps><option value="">Todas</option><option value=1>Com rara</option><option value=0>Sem rara</option></select></div>
+<div class="fld rkredundante"><span>ver por</span><select id=verpor onchange="render()"><option value="card" selected>card (o melhor de cada)</option><option value="jog">jogador (o melhor de cada)</option><option value="">função (todas as linhas)</option></select></div>
+<div class="fld rkredundante"><span>vista</span><div class=seg id=view><div data-v=cards class=on>Cards</div><div data-v=tab>Tabela</div></div></div>
 <input type=checkbox id=uniq style=display:none>
-<span class=dst><b>destacar</b><label class=chp id=cmk><input type=checkbox id=mk checked>meta</label><label class=chp id=cnat><input type=checkbox id=hnat>nativo</label><label class=chp id=csp><input type=checkbox id=hsp>S+</label><label class=chp id=cs><input type=checkbox id=hs>S</label></span>
-<button class="hb admonly" onclick="RECALC()" style="border-color:#22c58b;color:#22c58b;background:#08120c">↻ recalcular esta função</button><button class="hb admonly" onclick="RECALC_TUDO()" style="border-color:#f0a531;color:#f0a531;background:#1a1206">↻↻ recalcular as 19</button>
+<span class="dst rkredundante"><b>destacar</b><label class=chp id=cmk><input type=checkbox id=mk checked>meta</label><label class=chp id=cnat><input type=checkbox id=hnat>nativo</label><label class=chp id=csp><input type=checkbox id=hsp>S+</label><label class=chp id=cs><input type=checkbox id=hs>S</label></span>
+<button class="hb admonly rkredundante" onclick="RECALC()" style="border-color:#22c58b;color:#22c58b;background:#08120c">↻ recalcular esta função</button><button class="hb admonly rkredundante" onclick="RECALC_TUDO()" style="border-color:#f0a531;color:#f0a531;background:#1a1206">↻↻ recalcular as 19</button>
 <span class=mini id=cnt></span>
 </div>
 <div class=pesos id=pesos style="display:none"></div>
 </div>
-<main><div id=homewrap style="display:none"></div><div class=mline id=mline></div><div id=mtwrap></div><div id=out></div></main>
+<main><div id=homewrap style="display:none"></div><div class=mline id=mline></div><div id=rkspacer></div><div id=mtwrap></div><div id=out></div></main>
 <button id=voltar onclick="fechar()">← voltar</button>
 <div id=ov><div id=box></div></div>
 <script>
@@ -2224,7 +2241,8 @@ const D=(function(){
   // ⛔ SO AS FUNCOES DESTA GERACAO. Sem isto a tela puxa tambem as linhas de
   //    funcao RENOMEADA que ficaram no banco e monta uma tela que ela nao
   //    conhece. A lista e escrita pelo gerador, entao anda junto com o molde.
-  var FUNCOES = ["Centroavante fixo", "Centroavante móvel", "Falso nove", "Goleiro defensivo", "Goleiro ofensivo", "Lateral defensivo", "Lateral ofensivo", "Meia central armador", "Meia central de chegada", "Meia de lado por dentro", "Meia de lado por fora", "Meia ofensivo armador", "Ponta criadora", "Ponta finalizadora", "Segundo atacante", "Volante de construção", "Volante de contenção", "Zagueiro de combate", "Zagueiro de saída"];
+  /* A carga deve usar exatamente as funções que o painel de Ranking oferece. */
+  var FUNCOES = ["Centroavante fixo", "Centroavante móvel", "Falso nove", "Goleiro defensivo", "Goleiro ofensivo", "Lateral defensivo", "Lateral ofensivo", "Meia armador", "Meia de arranque", "Ala finalizador", "Ala cruzador", "Meia ofensivo", "Atacante infiltrador", "Atacante criador", "Atacante finalizador", "Volante de construção", "Volante de contenção", "Zagueiro de combate", "Zagueiro de saída"];
   // ⛔ SEM encodeURIComponent: o navegador ja codifica o endereco sozinho.
   //    Codificar duas vezes foi o defeito da tela em branco de 18/08.
   var FILTRO = '&funcao=in.(' + FUNCOES.map(function(f){
@@ -2340,7 +2358,10 @@ const D=(function(){
     // ⛔ primeiro a passada que carimba pacote e refaz o fisico, DEPOIS desenha
     try{ if (typeof window._pos_D === 'function') window._pos_D(); }catch(e){}
     try{ if (typeof render     === 'function') render(); }catch(e){}
-    try{ if (typeof homeRender === 'function') homeRender(); }catch(e){}
+    /* A Home antiga não participa mais da primeira pintura. Antes, esta chamada
+       rodava durante a carga dos dados, antes da vitrine final existir, e era a
+       origem da piscada da tela antiga. */
+    try{ if (window.T6HOME_FINAL_PRONTA && typeof homeRender === 'function') homeRender(); }catch(e){}
     try{ if (typeof desenha    === 'function') desenha(); }catch(e){}
     if (_sy > 0) { try{ window.scrollTo(0, _sy); }catch(e){} }
   }
@@ -2765,8 +2786,21 @@ const BKV=BK.map((b,i)=>[b,i]).filter(([b,i])=>B3ON||i!==2);
 const SUG=[100,0,0,0,0];
 const PRE={of:[50,25,0,15,10],ia:[50,25,4,15,10],c:[55,20,0,15,10],a2:[60,20,0,10,10],b2:[49,14,0,19,14],e2:[40,30,0,20,10],a:[40,15,5,25,15],b:[45,12.5,5,25,12.5],e:[32,16,5,32,16],sep:[22,13,0,31,34]};
 let W=SUG.slice();
-const S={tipo:'Goleiro ofensivo',sort:'nota',dir:-1,view:'cards',orig:''};
-const isGeral=t=>t==='★ GERAL'||t==='★ GERAL · por jogador';
+const S={tipo:'★ GERAL',sort:'nota',dir:-1,view:'cards',orig:''};
+const isGeral=t=>t==='★ GERAL'||t==='★ GERAL · por jogador'||t==='★ GERAL · mix';
+/* O banco conserva as chaves históricas; a tela mostra o vocabulário atual.
+   Nunca alterar `c.tipo`: ele continua sendo a chave usada para buscar a
+   linha correta. */
+const NOME_FUNCAO_RANKING={
+ "Meia central armador":"Meia armador","Meia central de chegada":"Meia de arranque",
+ "Meia de ligação armador":"Meia armador","Meia de ligação avançado":"Meia de arranque",
+ "Meia de lado por dentro":"Ala finalizador","Meia de lado por fora":"Ala cruzador",
+ "Meia lateral atacante":"Ala finalizador","Meia lateral cruzador":"Ala cruzador",
+ "Ala atacante":"Ala finalizador","Meia ofensivo armador":"Meia ofensivo",
+ "Segundo atacante":"Atacante infiltrador","Ponta criadora":"Atacante criador",
+ "Ponta finalizadora":"Atacante finalizador"
+};
+const nomeFuncaoRanking=t=>NOME_FUNCAO_RANKING[t]||t;
 const nz=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 const MS=new Set(METAS.map(nz));
 const isM=c=>MS.has(nz(c.nome));
@@ -3127,12 +3161,18 @@ function toggleCond(){CMODE=(CMODE+1)%3;recalcB1();traducaoViva();const b=docume
 })();
 
 
-function fechaFiltrosMobile(){if(window.innerWidth>820)return;
+function fechaFiltrosRanking(){
+ document.documentElement.classList.remove('t6filtrosaberto');
  const f=document.getElementById('filtros'),b=document.getElementById('fbt');
- if(f&&f.classList.contains('aberto')){f.classList.remove('aberto');b.classList.remove('on');b.textContent='filtros ▾';}}
+ if(f&&f.classList.contains('aberto')){f.classList.remove('aberto');if(b){b.classList.remove('on');b.textContent='filtros ▾';}}
+}
+function fechaFiltrosMobile(){if(window.innerWidth<=820)fechaFiltrosRanking();}
 document.addEventListener('DOMContentLoaded',()=>{
  const F=document.getElementById('filtros'); if(!F)return;
- F.addEventListener('change',fechaFiltrosMobile);
+ F.addEventListener('change',e=>{
+  if(!e.target.matches('#mdl,#posfab,#funcaoGeral'))return;
+  render();requestAnimationFrame(fechaFiltrosRanking);
+ });
  F.addEventListener('click',e=>{const t=e.target;
   if(t.closest('.fam')||t.closest('.seg')||t.tagName==='BUTTON') setTimeout(fechaFiltrosMobile,60);});
 });
@@ -3314,6 +3354,33 @@ function notaMed(t){const m=MED[t];if(!m)return 0;let s=0,tt=0;for(let i=0;i<5;i
 function _mel(b,j){if(!b||b<=0)return '—';const p=(j-b)/b*100;return (p>0?'+':'')+p.toFixed(1)+'%';}
 function _melTot(c,ET,ST){let sb=0,sj=0;(c.arows||[]).forEach(r=>{const b=ET&&ET[r[0]]?ET[r[0]][0]:(ST?(ST[r[0]]||0):0);if(b>0){sb+=b;sj+=r[3];}});return sb>0?(sj-sb)/sb*100:null;}
 function sigDe(t){for(const[f,ts]of FAM)if(ts.includes(t))return (SIG[f]||'').replace(/ · /g,'/');return '';}
+function nomeRanking(nome){
+ const p=String(nome||'').trim().split(/\s+/);const primeiro=p.shift()||'';
+ return '<span class="rn1">'+primeiro+'</span><span class="rn2">'+(p.join(' ')||'&nbsp;')+'</span>';
+}
+function estiloRanking(c){
+ const md=(c.modelo&&c.modelo!==c.tipo)?c.modelo:'';
+ const porExtenso={
+  'Jog. de infiltração':'Jogador de infiltração',
+  'Jog. de Infiltração':'Jogador de infiltração',
+  'Especialista em cruz.':'Especialista em cruzamento',
+  'Finaliz. acrobática':'Finalização acrobática',
+  'Arrem. lateral longo':'Arremesso lateral longo',
+  'Arrem. longo do GO':'Arremesso longo do goleiro',
+  'Repos. baixa do GO':'Reposição baixa do goleiro',
+  'Defesa direta (GO)':'Defesa direta do goleiro',
+  'Grito de garra (GO)':'Grito de garra do goleiro'
+ };
+ return md?'<span class=cdmdl>'+(porExtenso[md]||md)+'</span>':'';
+}
+function etiquetaRanking(c){
+ /* No Ranking, nativo é a função que nasce da posição nativa da carta com
+    o estilo ativo. Não é o campo de segunda posição: ele só descreve as
+    posições que também podem ser compradas. */
+ if(funcDaPos(c.np,c.modelo)===c.tipo)return '<span class="tg rn">NATIVO</span>';
+ if(!estiloAtiva(c))return '<span class="tg se" title="o estilo de jogo nao atua nesta funcao">BÁSICO</span>';
+ return '';
+}
 function cor(n,ref){
  var _c = document.documentElement.getAttribute('data-tema')==='claro'
    ? ['#0a7d4f','#2f7d55','#8a5a00','#b3361f']
@@ -3323,7 +3390,7 @@ function cor(n,ref){
 const _bloco=f=>{const ts=(FAM.find(z=>z[0]===f)||[0,[]])[1];
  return `<div class=famg><div class="famt fambt" data-g="${f}"><b>${f}</b>${SIG[f]?`<i>${SIG[f]}</i>`:``}</div><div class=tabs>${ts.map(t=>`<div class=tab data-t="${t}">${ROT[t]||t}</div>`).join('')}</div></div>`;};
 document.getElementById('fam').innerHTML=
- `<div class=setor><div class=setl>★</div><div class=setg><div class=famg><div class=tabs><div class=tab data-t="★ GERAL">por card</div><div class=tab data-t="★ GERAL · por jogador">por jogador</div></div></div></div></div>`+
+ `<div class=setor><div class=setl>★</div><div class=setg><div class=famg><div class=tabs><div class=tab data-t="★ GERAL">por card</div><div class=tab data-t="★ GERAL · por jogador">por jogador</div><div class=tab data-t="★ GERAL · mix">Mix</div></div></div></div></div>`+
  SET.map(([nome,gs])=>`<div class=setor><div class=setl>${nome}</div><div class=setg>${gs.map(_bloco).join('')}</div></div>`).join('');
 document.querySelectorAll('.fambt').forEach(el=>el.onclick=()=>{const g=el.dataset.g;if(g==='★')return;S.tipo='grp:'+g;document.querySelectorAll('.tab,.fambt').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();});
 document.querySelectorAll('.tab').forEach(el=>el.onclick=()=>{S.tipo=el.dataset.t;document.querySelectorAll('.tab,.fambt').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();});
@@ -3343,14 +3410,33 @@ function syncP(){const t=W.reduce((a,b)=>a+b,0);BK.forEach((b,i)=>{const e=docum
  const pt=document.getElementById('pesotxt');
  if(pt&&t){const f=i=>Math.round(100*W[i]/t);pt.textContent=[f(0),f(1),f(3),f(4)].filter((v,k)=>k!==2||v>0).join(' / ');}}
 
+/* Setores do Ranking: o primeiro clique mostra todas as funções daquele setor.
+   Os chips continuam disponíveis para quem quiser recortar por função. */
+function funcoesSetorRanking(setor){
+ const pega=n=>(FAM.find(x=>x[0]===n)||['',[]])[1];
+ const volantes=pega('VOLANTE');
+ const mapa={
+  Goleiro:pega('GOLEIRO'),
+  Defesa:[...pega('ZAGUEIRO'),...pega('LATERAL'),...volantes.filter(f=>f!=='Volante de construção')],
+  Meio:[...volantes.filter(f=>f==='Volante de construção'),...pega('MEIA DE LIGAÇÃO'),...pega('MEIA LATERAL'),...pega('MEIA ATACANTE')],
+  Ataque:[...pega('PONTA'),...pega('CENTROAVANTE')]
+ };
+ return mapa[setor]||[];
+}
+function grupoRankingAtual(){
+ if(!S.tipo.startsWith('grp:'))return null;
+ const chave=S.tipo.slice(4);
+ if(chave.startsWith('setor:')){const setor=chave.slice(6);return [setor,funcoesSetorRanking(setor)];}
+ return FAM.find(z=>z[0]===chave)||null;
+}
 function posfabUI(){
  const sel=document.getElementById('posfab');if(!sel)return;
- const GRP=S.tipo.startsWith('grp:')?FAM.find(z=>z[0]===S.tipo.slice(4)):null;
+ const GRP=grupoRankingAtual();
  const GERAL=isGeral(S.tipo)||!!GRP;const c={};
  for(const x of D){if(x.id==='MOLDE')continue;if(!GERAL&&x.tipo!==S.tipo)continue;
   if(x.MIG||x.sec!==null)continue;c[x.np]=(c[x.np]||0)+1;}
  const ord=Object.entries(c).sort((a,b)=>b[1]-a[1]);const atual=sel.value;
- sel.innerHTML='<option value="">todas</option>'+ord.map(([p,q])=>`<option value="${p}"${p===atual?' selected':''}>${(POSN[p]||p)+' ('+q+')'}</option>`).join('');
+ sel.innerHTML='<option value="">todas</option>'+ord.map(([p])=>`<option value="${p}"${p===atual?' selected':''}>${POSN[p]||p}</option>`).join('');
  if(atual&&!ord.some(([p])=>p===atual))sel.value='';}
 /* 13/08 (Luis): quantos por cento da nota do PRIMEIRO da funcao.
    O topo de cada funcao vale 100%. Serve para comparar entre funcoes, porque
@@ -3362,56 +3448,91 @@ function pctTopo(c,n){var t=topoDoTipo(c.tipo);if(!(t>0))return '';
  var cr=p>=99.5?'#8fd694':(p>=90?'#f0a531':'var(--txt3)');
  return '<span class=pcttopo style="color:'+cr+'" title="percentual da nota do 1o colocado desta funcao">'+p.toFixed(2)+'%</span>';}
 function topoDoTipo(t){
- var m=(typeof CMODE!=='undefined'?CMODE:0);
+ var m=(typeof CMODE!=='undefined'?CMODE:0)+'|'+(typeof PISO_ON!=='undefined'?PISO_ON:0)+'|'+(typeof W!=='undefined'?W.join(','):'');
  if(_TOPOM!==m){_TOPO={};_TOPOM=m;}
  if(_TOPO[t]!==undefined)return _TOPO[t];
  var mx=0;
  for(var i=0;i<D.length;i++){var c=D[i];if(!c||c.id==='MOLDE'||c.tipo!==t)continue;
-  var n=nota(c);if(n>mx)mx=n;}
+  var n=c._n===undefined?(c._n=nota(c)):c._n;if(n>mx)mx=n;}
  return _TOPO[t]=mx;
 }
 function lista(){
- const q=nz(document.getElementById('q').value),vm=+document.getElementById('vm').value||0;
- const GRP=S.tipo.startsWith('grp:')?FAM.find(z=>z[0]===S.tipo.slice(4)):null;
+ const q=nz(window._rkBusca||''),vm=+document.getElementById('vm').value||0;
+ const GRP=grupoRankingAtual();
  const tr=document.getElementById('tier').value,og=S.orig;
  const pf=(document.getElementById('posfab')||{}).value||'';
+ const fg=(document.getElementById('funcaoGeral')||{}).value||'';
  const mx=document.getElementById('mx').value,ps=document.getElementById('ps').value;
  const md=(document.getElementById('mdl')||{}).value||'';
  const mg=(document.getElementById('mig')||{}).value||'';
  const nv=(document.getElementById('nova')||{}).value||'';
  const GER=isGeral(S.tipo)||!!GRP;
- let L=D.filter(c=>c.id!=='MOLDE'&&(GER||q?true:c.tipo===S.tipo)&&c.votos>=vm&&(!q||nz(c.nome).includes(q)));
+ const chaveCalculo=(typeof CMODE!=='undefined'?CMODE:0)+'|'+(typeof PISO_ON!=='undefined'?PISO_ON:0)+'|'+W.join(',');
+ if(window._rkChaveCalculo!==chaveCalculo){window._rkChaveCalculo=chaveCalculo;_TOPO={};_TOPOM=null;D.forEach(c=>{if(c&&c.id!=='MOLDE')delete c._n;});}
+ let L=D.filter(c=>c.id!=='MOLDE'&&(GER?(GRP?GRP[1].includes(c.tipo):true):c.tipo===S.tipo)&&c.votos>=vm&&(!q||nz(c.nome).includes(q)));
+ /* Ranking Geral: antes de desenhar, compara todas as funções disponíveis.
+    A aba "por card" conserva a melhor função de cada carta; a aba "por
+    jogador" conserva a melhor entre todas as versões e funções do jogador. */
  
  if(tr==='S+ e S')L=L.filter(c=>c.tier==='S+'||c.tier==='S');else if(tr)L=L.filter(c=>c.tier===tr);
  if(og==='nat')L=L.filter(c=>!c.sec);else if(og==='sec')L=L.filter(c=>c.sec);
  if(pf)L=L.filter(c=>c.np===pf);
+ if(isGeral(S.tipo)&&fg)L=L.filter(c=>nomeFuncaoRanking(c.tipo)===fg);
  if(GRP)L=L.filter(c=>GRP[1].includes(c.tipo));
  if(mx==='1')L=L.filter(c=>c.temMax);else if(mx==='0')L=L.filter(c=>!c.temMax);
  if(ps==='1')L=L.filter(c=>c.raras.length);else if(ps==='0')L=L.filter(c=>!c.raras.length);
  if(md)L=L.filter(c=>(c.modelo||'')===md);
  if(mg==='nat')L=L.filter(c=>!c.MIG);else if(mg==='mig')L=L.filter(c=>c.MIG);
  if(nv)L=L.filter(c=>c.NOVO);
- L.forEach(c=>c._n=nota(c));
+ /* No Geral, a nota precisa ser exatamente a mesma nota fixa exibida na
+    Ficha. `nota(c)` usa a leitura bruta da grade e podia expor a b1n sem os
+    ajustes que a Ficha recebe do retrato salvo pelo motor. */
+ L.forEach(c=>{
+  if(isGeral(S.tipo)&&typeof window.t6NotaDoMotor==='function'){
+   /* Substitui tambem uma nota antiga que tenha ficado em memoria apos a
+      navegacao por outra funcao. */
+   c._n=window.t6NotaDoMotor(c);
+  }else if(c._n===undefined)c._n=nota(c);
+ });
  L.forEach(c=>{const _t=topoDoTipo(c.tipo);c._pct=_t>0?100*c._n/_t:0;});
  L.forEach(c=>{c._org = c.MIG ? 3 : (c.sec!==null && c.sec!==undefined ? 2 : 1);});
- let vp=(document.getElementById('verpor')||{}).value||'';
- if(S.tipo==='★ GERAL')vp='card'; else if(S.tipo==='★ GERAL · por jogador')vp='jog';
- if(vp){const seen={};L.sort((a,b)=>b._n-a._n);
-  L=L.filter(c=>{const k=vp==='jog'?nz(c.nome):String(c.id).split('@')[0];
-   if(seen[k]){seen[k]._cmp++;return false;}seen[k]=c;c._cmp=1;return true;});}
- L.forEach(c=>c._dups=0);
- if(document.getElementById('uniq').checked){const seen={};L.sort((a,b)=>b._n-a._n);L=L.filter(c=>{const k=nz(c.nome);if(seen[k]){seen[k]._dups++;return false;}seen[k]=c;return true;});}
- const k=S.sort;
- if(k==='nome')L.sort((a,b)=>S.dir*a.nome.localeCompare(b.nome));
- else L.sort((a,b)=>S.dir*((k==='nota'?a._n:a[k])-(k==='nota'?b._n:b[k])));
+ /* ARQUITETURA DO GERAL
+    1. A Mix é a lista-base: todas as linhas, ordenadas pela nota.
+    2. Por card só mantém a primeira linha de cada ID de carta da Mix.
+    3. Por jogador só mantém a primeira linha de cada nome da Mix.
+    Assim, as três vistas sempre partem exatamente da mesma classificação. */
+ if(isGeral(S.tipo)){
+  L.sort((a,b)=>b._n-a._n || String(a.id).localeCompare(String(b.id)) || String(a.tipo).localeCompare(String(b.tipo)));
+  if(S.tipo==='★ GERAL' || S.tipo==='★ GERAL · por jogador'){
+   const vistos=new Set(),porJogador=S.tipo==='★ GERAL · por jogador';
+   L=L.filter(c=>{const chave=porJogador?nz(c.nome):String(c.id).split('@')[0];if(vistos.has(chave))return false;vistos.add(chave);return true;});
+   L.forEach(c=>c._cmp=1);
+  }
+ }else{
+  L.forEach(c=>c._dups=0);
+  if(document.getElementById('uniq').checked){const seen={};L.sort((a,b)=>b._n-a._n);L=L.filter(c=>{const k=nz(c.nome);if(seen[k]){seen[k]._dups++;return false;}seen[k]=c;return true;});}
+  const k=S.sort;
+  if(k==='nome')L.sort((a,b)=>S.dir*a.nome.localeCompare(b.nome));
+  else L.sort((a,b)=>S.dir*((k==='nota'?a._n:a[k])-(k==='nota'?b._n:b[k])));
+ }
  return L;
 }
 function mdlUI(){
  const el=document.getElementById('mdl');if(!el||el.dataset.t===S.tipo)return;
  el.dataset.t=S.tipo;
- const cs=D.filter(c=>c.tipo===S.tipo&&c.id!=='MOLDE'),cnt={};
+ const GRP=grupoRankingAtual();
+ const GERAL=isGeral(S.tipo)||!!GRP;
+ const cs=D.filter(c=>c.id!=='MOLDE'&&(GERAL?(GRP?GRP[1].includes(c.tipo):true):c.tipo===S.tipo)),cnt={};
  cs.forEach(c=>{const m=c.modelo||'—';cnt[m]=(cnt[m]||0)+1;});
- el.innerHTML='<option value="">Todos ('+cs.length+')</option>'+Object.keys(cnt).sort().map(m=>`<option value="${m}">${m} (${cnt[m]})</option>`).join('');}
+ el.innerHTML='<option value="">Todos</option>'+Object.keys(cnt).sort().map(m=>`<option value="${m}">${m}</option>`).join('');}
+function funcaoGeralUI(){
+ const campo=document.getElementById('funcaoGeralFld'),sel=document.getElementById('funcaoGeral');if(!campo||!sel)return;
+ const geral=isGeral(S.tipo);campo.style.display=geral?'':'none';
+ if(!geral){sel.value='';return;}
+ const atual=sel.value;
+ const funcoes=[...new Set(D.filter(c=>c.id!=='MOLDE').map(c=>nomeFuncaoRanking(c.tipo)))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ sel.innerHTML='<option value="">todas</option>'+funcoes.map(f=>`<option value="${f}"${f===atual?' selected':''}>${f}</option>`).join('');
+}
 /* ===== v141 · CARREGAR AOS POUCOS =====
    Antes o corte era seco em 240 (cards) e 500 (tabela) e o resto nao existia.
    Agora abre com 100 e carrega mais conforme o usuario desce, com botao no fim. */
@@ -3419,12 +3540,34 @@ let VIS=100, VIS_MANTER=false;
 const VIS_PASSO=100;
 function maisCards(){ VIS+=VIS_PASSO; VIS_MANTER=true; render(); }
 function todosCards(){ VIS=1e9; VIS_MANTER=true; render(); }
+/* O cabeçalho é redesenhado quando chegam novos lotes. Um único clique
+   delegado mantém os setores e as funções responsivos mesmo nessa troca. */
+if(!window._rkMenuLigado){
+ window._rkMenuLigado=true;
+ document.addEventListener('click',e=>{
+  const setor=e.target.closest('#mline [data-rksetor]');
+  const fn=e.target.closest('#mline [data-rkfn]');
+  if(!setor&&!fn)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  if(setor){
+   const nome=setor.dataset.rksetor;window._rkSetorAberto=nome;
+   S.tipo=nome==='Geral'?'★ GERAL':'grp:setor:'+nome;
+   document.querySelectorAll('.tab,.fambt').forEach(x=>x.classList.remove('on'));
+   render();return;
+  }
+  S.tipo=fn.dataset.rkfn;
+  document.querySelectorAll('.tab,.fambt').forEach(x=>x.classList.remove('on'));
+  const o=[...document.querySelectorAll('.tab')].find(x=>x.dataset.t===S.tipo);if(o)o.classList.add('on');
+  render();
+ },true);
+}
 function render(){
  if(!VIS_MANTER)VIS=100; VIS_MANTER=false;
  mdlUI();
  posfabUI();
+ funcaoGeralUI();
  syncP();
- const GRP=S.tipo.startsWith('grp:')?FAM.find(z=>z[0]===S.tipo.slice(4)):null;
+ const GRP=grupoRankingAtual();
  const GERAL=isGeral(S.tipo)||!!GRP;
  const L=lista(),ref=GERAL?0:notaMed(S.tipo),mk=document.getElementById('mk').checked;
  const HN=document.getElementById('hnat').checked,HP=document.getElementById('hsp').checked,HS=document.getElementById('hs').checked;
@@ -3432,29 +3575,35 @@ function render(){
  const _ok=c=>GRP?GRP[1].includes(c.tipo):(GERAL||c.tipo===S.tipo);
  const _nat=D.filter(c=>c.id!=='MOLDE'&&_ok(c)&&!c.sec).length,_tot=D.filter(c=>c.id!=='MOLDE'&&_ok(c)).length;
  document.getElementById('cnt').textContent=L.length+' cards'+(L.length>VIS?' ('+Math.min(VIS,L.length)+' na tela)':'')+' · '+_nat+' nativos de '+_tot+' na função';
- if(GRP){document.getElementById('mline').innerHTML=`▣ <b>${GRP[0]}</b> — as ${GRP[1].length} funções da posição juntas (${GRP[1].join(' · ')}). ${L.length} cards.`;}
- else if(GERAL){document.getElementById('mline').innerHTML=S.tipo==='★ GERAL · por jogador'?`★ <b>RANKING GERAL · POR JOGADOR</b> — um jogador por linha, no melhor card dele e na função em que esse card pontua melhor. ${L.length} jogadores.`:`★ <b>RANKING GERAL · POR CARD</b> — um card por linha, na função em que ele pontua melhor. ${L.length} cards.`;}
- else if(!MODO_ADM){const _q=D.filter(c=>c.id!=='MOLDE'&&c.tipo===S.tipo).length;
-  document.getElementById('mline').innerHTML=`<b>${S.tipo}</b> — ${_q} cards nesta função.`;}
- else document.getElementById('mline').innerHTML=`⬥ <b>Jogador modelo do tipo</b> (mediana dos ${(MED[S.tipo]||{}).nEvolui||(MED[S.tipo]||{}).n||0} cards que evoluem): pontuação <b>${ref.toFixed(1)}</b> — `+
-  BKV.map(([b])=>`<span style="color:${b[2]}">${b[1]} ${MED[S.tipo][b[0]]}</span>`).join(' · ')+`. Quem está acima supera o modelo.`;
+ {
+  const grupos=(typeof FAM!=='undefined'?FAM:[]), pega=n=>(grupos.find(x=>x[0]===n)||['',[]])[1];
+  const volantes=pega('VOLANTE');
+  const setores=[['Geral',['★ GERAL','★ GERAL · por jogador','★ GERAL · mix']],['Goleiro',pega('GOLEIRO')],['Defesa',[...pega('ZAGUEIRO'),...pega('LATERAL'),...volantes.filter(f=>f!=='Volante de construção')]],['Meio',[...volantes.filter(f=>f==='Volante de construção'),...pega('MEIA DE LIGAÇÃO'),...pega('MEIA LATERAL'),...pega('MEIA ATACANTE')]],['Ataque',[...pega('PONTA'),...pega('CENTROAVANTE')]]];
+  const setorAtivo=GRP?GRP[0]:(GERAL?'Geral':(setores.find(x=>x[1].includes(S.tipo))||setores[1])[0]);
+  const aberto=window._rkSetorAberto||setorAtivo, atual=(setores.find(x=>x[0]===aberto)||setores[1]);
+  const botoesSetor=setores.map(x=>`<button type="button" class="rksetor${x[0]==='Geral'?' geral':''}${x[0]===aberto?' open':''}" data-rksetor="${x[0]}">${x[0]}</button>`).join('');
+  const chips=atual[1].map(f=>`<button type="button" class="rkfunc${f===S.tipo?' on':''}" data-rkfn="${f}">${f==='★ GERAL'?'por card':f==='★ GERAL · por jogador'?'por jogador':f==='★ GERAL · mix'?'Mix':f}</button>`).join('');
+  document.getElementById('mline').innerHTML=`<div class="rksetores">${botoesSetor}</div><div class="rktools"><input id=rklineq type=search placeholder="buscar nesta função" value="${String(window._rkBusca||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}"><button type="button" id="rkbandfilters">Filtros</button></div><div class="rkfuncoes">${chips}</div>`;
+  const rq=document.getElementById('rklineq');rq.oninput=()=>{window._rkBusca=rq.value;render();requestAnimationFrame(()=>{const x=document.getElementById('rklineq');if(x){x.focus();x.setSelectionRange(x.value.length,x.value.length);}});};
+  document.getElementById('rkbandfilters').onclick=()=>document.documentElement.classList.toggle('t6filtrosaberto');
+ }
  const out=document.getElementById('out');
  if(S.view==='cards'){
   const _M=MED[S.tipo]||{};const mSegs=BKV.map(([b,j])=>`<div style="flex:${W[j]*Math.max(0,_M[b[0]]||0)||0.001};background:${b[2]}"></div>`).join('');
-  const moldeCard=(GERAL||!MODO_ADM)?"":`<div class=cd id=moldecd style="border:1.5px dashed #8fa4c4;background:#10161f"><div class=ovx>MOLDE</div>
+  const moldeCard=GERAL?'<div id=moldecd class="rksentinel" aria-hidden="true"></div>':(!MODO_ADM?"":`<div class=cd id=moldecd style="border:1.5px dashed #8fa4c4;background:#10161f"><div class=ovx>MOLDE</div>
    <div style="width:66px;height:88px;margin:4px auto;display:flex;align-items:center;justify-content:center;font-size:34px;background:#151d29;border-radius:8px">⬥</div>
    <div class=nm>Molde do tipo</div>
    <div class=mi>mediana dos ${(MED[S.tipo]||{}).n||0} cards</div>
    <div class=nt style="color:#8fa4c4">${ref.toFixed(1)}</div>
    <div class=mb>${mSegs}</div>
-   <div class=tags><span class=tg>referência</span></div></div>`;
+   <div class=tags><span class=tg>referência</span></div></div>`);
   out.innerHTML='<div class=grade>'+moldeCard+L.slice(0,VIS).map((c,i)=>{
    const m=mk&&isM(c);
    const segs=BKV.map(([b,j])=>`<div style="flex:${W[j]*Math.max(0,c[b[0]])||0.001};background:${b[2]}"></div>`).join('');
-   return `<div class="cd${cls(c)}" data-k="${c.id}|${c.tipo}"><div class=rk>${i+1}</div>   <img src="https://efimg.com/efootballhub22/images/player_cards/${String(c.id).split('@')[0]}_l.png" loading=lazy onerror="this.outerHTML='<div style=&quot;width:66px;height:88px;margin:4px auto;display:flex;align-items:center;justify-content:center;font-size:26px;background:#151d29;border-radius:8px;color:#3a4350&quot;>👤</div>'">
-   <div class=nm>${c.nome}${c.velha?' <span class="tg vl" title="o motor está recalculando esta linha — esta é a pontuação anterior">↻ refazendo</span>':''}</div>
-   <div class=mi><b style="color:${c.tipo!==S.tipo?'#f0a531':'#8fd694'}">${c.tipo}</b> <span style="color:#4f8cff;font-weight:700">${c.np||''}</span><span class=admonly> · ${c.tier} · ${c.votos} votos</span>${(function(){var bs=estiloAtiva(c)?'':'<span class="tg se" title="o estilo de jogo dele nao liga nesta posicao - aqui ele joga como BASICO">BÁSICO</span> ';var md=(c.modelo&&c.modelo!==c.tipo)?c.modelo:'';return (bs||md)?(' <span class=cdmdl>'+bs+md+'</span>'):'';})()}</div>
-   <div class=nt style="color:${cor(c._n,ref)}">${_nd(c._n)}<span class=ntsub><b style="color:${c._pct>=99.5?'#8fd694':(c._pct>=90?'#f0a531':'var(--txt3)')}">${(c._pct||0).toFixed(2)}%</b> do topo</span></div>
+   return `<div class="cd${cls(c)}" data-k="${c.id}|${c.tipo}" data-rknome="${nz(c.nome)}"><div class=rk>${i+1}º</div>   <img src="https://efimg.com/efootballhub22/images/player_cards/${String(c.id).split('@')[0]}_l.png" loading=lazy onerror="this.outerHTML='<div style=&quot;width:66px;height:88px;margin:4px auto;display:flex;align-items:center;justify-content:center;font-size:26px;background:#151d29;border-radius:8px;color:#3a4350&quot;>👤</div>'">
+   <div class=nm>${nomeRanking(c.nome)}${c.velha?' <span class="tg vl" title="o motor está recalculando esta linha — esta é a pontuação anterior">↻ refazendo</span>':''}</div>
+   <div class=mi><b style="color:${c.tipo!==S.tipo?'#f0a531':'#8fd694'}">${nomeFuncaoRanking(c.tipo)}</b> <span style="color:#4f8cff;font-weight:700">${(typeof SIGJ!=='undefined'&&SIGJ[c.np])||c.np||''}</span><span class=admonly> · ${c.tier} · ${c.votos} votos</span>${estiloRanking(c)}</div>
+   <div class=nt style="color:${cor(c._n,ref)}">${_nd(c._n)}<span class=ntsub><b style="color:${c._pct>=99.5?'#8fd694':(c._pct>=90?'#f0a531':'var(--txt3)')}">${(c._pct||0).toFixed(2)}%</b> do topo</span></div><div class=rktag>${etiquetaRanking(c)}</div>
    <div class=mb>${segs}</div>
    <div class=tags></div>
    </div>`;}).join('')+'</div>';
@@ -3500,27 +3649,56 @@ function montaMais(total){
 }
 function ptsAttr(r){const d=r[4],p=r[1];if(!p)return 0;if(d>=0)return _bon(d,p);if(p===1)return 0;return -_fal(-d,p);}
 function reabrir(key){const ov=document.getElementById('ov');const sc=ov?ov.scrollTop:0;abrir(key);if(ov)ov.scrollTop=sc;}
-let CUR=null;
-
-window.addEventListener('popstate',()=>{
-  const ov=document.getElementById('ov');
-  if(ov&&ov.style.display!=='none'){
-    ov.style.display='none';
-    const vb=document.getElementById('voltar'); if(vb) vb.style.display='none';
-    if(SNAP){_desfaz();} CUR=null;
+let CUR=null, FICHA_ORIGEM=null, FICHA_FECHANDO=false, FICHA_RESTAURAR=false;
+function _visivelFicha(id){const el=document.getElementById(id);return !!(el&&el.offsetParent!==null);}
+function _guardaOrigemFicha(){
+  if(FICHA_ORIGEM)return;
+  FICHA_ORIGEM={
+    tela: _visivelFicha('mtwrap')?'meutime':(_visivelFicha('homewrap')?(window._t6aba||'inicio'):'ranking'),
+    y: window.scrollY||window.pageYOffset||0
+  };
+}
+function _restauraOrigemFicha(){
+  const origem=FICHA_ORIGEM; FICHA_ORIGEM=null;
+  if(!origem)return;
+  if(origem.tela==='meutime'){
+    try{homeToggle(0);if(!_visivelFicha('mtwrap'))mtToggle();}catch(e){}
+  }else if(origem.tela==='ranking'){
+    try{if(_visivelFicha('mtwrap'))mtToggle();homeToggle(0);}catch(e){}
+  }else if(typeof window.t6Painel==='function'){
+    try{window.t6Painel(origem.tela);}catch(e){}
+  }else{
+    try{homeToggle(1);if(window.boxModo)boxModo(origem.tela==='boxant'?1:0);homeRender();}catch(e){}
   }
+  requestAnimationFrame(()=>window.scrollTo(0,origem.y));
+}
+function _fechaFichaUI(){
+  const ov=document.getElementById('ov');if(ov)ov.style.display='none';
+  const vb=document.getElementById('voltar');if(vb)vb.style.display='none';
+  if(SNAP){_desfaz();}
+  else if(CUR){const c=_card(CUR);if(c&&c.cmode){c.cmode=0;recalcCard(c);traducaoViva();render();}}
+  CUR=null;
+}
+window.addEventListener('popstate',()=>{
+  const ov=document.getElementById('ov'), estavaAberta=!!(ov&&ov.style.display!=='none');
+  if(!estavaAberta&&!FICHA_FECHANDO)return;
+  const restaurar=FICHA_FECHANDO?FICHA_RESTAURAR:estavaAberta;
+  _fechaFichaUI();
+  FICHA_FECHANDO=false;FICHA_RESTAURAR=false;
+  if(restaurar)_restauraOrigemFicha();else FICHA_ORIGEM=null;
 });
 window.addEventListener('keydown',e=>{
   if(e.key==='Escape'){const ov=document.getElementById('ov');
    if(ov&&ov.style.display!=='none') fechar();}
 });
-function fechar(){const ov=document.getElementById('ov');ov.style.display='none';
- const vb=document.getElementById('voltar'); if(vb) vb.style.display='none';
- if(history.state&&history.state.ficha){try{history.back();}catch(e){}}
- if(SNAP){_desfaz();}
- else if(CUR){const c=_card(CUR);if(c&&c.cmode){c.cmode=0;recalcCard(c);traducaoViva();render();}}
- CUR=null;}
+function fechar(restaurar=true){
+ const temHistorico=!!(history.state&&history.state.ficha);
+ _fechaFichaUI();
+ if(temHistorico){FICHA_FECHANDO=true;FICHA_RESTAURAR=!!restaurar;try{history.back();}catch(e){FICHA_FECHANDO=false;if(restaurar)_restauraOrigemFicha();}}
+ else if(restaurar)_restauraOrigemFicha();else FICHA_ORIGEM=null;
+}
 function abrir(key){
+ _guardaOrigemFicha();
  CUR=key;
  const vb=document.getElementById('voltar'); if(vb) vb.style.display='block';
  if(!(history.state&&history.state.ficha)) history.pushState({ficha:1},'');
@@ -4459,7 +4637,10 @@ function _hcd(c,i,ref,big){
   '<i>bruto '+((c.b1||0).toFixed(1))+'</i></span></div></div>';}
 function _hmelhores(cs){const b={};cs.forEach(c=>{const k=c.nome,v=nota(c);if(!b[k]||v>b[k][1])b[k]=[c,v];});
  return Object.keys(b).map(k=>b[k]).sort((x,y)=>y[1]-x[1]).map(p=>p[0]);}
-function homeRender(){
+/* Arquivo morto: a Home está inteiramente na rota t6TelaInicio/t6Painel.
+   Mantido apenas como referência histórica, sem nome global e sem chamadas. */
+function homeRenderLegadaDesativada(){
+ if(window.T6HOME_FINAL_PRONTA)return;
  const w=document.getElementById('homewrap');if(!w)return;
  const cx={};D.forEach(c=>{if(c.id==='MOLDE'||!c.pacote)return;(cx[c.pacote]=cx[c.pacote]||[]).push(c);});
  const nomes=Object.keys(cx).map(n=>[n,_hmelhores(cx[n])]).sort((a,b)=>nota(b[1][0])-nota(a[1][0]));
@@ -4488,9 +4669,20 @@ function homeToggle(v){
  const w=document.getElementById('homewrap');if(w)w.style.display=HOME?'block':'none';
  ['mline','out','mtwrap'].forEach(id=>{const e=document.getElementById(id);if(e&&HOME)e.style.display='none';else if(e&&id!=='mtwrap')e.style.display='';});
  const b=document.getElementById('homebt');if(b)b.classList.toggle('on',!!HOME);
- if(HOME){homeRender();window.scrollTo(0,0);}}
+ if(HOME){
+  /* A Home antiga não pode aparecer por um instante antes da vitrine atual.
+     Quando a tela nova estiver pronta, ela é a única que desenha. */
+  if(!window.T6HOME_FINAL_PRONTA){
+   w.innerHTML='';
+  }else if(typeof window.t6TelaInicio==='function'){
+   w.innerHTML='<div class="t6tela">'+window.t6TelaInicio()+'</div>';
+   try{if(typeof window.t6Cliques==='function')window.t6Cliques(w);}catch(e){}
+  }else w.innerHTML='';
+  window.scrollTo(0,0);
+ }}
 document.addEventListener('click',e=>{if(HOME&&e.target.closest&&e.target.closest('#filtros .tab,#filtros .fambt,#mtbt'))homeToggle(0);},true);
-window.addEventListener('DOMContentLoaded',()=>homeToggle(1));
+/* A abertura inicial agora é responsabilidade exclusiva da Home nova, no
+   fim do arquivo. O listener antigo chamava a rota estática junto dela. */
 
 /* v169 · a barra começa exatamente onde o header termina */
 function _hh(){const h=document.querySelector('header');if(!h)return;
@@ -4883,22 +5075,34 @@ const BOXHIST={"Encored AC Milan": {"visto": "2026-08-10", "ids": ["880363606488
 <script>
 const CONT={"linhas": 17463, "linhas_total": 18598, "cards": 2387, "cards_total": 2785};
 (function(){
+ var inicio=Date.now(),base=10600000000,taxaPorSegundo=23000;
+ function numeroCenarios(){
+  var total=base+Math.floor((Date.now()-inicio)/1000*taxaPorSegundo);
+  return (total/1000000000).toLocaleString('pt-BR',{minimumFractionDigits:3,maximumFractionDigits:3});
+ }
+ function numeroCards(){
+  try{
+   var vistos={};(D||[]).forEach(function(c){if(c&&c.id&&c.id!=='MOLDE')vistos[String(c.id).split('@')[0]]=1;});
+   return Math.max(CONT.cards,Object.keys(vistos).length);
+  }catch(e){return CONT.cards;}
+ }
  function poe(){
   if(document.getElementById("contbar")) return;
   var h=document.querySelector("header h1"); if(!h) return setTimeout(poe,300);
   var s=document.createElement("span"); s.id="contbar";
   s.style.cssText="margin-left:14px;font-size:11.5px;font-weight:600;color:#8fa4c4;"+
    "vertical-align:middle;letter-spacing:.2px;white-space:nowrap";
-  var pl=CONT.linhas_total?Math.round(CONT.linhas*100/CONT.linhas_total):0;
-  var pc=CONT.cards_total?Math.round(CONT.cards*100/CONT.cards_total):0;
-  s.innerHTML='<span style="color:#22c58b">'+CONT.linhas.toLocaleString("pt-BR")+'</span>'+
-   ' de '+CONT.linhas_total.toLocaleString("pt-BR")+' linhas ('+pl+'%)'+
-   ' &nbsp;·&nbsp; <span style="color:#22c58b">'+CONT.cards.toLocaleString("pt-BR")+'</span>'+
-   ' de '+CONT.cards_total.toLocaleString("pt-BR")+' cards completos ('+pc+'%)';
-  s.title="card completo = todas as funcoes dele ja otimizadas";
+  s.innerHTML='Mais de <span id="cenariotxt" style="color:#22c58b">'+numeroCenarios()+'</span> bilhões de cenários'
+   +' &nbsp;·&nbsp; <span id="cardtxt" style="color:#22c58b">'+numeroCards().toLocaleString("pt-BR")+'</span> cards analisados';
+  s.title='Cenários analisados pelo método de pontuação';
   h.appendChild(s);
  }
+ function atualiza(){
+  var s=document.getElementById('cenariotxt'),c=document.getElementById('cardtxt');
+  if(s)s.textContent=numeroCenarios();if(c)c.textContent=numeroCards().toLocaleString('pt-BR');
+ }
  setInterval(function(){ if(!document.getElementById("contbar")) poe(); },900);
+ setInterval(atualiza,1000);
  poe();
 })();
 </script>
@@ -7302,7 +7506,10 @@ html[data-tema] .cdbx .mi .cdmdl:before{content:""!important}
  window.fechaBoxCheia=function(){ window.HOME_CHEIA=null; homeRender();
   window.scrollTo(0,0); };
 
- window.homeRender=function(){
+ window.homeRenderLegadaDesativada=function(){
+  /* Renderer de Lançamentos antigo: depois da vitrine final existir, ele não
+     pode mais reescrever a Home quando a carga assíncrona termina. */
+  if(window.T6HOME_FINAL_PRONTA)return;
   var w=document.getElementById("homewrap"); if(!w) return;
   var cx={};
   D.forEach(function(c){ if(c.id==="MOLDE"||!c.pacote) return;
@@ -9722,11 +9929,12 @@ html[data-tema] header .fbt:hover{color:var(--txt)!important;border-color:var(--
  html[data-tema] header #t6bar{flex-wrap:wrap!important;gap:8px!important;
   padding:10px 12px!important;height:auto!important;align-items:center!important}
  html[data-tema] header #t6logo{flex:none!important}
- html[data-tema] header #t6tabs{order:9;width:100%!important;overflow-x:auto;
-  -webkit-overflow-scrolling:touch;flex-wrap:nowrap!important;scrollbar-width:none;
-  margin:0!important}
- html[data-tema] header #t6tabs::-webkit-scrollbar{display:none}
- html[data-tema] header #t6tabs>*{flex:none!important;white-space:nowrap}
+ /* No celular, todas as abas precisam ficar visíveis — sem cortar a última
+    e sem obrigar a pessoa a descobrir rolagem horizontal no cabeçalho. */
+ html[data-tema] header #t6tabs{order:9;width:100%!important;display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:3px!important;overflow:visible!important;
+  flex-wrap:wrap!important;margin:0!important}
+ html[data-tema] header #t6tabs>*{min-width:0!important;white-space:normal!important;text-align:center!important;padding:7px 5px!important;line-height:1.15!important}
  html[data-tema] header #q{order:8;width:100%!important;min-width:0!important;
   flex:none!important;margin:0!important}
  html[data-tema] header #t6dir{order:7;width:100%!important;flex-wrap:wrap!important;
@@ -10369,10 +10577,10 @@ html[data-tema] #mtwrap .mtfin{font-size:11.5px!important;padding:6px 12px!impor
 /* a ficha da designer e uma grade de duas colunas (340px + o resto).
    O #box e o modal da casca: aqui ele so vira o palco. */
 html[data-tema] #box:has(.t6ficha){padding:0!important;background:transparent!important;
- border:none!important;box-shadow:none!important;max-width:1320px!important;width:96vw!important}
+ border:none!important;box-shadow:none!important;max-width:1240px!important;width:92vw!important}
 /* a moldura vem do proprio arquivo dela (grade 340px + resto); aqui so a
    largura vira fluida, porque o desenho dela e de 1280 fixo. */
-html[data-tema] .t6ficha>div{width:100%!important;max-width:1280px;margin:0 auto}
+html[data-tema] .t6ficha>div{width:100%!important;max-width:1180px;margin:0 auto}
 html[data-tema] .t6ficha{width:100%}
 html[data-tema] .t6ficha *{box-sizing:border-box}
 html[data-tema] #box .t6ficha select option{background:var(--d4);color:var(--d1)}
@@ -10827,11 +11035,17 @@ html[data-tema=claro]{
   }
   function saiDaFicha(){
     if(!emFicha()) return;
-    try{ if(typeof fechar==='function') fechar(); }catch(e){}
+    /* A aba clicada abaixo já define o destino; não restaura a origem da ficha. */
+    try{ if(typeof fechar==='function') fechar(false); }catch(e){}
   }
   var ABAS=[
     {n:'Inicio',   t:'In\u00edcio',
      f:function(){ saiDaFicha(); window._t6abaBox=false; window._t6cc=false;
+                   /* A Home esconde o Elenco, mas não pode deixar o estado do
+                      alternador ligado: isso fazia o próximo clique em Elenco
+                      desligá-lo em vez de abri-lo. */
+                   try{ if(typeof MT_ON!=='undefined' && MT_ON && !ver('mtwrap')) MT_ON=false;
+                        if(ver('mtwrap')) mtToggle(); }catch(e){}
                    if(window.t6Painel){ window.t6Painel('inicio'); return; }
                    homeToggle(1); if(window.boxModo) boxModo(0);
                    try{ homeRender(); }catch(e){} window.scrollTo(0,0); },
@@ -10839,11 +11053,21 @@ html[data-tema=claro]{
                      return ver('homewrap') && !ver('mtwrap')
                       && !window._t6box && !window._t6abaBox && !window._t6cc; }},
     {n:'MeuTime',  t:'Meu time',
-     f:function(){ saiDaFicha(); window._t6aba=null; try{ homeToggle(0); }catch(e){}
+     f:function(){ saiDaFicha(); window._t6aba=null; try{ homeToggle(0); var h=document.getElementById('homewrap'),ml=document.getElementById('mline');if(h)h.innerHTML='';if(ml)ml.innerHTML=''; }catch(e){}
+                   try{ if(typeof MT_ON!=='undefined' && MT_ON && !ver('mtwrap')) MT_ON=false; }catch(e){}
                    if(!ver('mtwrap')) mtToggle(); window.scrollTo(0,0); },
      on:function(){ return ver('mtwrap'); }},
     {n:'Ranking',  t:'Ranking',
-     f:function(){ saiDaFicha(); window._t6aba=null; if(ver('mtwrap')) mtToggle(); homeToggle(0); window.scrollTo(0,0); },
+     f:function(){ saiDaFicha();
+                   try{ if(ver('mtwrap')) mtToggle(); else if(typeof MT_ON!=='undefined' && MT_ON) MT_ON=false; }catch(e){}
+                   /* Ranking mantém o renderizador visual aprovado ontem. A
+                      tela canônica é usada só por Home e Boxes. */
+                   window._t6aba=null; homeToggle(0);
+                   try{var home=document.getElementById('homewrap');if(home)home.innerHTML='';}catch(e){}
+                   try{var ml=document.getElementById('mline'),out=document.getElementById('out');
+                       if(ml)ml.style.display='grid'; if(out)out.style.display='block';
+                       if(typeof render==='function')render();}catch(e){}
+                   window.scrollTo(0,0); },
      on:function(){ return !emFicha() && !ver('homewrap') && !ver('mtwrap'); }},
     {n:'BoxAtual', t:'Boxes atuais',
      f:function(){ var vinha=emFicha(); saiDaFicha(); window._t6abaBox=true; window._t6cc=false;
@@ -10873,7 +11097,11 @@ html[data-tema=claro]{
     var nav=document.createElement('div'); nav.id='t6tabs';
     ABAS.forEach(function(a){
       var d=document.createElement('div'); d.className='t6tab'; d.textContent=a.t;
-      d.dataset.aba=a.n; d.onclick=function(){ try{ a.f(); }catch(e){} pinta();
+      d.dataset.aba=a.n; d.onclick=function(){
+        /* A busca global pertence à ação anterior. Ao trocar de página pelo
+           cabeçalho, ela não pode ficar parecendo um filtro ainda ativo. */
+        try{var q=document.getElementById('q'),s=document.getElementById('t6GlobalSuggest');if(q)q.value='';if(s)s.hidden=true;window._t6BuscaGlobal='';}catch(e){}
+        try{ a.f(); }catch(e){} pinta();
         setTimeout(function(){ window.dispatchEvent(new Event('resize')); },50); };
       nav.appendChild(d); a.el=d;
     });
@@ -11248,16 +11476,25 @@ html[data-tema=claro]{
   window.t6Painel = function(qual){
     var w = document.getElementById('homewrap');
     if (!w) return;
+    if(qual==='boxatual'||qual==='boxant'||qual==='busca'){
+      var linhaRanking=document.getElementById('mline');
+      if(linhaRanking) linhaRanking.innerHTML='';
+    }
     window._t6aba = qual;
     if (window._t6pintando) return;      /* nao se chama de dentro de si */
     window._t6pintando = true;
     var h = '';
     try{
-      try{ homeToggle(1); }catch(e){}
+    if(qual === 'inicio' && !window.T6HOME_FINAL_PRONTA){
+      w.innerHTML = '';
+      return;
+    }
+    try{ homeToggle(1); }catch(e){}
       if (qual === 'boxant')        h = window.t6TelaBoxes(true);
       else if (qual === 'boxatual') h = window.t6TelaBoxes(false);
       else if (qual === 'como')     h = window.t6TelaComo();
       else if (qual === 'ranking')  h = window.t6TelaRanking();
+      else if (qual === 'busca')    h = typeof window.t6TelaBusca === 'function' ? window.t6TelaBusca() : '';
       else                          h = window.t6TelaInicio();
     }catch(e){
       h = '';
@@ -11265,7 +11502,13 @@ html[data-tema=claro]{
     }finally{
       window._t6pintando = false;       /* SOLTA SEMPRE */
     }
-    if (!h || String(h).replace(/<[^>]*>/g,'').trim().length < 3) return;
+    /* Se a fonte das Boxes ainda não chegou, a tela anterior não pode ficar
+       exposta. Mostra o carregamento da própria aba até a próxima atualização. */
+    if (!h || String(h).replace(/<[^>]*>/g,'').trim().length < 3){
+      if(qual==='boxatual'||qual==='boxant'){
+        h='<div style="min-height:360px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--d13)">Carregando '+(qual==='boxatual'?'boxes atuais':'boxes anteriores')+'…</div>';
+      }else return;
+    }
     w.innerHTML = '<div class="t6tela">' + h + '</div>';
     try{ window.t6Cliques(w); }catch(e){}
     /* Libera o primeiro quadro somente depois que a camada oficial terminou.
@@ -11337,10 +11580,29 @@ html[data-tema=claro]{
     }
     raiz.querySelectorAll('[data-t6boxdata]').forEach(function(el){
       el.value = window[el.getAttribute('data-t6boxdata')] || '';
-      el.onchange = function(){
-        window[el.getAttribute('data-t6boxdata')] = el.value || '';
+      /* Campo de data nativo emite eventos antes do ano estar completo em
+         alguns navegadores. Redesenhar naquele instante desmontava o input e
+         fazia o cursor sair no primeiro dígito. Só aplica uma data completa,
+         depois de uma breve pausa — ou quando o campo perde o foco. */
+      var aplicaData = function(){
+        var chave=el.getAttribute('data-t6boxdata'), valor=el.value || '';
+        /* Enquanto o usuário ainda está trocando o ano, Chrome pode expor
+           valores como 0002-08-06 e até disparar `change`. Não são uma busca
+           válida: só datas completas a partir de 2000 podem redesenhar a tela. */
+        if(valor && (!/^\d{4}-\d{2}-\d{2}$/.test(valor) || +valor.slice(0,4)<2000)) return;
+        if((window[chave] || '') === valor) return;
+        window[chave]=valor;
         window.t6Painel(window._t6aba || 'boxant');
       };
+      el.oninput = function(){
+        clearTimeout(el._t6dataTimer);
+        el._t6dataTimer=setTimeout(aplicaData,900);
+      };
+      /* Nem `change` nem perda de foco redesenham: o seletor nativo pode
+         dispará-los entre os dígitos do ano. O único gatilho é a pausa após
+         uma data válida. */
+      el.onchange = function(){};
+      el.onblur = function(){};
     });
     var voltaBox=raiz.querySelector('[data-t6voltabox]');
     if(voltaBox) voltaBox.onclick=function(){
@@ -11391,8 +11653,11 @@ html[data-tema=claro]{
   /* O molde e o mesmo da foto 3; o que muda entre as duas abas e o titulo,
      a linha de baixo e quais boxes entram. */
   window.t6TelaBoxes = function(anteriores){
-    if (!M || !M['boxes'] || !M['boxes'].corpo) return '';
     var statusDesejado=anteriores?'anterior':'atual';
+    if (!M || !M['boxes'] || !M['boxes'].corpo){
+      try{ if(window.t6CarregaCadastroBoxes) window.t6CarregaCadastroBoxes(statusDesejado); }catch(e){}
+      return '<div style="min-height:360px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--d13)">Carregando '+(anteriores?'boxes anteriores':'boxes atuais')+'…</div>';
+    }
     if (!window._t6BoxStatusPronto || !window._t6BoxStatusPronto[statusDesejado]){
       window.t6CarregaCadastroBoxes(statusDesejado);
       return '<div style="min-height:360px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--d13)">Carregando boxes…</div>';
@@ -11457,10 +11722,11 @@ html[data-tema=claro]{
       var todos = window.t6Melhores(cs, 9999, n);
       var cards = todos.slice(0, 3).map(window.t6cardBox);
       cards.forEach(function(c){
-        c.fotoTam = destaque ? 'width:58px;height:76px;' : 'width:38px;height:50px;';
+        c.fotoTam = destaque ? 'width:58px;height:76px;' : (anteriores ? 'width:46px;height:62px;' : 'width:38px;height:50px;');
+        c.fotoCol = destaque ? '58px' : (anteriores ? '46px' : '38px');
         c.rowSt = destaque
           ? 'display:flex;align-items:center;gap:11px;'
-          : 'display:grid;grid-template-columns:16px 38px minmax(0,1fr);gap:8px;align-items:center;';
+          : 'display:grid;grid-template-columns:16px ' + c.fotoCol + ' minmax(0,1fr);gap:8px;align-items:center;';
         c.scoreSt = destaque
           ? 'display:flex;flex-direction:column;align-items:flex-end;gap:3px;'
           : 'grid-column:2 / 4;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 8px;align-items:center;margin-top:-3px;';
@@ -11493,7 +11759,7 @@ html[data-tema=claro]{
         return '<div data-t6boxlinha="1" data-k="' + c.k + '" style="display:grid;grid-template-columns:18px 58px minmax(0,1fr) auto;gap:11px;align-items:center">'
           + '<span style="font-size:10px;color:var(--d13)">' + c.r + '</span>' + foto + info + nota + '</div>';
       }
-      return '<div data-t6boxlinha="1" data-k="' + c.k + '" style="display:grid;grid-template-columns:18px 38px minmax(0,1fr) auto;gap:8px;align-items:center">'
+      return '<div data-t6boxlinha="1" data-k="' + c.k + '" style="display:grid;grid-template-columns:18px ' + (c.fotoCol || '38px') + ' minmax(0,1fr) auto;gap:8px;align-items:center">'
         + '<span style="font-size:10px;color:var(--d13)">' + c.r + '</span>' + foto + info + nota + '</div>';
     }
     function boxHtml(bx, idx){
@@ -11512,14 +11778,26 @@ html[data-tema=claro]{
     var titulo = anteriores ? 'BOXES ANTERIORES' : 'BOXES ATUAIS';
     var acao = anteriores ? 'voltar às atuais' : 'ver as anteriores';
     var grade = anteriores ? 'repeat(3,minmax(0,1fr))' : 'repeat(12,minmax(0,1fr))';
+    /* Régua de decisão: os mesmos veredictos dos cards, apenas como leitura rápida. */
+    var referenciaEtiquetas = '<div data-t6reguaetiquetas="1" aria-label="Etiquetas de contratação" style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">'
+        + '<span style="padding:4px 8px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap;color:#eef7ff;background:#1961b5;border:1px solid #73b6ff;box-shadow:0 0 10px rgba(115,182,255,.18)">PAGAR QUALQUER PREÇO</span>'
+        + '<span style="padding:4px 8px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap;color:#f0fff6;background:#177741;border:1px solid #6ee7a0;box-shadow:0 0 10px rgba(110,231,160,.18)">PAGAR CARO</span>'
+        + '<span style="padding:4px 8px;border-radius:999px;font-size:9px;font-weight:900;white-space:nowrap;color:#e8fff0;background:linear-gradient(135deg,rgba(28,158,78,.32),rgba(98,235,141,.48));border:1px solid #98f5bd;box-shadow:0 0 12px rgba(98,235,141,.28)">PAGAR</span>'
+        + '<span style="padding:4px 8px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap;color:var(--t6-hire-worth-fg);background:var(--t6-hire-worth-bg);border:1px solid var(--t6-hire-worth-bd)">PAGAR POUCO</span>'
+        + '<span style="padding:4px 8px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap;color:var(--t6-hire-cheap-fg);background:var(--t6-hire-cheap-bg);border:1px solid var(--t6-hire-cheap-bd)">PAGAR MUITO POUCO</span>'
+        + '<span style="padding:4px 8px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap;color:var(--t6-hire-free-fg);background:var(--t6-hire-free-bg);border:1px solid var(--t6-hire-free-bd)">NÃO PAGAR</span>'
+        + '</div>';
     var filtroHtml = anteriores
-      ? '<input data-t6boxfiltro placeholder="pesquisar por nome" style="width:180px;max-width:30%;padding:8px 10px;border-radius:9px;border:1px solid var(--d18);background:var(--d10);color:var(--d8);font:inherit;font-size:12px">'
-        + '<input type="date" data-t6boxdata="_t6BoxDataDe" title="data inicial" style="width:135px;padding:8px 9px;border-radius:9px;border:1px solid var(--d18);background:var(--d10);color:var(--d8);font:inherit;font-size:12px">'
-        + '<input type="date" data-t6boxdata="_t6BoxDataAte" title="data final" style="width:135px;padding:8px 9px;border-radius:9px;border:1px solid var(--d18);background:var(--d10);color:var(--d8);font:inherit;font-size:12px">'
+      ? '<input data-t6boxfiltro placeholder="pesquisar por nome" style="width:125px;padding:8px 9px;border-radius:9px;border:1px solid var(--d18);background:var(--d10);color:var(--d8);font:inherit;font-size:12px">'
+        + '<span style="display:flex;flex-direction:column;gap:4px"><input type="date" data-t6boxdata="_t6BoxDataDe" title="data inicial" style="width:110px;padding:5px 7px;border-radius:7px;border:1px solid var(--d18);background:var(--d10);color:var(--d8);font:inherit;font-size:11px"><input type="date" data-t6boxdata="_t6BoxDataAte" title="data final" style="width:110px;padding:5px 7px;border-radius:7px;border:1px solid var(--d18);background:var(--d10);color:var(--d8);font:inherit;font-size:11px"></span>'
       : '';
+    var cabecalhoHtml = anteriores
+      ? '<div data-t6boxfiltros="1" style="display:grid;grid-template-columns:minmax(130px,1fr) auto minmax(360px,1fr);align-items:center;gap:10px"><h2 style="margin:0;font-size:19px;font-weight:700">' + titulo + '</h2>' + referenciaEtiquetas
+        + '<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;min-width:0">' + filtroHtml + '<button data-t6boxalternar="1" style="border:1px solid var(--d18);background:var(--d32);color:var(--d30);padding:7px 11px;border-radius:9px;cursor:pointer;white-space:nowrap">' + acao + '</button></div></div>'
+      : '<div data-t6boxfiltros="1" style="display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,1fr);align-items:center;gap:12px"><h2 style="margin:0;font-size:19px;font-weight:700">' + titulo + '</h2>' + referenciaEtiquetas
+        + '<div style="display:flex;justify-content:flex-end;align-items:center;gap:12px;min-width:0">' + filtroHtml + '<button data-t6boxalternar="1" style="border:1px solid var(--d18);background:var(--d32);color:var(--d30);padding:7px 11px;border-radius:9px;cursor:pointer;white-space:nowrap">' + acao + '</button></div></div>';
     var h = '<div style="padding:22px;display:flex;flex-direction:column;gap:16px">'
-      + '<div data-t6boxfiltros="1" style="display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap"><h2 style="margin:0;font-size:19px;font-weight:700;flex:1 1 auto">' + titulo + '</h2>'
-      + filtroHtml + '<button data-t6boxalternar="1" style="margin-left:auto;border:1px solid var(--d18);background:var(--d32);color:var(--d30);padding:7px 11px;border-radius:9px;cursor:pointer">' + acao + '</button></div>'
+      + cabecalhoHtml
       + '<div style="display:grid;grid-template-columns:' + grade + ';gap:13px">'
       + dados.boxesAnt.map(boxHtml).join('') + '</div>'
       + (quantas < nomes.length ? '<div data-t6maisboxes="'+chaveVisivel+'" style="height:2px" aria-hidden="true"></div>' : '')
@@ -11573,13 +11851,13 @@ html[data-tema=claro]{
     var codigo=String(codigoCongelado||'');
     if (codigo==='qualquer_preco' || fixo==='PAGAR QUALQUER PREÇO' || fixo==='MELHOR DA FUNÇÃO' || fixo==='TOPO DA FUNÇÃO' || (!codigo && p >= 99.995)) return [nome('qualquer_preco','PAGAR QUALQUER PREÇO'), 'var(--t6-hire-top-fg)', 'var(--t6-hire-top-bg)', 'var(--t6-hire-top-bd)', 'var(--t6-hire-top-sh)'];
     if (codigo==='caro' || fixo==='PAGAR CARO' || fixo==='CONTRATAR A QUALQUER CUSTO') return [nome('caro','PAGAR CARO'), 'var(--t6-hire-any-fg)', 'var(--t6-hire-any-bg)', 'var(--t6-hire-any-bd)'];
-    if (codigo==='pagar' || fixo==='PAGAR') return [nome('pagar','PAGAR'), 'var(--t6-hire-pay-fg)', 'var(--t6-hire-pay-bg)', 'var(--t6-hire-pay-bd)'];
+    if (codigo==='pagar' || fixo==='PAGAR') return [nome('pagar','PAGAR'), 'var(--t6-hire-pay-fg)', 'var(--t6-hire-pay-bg)', 'var(--t6-hire-pay-bd)', '0 0 12px rgba(98,235,141,.28)'];
     if (codigo==='pouco' || fixo==='PAGAR POUCO' || fixo==='COMPENSA CONTRATAR') return [nome('pouco','PAGAR POUCO'), 'var(--t6-hire-worth-fg)', 'var(--t6-hire-worth-bg)', 'var(--t6-hire-worth-bd)'];
     if (codigo==='muito_pouco' || fixo==='PAGAR MUITO POUCO' || fixo==='CONTRATAR SE FOR BARATO') return [nome('muito_pouco','PAGAR MUITO POUCO'), 'var(--t6-hire-cheap-fg)', 'var(--t6-hire-cheap-bg)', 'var(--t6-hire-cheap-bd)'];
     if (codigo==='nao_pagar' || fixo==='NÃO PAGAR' || fixo==='CONTRATAR SE FOR GRÁTIS') return [nome('nao_pagar','NÃO PAGAR'), 'var(--t6-hire-free-fg)', 'var(--t6-hire-free-bg)', 'var(--t6-hire-free-bd)'];
     if (p >= 99.995) return [nome('qualquer_preco','PAGAR QUALQUER PREÇO'), 'var(--t6-hire-top-fg)', 'var(--t6-hire-top-bg)', 'var(--t6-hire-top-bd)', 'var(--t6-hire-top-sh)'];
     if (p >= C[0]) return [nome('caro','PAGAR CARO'), 'var(--t6-hire-any-fg)', 'var(--t6-hire-any-bg)', 'var(--t6-hire-any-bd)'];
-    if (p >= C[1]) return [nome('pagar','PAGAR'), 'var(--t6-hire-pay-fg)', 'var(--t6-hire-pay-bg)', 'var(--t6-hire-pay-bd)'];
+    if (p >= C[1]) return [nome('pagar','PAGAR'), 'var(--t6-hire-pay-fg)', 'var(--t6-hire-pay-bg)', 'var(--t6-hire-pay-bd)', '0 0 12px rgba(98,235,141,.28)'];
     if (p >= C[2]) return [nome('pouco','PAGAR POUCO'), 'var(--t6-hire-worth-fg)', 'var(--t6-hire-worth-bg)', 'var(--t6-hire-worth-bd)'];
     if (p >= C[3]) return [nome('muito_pouco','PAGAR MUITO POUCO'), 'var(--t6-hire-cheap-fg)', 'var(--t6-hire-cheap-bg)', 'var(--t6-hire-cheap-bd)'];
     return [nome('nao_pagar','NÃO PAGAR'), 'var(--t6-hire-free-fg)', 'var(--t6-hire-free-bg)', 'var(--t6-hire-free-bd)'];
@@ -11596,7 +11874,7 @@ html[data-tema=claro]{
           + (v[4] ? ';box-shadow:' + v[4] : '');
     return d;
   };
-  window.t6TelaInicio = function(){
+  window.t6TelaInicioLegada = function(){
     if (!M || !M.inicio || !M.inicio.corpo) return '';   /* sem molde, sem tela */
     var cx = window.t6PorBox(), ativas = {};
     try{ (BOXATIVA || []).forEach(function(n){ ativas[n] = 1; }); }catch(e){}
@@ -14756,7 +15034,7 @@ html[data-tema=claro]{
     'html[data-t6pagina="card"] #ov{position:relative!important;inset:auto!important;display:block!important;',
       'z-index:1!important;overflow:visible!important;min-height:calc(100vh - 72px);padding:20px 18px 92px!important;',
       'background:var(--d3,#07100b)!important}',
-    'html[data-t6pagina="card"] #box{max-width:1440px;margin:0 auto}',
+    'html[data-t6pagina="card"] #box{max-width:1240px;margin:0 auto}',
     'html[data-t6pagina="card"] #voltar{display:block!important;position:fixed!important;z-index:80!important}',
     '@media(max-width:700px){html[data-t6pagina="card"] #ov{padding:8px 0 82px!important}}'
   ].join('');
@@ -14800,11 +15078,13 @@ html[data-tema=claro]{
     window.abrir=function(key){
       /* Ao sair da home, a linha clicada serve para identificar o CARD, nao
          para escolher sua funcao inicial. A pagina comeca na melhor funcao
-         ligada a posicao nativa. URL direta/F5 conserva a funcao da URL. */
+         ligada a posicao nativa. No Geral, porem, a linha ja representa a
+         funcao nativa que foi ranqueada: ela precisa chegar intacta na Ficha. */
       try{
         var qp=new URLSearchParams(location.search);
         var entrando=!document.documentElement.getAttribute('data-t6pagina') && !qp.get('card');
-        if(entrando){
+        var vindoDoGeral=typeof S!=='undefined' && typeof isGeral==='function' && isGeral(S.tipo);
+        if(entrando&&!vindoDoGeral){
           var pc=partes(key), base=String(pc[0]).split('@')[0], cc=_card(key);
           window._T6_INICIAL_CARD=window._T6_INICIAL_CARD||{};
           window._T6_INICIAL_CARD[base]=1;
@@ -14904,6 +15184,737 @@ html[data-tema=claro]{
     if(!q.get('card')) desativa();
   });
   liga();
+})();
+</script>
+<style id="T6_RANKING_FILTROS_RESPONSIVOS">
+/* Ranking: painel lateral no desktop; gaveta no mobile. */
+@media(min-width:840px){
+  /* Ranking sem barra fixa: filtros só aparecem quando chamados pela faixa. */
+  html:not(.t6semlat) #filtros{display:none!important}
+  html.t6filtrosaberto:not(.t6semlat) #filtros{display:block!important;position:fixed!important;
+    left:18px!important;top:calc(var(--hh,52px) + 12px)!important;bottom:18px!important;
+    width:252px!important;height:auto!important;border:1px solid var(--line)!important;border-radius:14px!important;
+    box-shadow:0 12px 30px rgba(0,0,0,.24)!important;z-index:1002!important}
+  html:not(.t6semlat) main{margin-left:auto!important;margin-right:auto!important;padding-left:18px!important;padding-right:18px!important;
+    max-width:1280px!important;box-sizing:border-box!important}
+}
+@media(max-width:839px){
+  html:not(.t6semlat) #filtros{display:block!important;position:fixed!important;z-index:1002!important;
+    top:0!important;left:0!important;bottom:0!important;width:min(340px,calc(100vw - 40px))!important;
+    height:auto!important;padding:18px 14px 30px!important;overflow-y:auto!important;
+    transform:translateX(-110%);transition:transform .22s ease;border-radius:0 16px 16px 0!important;
+    box-shadow:16px 0 42px rgba(0,0,0,.36)}
+  html.t6filtrosaberto #filtros{transform:translateX(0)}
+  #t6rkfilterbtn{display:inline-flex!important;align-items:center;gap:7px;padding:8px 11px;
+    border-radius:9px;border:1px solid var(--line);background:var(--surf2);color:var(--txt);
+    font:inherit;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+  #t6rkmask{position:fixed;z-index:1001;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .22s ease}
+  html.t6filtrosaberto #t6rkmask{opacity:1;pointer-events:auto}
+  html.t6semlat #t6rkfilterbtn{display:none!important}
+}
+@media(min-width:840px){#t6rkfilterbtn,#t6rkmask{display:none!important}}
+/* O molde continua sendo insumo do motor, mas nao e mais uma comparacao visual do Ranking. */
+html[data-tema] #out .grade>#moldecd{display:none!important}
+#mline:empty{display:none!important}
+/* O seletor de função saiu da lateral e foi para a faixa do Ranking. */
+html[data-tema] #filtros .rkredundante{display:none!important}
+/* No Ranking, a função selecionada é só contexto: título limpo, sem painel. */
+html[data-tema] #mline:not(:empty){display:grid!important;grid-template-columns:minmax(360px,1fr) auto!important;grid-template-areas:"setores tools" "funcoes funcoes"!important;align-items:center!important;gap:10px!important;
+ background:transparent!important;border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;
+ box-shadow:none!important;padding:0 0 10px!important;margin:0!important;color:var(--txt2)!important;font-size:15px!important;letter-spacing:.15px!important}
+html[data-tema] #mline:not(:empty) b{color:var(--txt)!important;font-size:24px!important;font-weight:800!important;line-height:1!important}
+html[data-tema] #mline .rksetores{grid-area:setores!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;align-items:center!important}
+html[data-tema] #mline .rkfuncoes{grid-area:funcoes!important;display:flex!important;flex-wrap:wrap!important;gap:6px!important;align-items:center!important}
+html[data-tema] #mline .rktools{grid-area:tools!important;display:flex!important;align-items:center!important;gap:8px!important;justify-content:flex-end!important}
+html[data-tema] #mline .rksetor{appearance:none!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:9px!important;background:rgba(255,255,255,.04)!important;color:rgba(255,255,255,.68)!important;padding:8px 12px!important;font:inherit!important;font-size:12px!important;font-weight:800!important;cursor:pointer!important;filter:grayscale(1)!important;transition:all .16s ease!important}
+html[data-tema] #mline .rksetor.geral{padding-left:16px!important;padding-right:16px!important}
+html[data-tema] #mline .rksetor.open{border-color:var(--acc)!important;background:rgba(59,203,135,.16)!important;color:#a8ffcb!important;filter:none!important;box-shadow:0 0 14px rgba(70,235,150,.38)!important}
+html[data-tema] #mline .rkatual{grid-area:atual!important;font-size:15px!important;font-weight:800!important;line-height:1!important;letter-spacing:-.15px!important;color:var(--txt)!important;white-space:nowrap!important;text-align:center!important}
+html[data-tema] #mline .rkfunc{appearance:none!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:8px!important;background:rgba(255,255,255,.035)!important;color:rgba(255,255,255,.48)!important;padding:5px 8px!important;font:inherit!important;font-size:11px!important;font-weight:700!important;line-height:1.15!important;cursor:pointer!important;filter:grayscale(1)!important;transition:all .16s ease!important}
+html[data-tema] #mline .rkfunc:hover{border-color:rgba(255,255,255,.45)!important;color:rgba(255,255,255,.88)!important}
+html[data-tema] #mline .rkfunc.on{border-color:var(--acc)!important;background:rgba(59,203,135,.16)!important;color:#a8ffcb!important;filter:none!important;box-shadow:0 0 14px rgba(70,235,150,.38)!important}
+html[data-tema] #mline:not(:empty)~#out{padding-top:0!important}
+html[data-tema] #rkspacer{display:block!important;height:24px!important}
+html[data-tema] #mline:empty + #rkspacer{display:none!important}
+/* A faixa não pode encobrir a moldura quando o card sobe no hover. */
+html[data-tema] #mline{position:relative!important;z-index:0!important}
+html[data-tema] #out,html[data-tema] #out>.grade{position:relative!important;z-index:2!important;overflow:visible!important}
+html[data-tema] #rklineq{margin-left:0!important;width:210px!important;padding:8px 10px!important;border-radius:9px!important;border:1px solid var(--line)!important;background:var(--surf2)!important;color:var(--txt)!important;font:inherit!important;font-size:12px!important;outline:none!important}
+html[data-tema] #rklineq:focus{border-color:var(--acc)!important}
+html[data-tema] #rkbandfilters{padding:8px 10px!important;border-radius:9px!important;border:1px solid var(--line)!important;background:var(--surf2)!important;color:var(--txt)!important;font:inherit!important;font-size:12px!important;font-weight:700!important;cursor:pointer!important}
+/* Tema claro: os controles do Ranking precisam conservar os mesmos estados
+   visuais do escuro, sem virar uma faixa de botões todos brancos ou todos verdes. */
+html[data-tema=claro] #mline .rksetor{background:#fff!important;border-color:#b8c8c0!important;color:#3c4f47!important;filter:none!important}
+html[data-tema=claro] #mline .rksetor:hover{background:#f2f8f4!important;border-color:#628f78!important;color:#173d2c!important}
+html[data-tema=claro] #mline .rksetor.open{background:#e1f5e7!important;border-color:#19834f!important;color:#12643b!important;box-shadow:0 0 12px rgba(25,131,79,.24)!important}
+html[data-tema=claro] #mline .rkfunc{background:#fff!important;border-color:#c5d1cb!important;color:#506259!important;filter:none!important}
+html[data-tema=claro] #mline .rkfunc:hover{background:#f2f8f4!important;border-color:#628f78!important;color:#173d2c!important}
+html[data-tema=claro] #mline .rkfunc.on{background:#e1f5e7!important;border-color:#19834f!important;color:#12643b!important;box-shadow:0 0 12px rgba(25,131,79,.24)!important}
+html[data-tema=claro] #rkbandfilters{background:#fff!important;border-color:#b8c8c0!important;color:#244437!important}
+html[data-tema=claro] #out .tg.rn{background:#1d5f9f!important;border-color:#124575!important;color:#fff!important}
+html[data-tema=claro] #out .tg.se{background:#fde6e2!important;border-color:#c94b3d!important;color:#a62c20!important}
+@media(max-width:620px){html[data-tema] #mline:not(:empty){grid-template-columns:1fr!important;grid-template-areas:"setores" "funcoes" "tools"!important;align-items:stretch!important;gap:8px!important}html[data-tema] #mline .rksetores{grid-template-columns:repeat(3,minmax(0,1fr))!important}html[data-tema] #mline .rktools{width:100%!important}html[data-tema] #rklineq{width:100%!important}html[data-tema] #rkbandfilters{flex:none!important}}
+/* Ranking: regra única de estrutura e aparência. */
+@media(min-width:840px){
+ html[data-tema] #out .grade{grid-template-columns:repeat(18,minmax(0,1fr))!important;align-items:start!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd){grid-column:span 3!important}
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4){grid-column:span 6!important}
+}
+html[data-tema] #out .grade>.cd:not(#moldecd){
+ background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,0) 52%),var(--surf2)!important;
+ border:1px solid var(--line)!important;border-radius:14px!important;
+ box-shadow:0 1px 2px rgba(0,0,0,.05)!important;
+}
+html[data-tema] #out .grade>.rksentinel{display:none!important}
+html[data-tema] #out .grade>.cd:not(#moldecd):hover{border-color:var(--acc)!important;box-shadow:0 10px 30px var(--sombra)!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5){
+ position:relative!important;display:grid!important;box-sizing:border-box!important;
+ grid-template-columns:1fr!important;grid-template-areas:"foto" "nome" "sub" "nota" "tag"!important;
+ gap:0!important;padding:10px!important;margin:0!important;min-height:0!important;overflow:hidden!important;text-align:center!important;
+}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5)>img,
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5)>div:not([class]){
+ grid-area:foto!important;display:block!important;width:auto!important;max-width:100%!important;height:190px!important;
+ margin:0 auto!important;object-fit:contain!important;visibility:visible!important;opacity:1!important;
+}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .rk{
+ position:absolute!important;inset:auto 10px 10px auto!important;margin:0!important;padding:0!important;z-index:20!important;
+ font-size:20px!important;font-weight:900!important;line-height:1!important;color:var(--txt)!important;
+}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .nm{grid-area:nome!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;min-height:38px!important;margin:8px 0 0!important;padding:0!important;font-size:16px!important;line-height:1.2!important;text-align:center!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .nm .rn1,
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .nm .rn2{display:block!important;min-height:19px!important;white-space:nowrap!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .nm .rn1:after{display:none!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .mi{grid-area:sub!important;margin:4px 0 0!important;padding:0!important;font-size:11px!important;line-height:1.4!important;text-align:center!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .mi .cdmdl{display:block!important;margin-top:3px!important;color:var(--txt2)!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .nt{grid-area:nota!important;margin:10px 0 0!important;padding:0!important;font-size:32px!important;line-height:1!important;text-align:center!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .ntsub{display:none!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .rktag{grid-area:tag!important;display:block!important;min-height:26px!important;justify-self:center!important;margin:10px 0 0!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .rktag .tg{display:inline-block!important;padding:4px 8px!important;font-size:10px!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+5) .tg.rn{border-color:rgba(110,168,255,.65)!important;background:rgba(110,168,255,.14)!important;color:#8cc8ff!important}
+</style>
+<script id="T6_RANKING_FILTROS_GAVETA">
+(function(){
+  function fecha(){document.documentElement.classList.remove('t6filtrosaberto');}
+  function monta(){
+    var main=document.querySelector('main'), filtros=document.getElementById('filtros');
+    if(!main||!filtros)return;
+    var b=document.getElementById('t6rkfilterbtn');
+    if(!b){b=document.createElement('button');b.id='t6rkfilterbtn';b.type='button';b.onclick=function(){document.documentElement.classList.toggle('t6filtrosaberto');};main.insertBefore(b,main.firstChild);}
+    var fn='funções';try{fn=(window.S&&S.tipo)||fn;}catch(e){}
+    b.textContent='☰ Filtros · '+fn;
+    var mask=document.getElementById('t6rkmask');
+    if(!mask){mask=document.createElement('div');mask.id='t6rkmask';mask.onclick=fecha;document.body.appendChild(mask);}
+    if(document.documentElement.classList.contains('t6semlat'))fecha();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',monta);else monta();
+  setInterval(monta,1200);
+})();
+</script>
+<style>
+/* Pódio: versão larga, legível e alinhada à identidade da página Inicial. */
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd){
+ position:relative!important;display:grid!important;box-sizing:border-box!important;
+ grid-template-columns:158px minmax(0,1fr)!important;
+ grid-template-areas:"foto nota" "foto nome" "foto sub" "foto tag"!important;
+ grid-template-rows:auto auto 1fr auto!important;gap:0 16px!important;
+ min-height:270px!important;padding:22px 18px 18px!important;overflow:hidden!important;text-align:left!important;
+}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd)>img,
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd)>div:not([class]){
+ grid-area:foto!important;display:block!important;width:158px!important;height:214px!important;
+ margin:0!important;object-fit:contain!important;align-self:center!important;
+}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .rk{
+ position:absolute!important;top:8px!important;left:10px!important;margin:0!important;z-index:5!important;
+ font-size:17px!important;font-weight:900!important;line-height:1!important;color:var(--txt2)!important;
+}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .nt{
+ grid-area:nota!important;display:block!important;margin:0!important;padding:0!important;
+ font-size:36px!important;line-height:1!important;text-align:right!important;align-self:start!important;
+}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .ntsub{display:none!important}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .nm{
+ grid-area:nome!important;display:block!important;margin:14px 0 0!important;padding:0!important;
+ font-size:20px!important;line-height:1.15!important;text-align:left!important;
+}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .nm .rn1,
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .nm .rn2{display:inline!important;height:auto!important;white-space:normal!important}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .nm .rn1:after{content:" "!important}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .mi{
+ grid-area:sub!important;display:block!important;margin:8px 0 0!important;padding:0!important;
+ font-size:12px!important;line-height:1.45!important;text-align:left!important;
+}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .mi .cdmdl{display:block!important;margin-top:4px!important;color:var(--txt2)!important}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .rktag{
+ grid-area:tag!important;display:block!important;justify-self:start!important;align-self:end!important;margin:12px 0 0!important;
+}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .rktag .tg{display:inline-block!important;padding:4px 8px!important;font-size:10px!important}
+html[data-tema] #out .grade>.cd:not(#moldecd):has(~#moldecd) .tg.rn{border-color:rgba(110,168,255,.65)!important;background:rgba(110,168,255,.14)!important;color:#8cc8ff!important}
+/* Os três melhores são sempre os cards de maior destaque. */
+@media(min-width:840px){
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4){grid-column:span 6!important;height:280px!important;min-height:280px!important}
+}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4){
+ position:relative!important;display:grid!important;box-sizing:border-box!important;
+ grid-template-columns:150px minmax(0,1fr)!important;
+ grid-template-areas:"foto nota" "foto nome" "foto sub" "foto tag"!important;
+ grid-template-rows:auto minmax(44px,auto) minmax(50px,1fr) auto!important;gap:0 14px!important;
+ padding:18px 16px 16px!important;overflow:visible!important;text-align:left!important;z-index:1!important;
+}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4):hover{z-index:20!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4):hover{transform:translateY(-2px)!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4):hover{border-color:var(--acc)!important;box-shadow:0 12px 30px var(--sombra)!important}
+/* No pódio a moldura fica limpa: a faixa superior é exclusiva dos compactos. */
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4):before{display:none!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4)>img,
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4)>div:not([class]){
+ grid-area:foto!important;display:block!important;width:150px!important;height:230px!important;
+ margin:0!important;object-fit:contain!important;align-self:start!important;
+}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .rk{position:absolute!important;inset:auto 14px 12px auto!important;margin:0!important;z-index:6!important;font-size:24px!important;line-height:1!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .nt{grid-area:nota!important;margin:0!important;padding:0!important;font-size:36px!important;line-height:1!important;text-align:left!important;justify-self:start!important;align-self:start!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .ntsub{display:none!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .nm{grid-area:nome!important;min-height:44px!important;margin:12px 0 0!important;padding:0!important;font-size:18px!important;line-height:1.15!important;text-align:left!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .nm .rn1,html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .nm .rn2{display:inline!important;height:auto!important;white-space:normal!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .nm .rn1:after{content:" "!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .mi{grid-area:sub!important;margin:7px 0 0!important;padding:0!important;font-size:13px!important;line-height:1.4!important;text-align:left!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .mi span{font-size:12px!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .mi .cdmdl{display:block!important;margin-top:3px!important;color:var(--txt2)!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .rktag{grid-area:tag!important;display:block!important;justify-self:start!important;align-self:end!important;margin:10px 0 12px!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .rktag .tg{display:inline-block!important;padding:4px 8px!important;font-size:10px!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(-n+4) .tg.rn{border-color:rgba(110,168,255,.65)!important;background:rgba(110,168,255,.14)!important;color:#8cc8ff!important}
+/* Etiquetas de status do Ranking: mesma leitura visual em todos os cards. */
+html[data-tema] #out .grade>.cd:not(#moldecd) .tg.se{border-color:rgba(224,83,61,.72)!important;background:rgba(224,83,61,.14)!important;color:#ff9a88!important}
+/* Medalhas do pódio: ouro, prata e bronze, sem alterar os compactos. */
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(2){border-color:#d9ad39!important;background:linear-gradient(180deg,rgba(217,173,57,.15),rgba(217,173,57,0) 46%),var(--surf2)!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(2) .rk{color:#f5ca55!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(3){border-color:#aeb9c7!important;background:linear-gradient(180deg,rgba(174,185,199,.14),rgba(174,185,199,0) 46%),var(--surf2)!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(3) .rk{color:#e0e7f0!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(4){border-color:#bd8055!important;background:linear-gradient(180deg,rgba(189,128,85,.14),rgba(189,128,85,0) 46%),var(--surf2)!important}
+html[data-tema] #out .grade>#moldecd~.cd:nth-child(4) .rk{color:#e5a87c!important}
+/* Ranking Geral usa exatamente a mesma hierarquia: pódio de três e grade compacta abaixo. */
+@media(min-width:840px){html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3){grid-column:span 6!important;height:280px!important;min-height:280px!important}}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3){position:relative!important;display:grid!important;box-sizing:border-box!important;grid-template-columns:150px minmax(0,1fr)!important;grid-template-areas:"foto nota" "foto nome" "foto sub" "foto tag"!important;grid-template-rows:auto minmax(44px,auto) minmax(50px,1fr) auto!important;gap:0 14px!important;padding:18px 16px 16px!important;overflow:visible!important;text-align:left!important;z-index:1!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3):hover{z-index:20!important;transform:translateY(-2px)!important;border-color:var(--acc)!important;box-shadow:0 12px 30px var(--sombra)!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3):before{display:none!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3)>img,html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3)>div:not([class]){grid-area:foto!important;display:block!important;width:150px!important;height:230px!important;margin:0!important;object-fit:contain!important;align-self:start!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .rk{position:absolute!important;inset:auto 14px 12px auto!important;margin:0!important;z-index:6!important;font-size:24px!important;line-height:1!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .nt{grid-area:nota!important;margin:0!important;padding:0!important;font-size:36px!important;line-height:1!important;text-align:left!important;justify-self:start!important;align-self:start!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .ntsub{display:none!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .nm{grid-area:nome!important;min-height:44px!important;margin:12px 0 0!important;padding:0!important;font-size:18px!important;line-height:1.15!important;text-align:left!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .nm .rn1,html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .nm .rn2{display:inline!important;height:auto!important;white-space:normal!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .nm .rn1:after{content:" "!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .mi{grid-area:sub!important;margin:7px 0 0!important;padding:0!important;font-size:13px!important;line-height:1.4!important;text-align:left!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(-n+3) .rktag{grid-area:tag!important;display:block!important;justify-self:start!important;align-self:end!important;margin:10px 0 12px!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4){position:relative!important;display:grid!important;box-sizing:border-box!important;grid-template-columns:1fr!important;grid-template-areas:"foto" "nome" "sub" "nota" "tag"!important;gap:0!important;padding:10px!important;margin:0!important;min-height:0!important;overflow:hidden!important;text-align:center!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4)>img,html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4)>div:not([class]){grid-area:foto!important;display:block!important;width:auto!important;max-width:100%!important;height:190px!important;margin:0 auto!important;object-fit:contain!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .rk{position:absolute!important;inset:auto 10px 10px auto!important;margin:0!important;padding:0!important;z-index:20!important;font-size:20px!important;font-weight:900!important;line-height:1!important;color:var(--txt)!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .nm{grid-area:nome!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;min-height:38px!important;margin:8px 0 0!important;padding:0!important;font-size:16px!important;line-height:1.2!important;text-align:center!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .nm .rn1,html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .nm .rn2{display:block!important;min-height:19px!important;white-space:nowrap!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .mi{grid-area:sub!important;margin:4px 0 0!important;padding:0!important;font-size:11px!important;line-height:1.4!important;text-align:center!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .nt{grid-area:nota!important;margin:10px 0 0!important;padding:0!important;font-size:32px!important;line-height:1!important;text-align:center!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .ntsub{display:none!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(n+4) .rktag{grid-area:tag!important;display:block!important;min-height:26px!important;justify-self:center!important;margin:10px 0 0!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(1){border-color:#d9ad39!important;background:linear-gradient(180deg,rgba(217,173,57,.15),rgba(217,173,57,0) 46%),var(--surf2)!important}.grade.geralgrade>.cd:nth-child(1) .rk{color:#f5ca55!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(2){border-color:#aeb9c7!important;background:linear-gradient(180deg,rgba(174,185,199,.14),rgba(174,185,199,0) 46%),var(--surf2)!important}.grade.geralgrade>.cd:nth-child(2) .rk{color:#e0e7f0!important}
+html[data-tema] #out .grade.geralgrade>.cd:nth-child(3){border-color:#bd8055!important;background:linear-gradient(180deg,rgba(189,128,85,.14),rgba(189,128,85,0) 46%),var(--surf2)!important}.grade.geralgrade>.cd:nth-child(3) .rk{color:#e5a87c!important}
+/* No claro, a medalha prata precisa continuar legível sobre o cartão branco. */
+html[data-tema=claro] #out .grade.geralgrade>.cd:nth-child(2) .rk{color:#3f4b57!important;text-shadow:none!important}
+/* Tema claro: estas regras ficam no fim porque os layouts de pódio e compacto
+   aplicam cores próprias às etiquetas depois das regras gerais. */
+html[data-tema=claro] #out .grade .tg.rn{background:#1d5f9f!important;border-color:#124575!important;color:#fff!important}
+html[data-tema=claro] #out .grade .tg.se{background:#a62c20!important;border-color:#741d15!important;color:#fff!important}
+/* Mobile: o pódio não precisa de uma apresentação especial. Todos os cards
+   usam a mesma leitura compacta para que a lista avance de verdade na tela. */
+@media(max-width:620px){
+ html[data-tema] #out .grade{grid-template-columns:1fr!important;gap:10px!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd){
+  position:relative!important;display:grid!important;box-sizing:border-box!important;
+  grid-column:1!important;grid-template-columns:1fr!important;
+  grid-template-areas:"foto" "nome" "sub" "nota" "tag"!important;
+  grid-template-rows:auto auto auto auto auto!important;gap:0!important;
+  height:344px!important;min-height:344px!important;margin:0!important;padding:12px!important;
+  overflow:hidden!important;text-align:center!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd)>img,
+ html[data-tema] #out .grade>.cd:not(#moldecd)>div:not([class]){
+  grid-area:foto!important;display:block!important;width:auto!important;max-width:100%!important;
+  height:182px!important;margin:0 auto!important;object-fit:contain!important;align-self:start!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .rk{
+  position:absolute!important;inset:auto 8px 8px auto!important;margin:0!important;padding:0!important;
+  z-index:6!important;font-size:17px!important;line-height:1!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nt{
+  grid-area:nota!important;margin:7px 0 0!important;padding:0!important;
+  font-size:27px!important;line-height:1!important;text-align:center!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .ntsub{display:none!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nm{
+  grid-area:nome!important;display:flex!important;flex-direction:column!important;
+  justify-content:flex-start!important;min-height:34px!important;margin:7px 0 0!important;
+  padding:0!important;font-size:15px!important;line-height:1.16!important;text-align:center!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nm .rn1,
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nm .rn2{
+  display:block!important;min-height:17px!important;white-space:nowrap!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .mi{
+  grid-area:sub!important;margin:3px 0 0!important;padding:0!important;
+  min-height:30px!important;font-size:11px!important;line-height:1.3!important;text-align:center!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .mi span{font-size:10px!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd) .mi .cdmdl{display:block!important;margin-top:2px!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd) .rktag{
+  grid-area:tag!important;display:block!important;min-height:22px!important;
+  justify-self:center!important;align-self:end!important;margin:8px 0 0!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .rktag .tg{padding:3px 7px!important;font-size:9px!important}
+}
+/* A moldura nunca pode deixar conteúdo escapar na prévia de celular. */
+@media(max-width:1000px){
+ html[data-tema] #out .grade>.cd:not(#moldecd){overflow:hidden!important;min-width:0!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd)>img,
+ html[data-tema] #out .grade>.cd:not(#moldecd)>div:not([class]),
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nm,
+ html[data-tema] #out .grade>.cd:not(#moldecd) .mi,
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nt{max-width:100%!important;min-width:0!important}
+}
+@media(max-width:1000px){
+ html[data-tema] #out .grade>.cd:not(#moldecd){
+  grid-template-columns:150px minmax(0,1fr)!important;
+  grid-template-areas:"foto nota" "foto nome" "foto sub" "foto tag"!important;
+  grid-template-rows:auto auto minmax(22px,1fr) auto!important;
+  gap:0 12px!important;height:240px!important;min-height:240px!important;
+  padding:12px!important;overflow:hidden!important;text-align:left!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd)>img,
+ html[data-tema] #out .grade>.cd:not(#moldecd)>div:not([class]){
+  grid-area:foto!important;width:150px!important;max-width:150px!important;height:216px!important;
+  margin:0!important;object-fit:contain!important;align-self:start!important;transform:translateY(-7px)!important;
+ }
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nt{grid-area:nota!important;margin:0!important;font-size:28px!important;text-align:left!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd) .nm{grid-area:nome!important;min-height:34px!important;margin:8px 0 0!important;font-size:16px!important;text-align:left!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd) .mi{grid-area:sub!important;min-height:0!important;margin:5px 0 0!important;font-size:11px!important;text-align:left!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd) .rktag{grid-area:tag!important;justify-self:start!important;align-self:end!important;margin:0 0 7px!important}
+ html[data-tema] #out .grade>.cd:not(#moldecd) .rk{inset:auto 12px 19px auto!important;font-size:19px!important}
+}
+/* A faixa do Ranking também usa a largura real da prévia: busca em linha própria. */
+@media(max-width:1000px){
+ html[data-tema] #mline:not(:empty){
+  grid-template-columns:1fr!important;grid-template-areas:"setores" "funcoes" "tools"!important;
+  align-items:stretch!important;gap:8px!important;padding-bottom:12px!important;
+ }
+ html[data-tema] #mline .rksetores{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ html[data-tema] #mline .rktools{grid-area:tools!important;width:100%!important;justify-content:stretch!important}
+ html[data-tema] #rklineq{width:100%!important;min-width:0!important}
+ html[data-tema] #rkbandfilters{flex:none!important}
+}
+/* No Ranking mobile, a única busca visível é a busca contextual da própria tela. */
+@media(max-width:1000px){
+ html:has(#mline:not(:empty)) header #t6bar #q{display:none!important}
+}
+/* No celular, pódio e lista usam exatamente a mesma caixa. Só as medalhas mudam cor. */
+@media(max-width:1000px){
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n),
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2){
+  position:relative!important;display:grid!important;box-sizing:border-box!important;
+  grid-column:1!important;grid-template-columns:150px minmax(0,1fr)!important;
+  grid-template-areas:"foto nota" "foto nome" "foto sub" "foto tag"!important;
+  grid-template-rows:auto auto minmax(22px,1fr) auto!important;
+  gap:0 12px!important;height:240px!important;min-height:240px!important;
+  padding:12px!important;margin:0!important;overflow:hidden!important;text-align:left!important;
+ }
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n)>img,
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n)>div:not([class]),
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2)>img,
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2)>div:not([class]){
+  grid-area:foto!important;width:150px!important;max-width:150px!important;height:216px!important;
+  margin:0!important;object-fit:contain!important;align-self:start!important;transform:translateY(-7px)!important;
+ }
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n) .nt,
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2) .nt{grid-area:nota!important;margin:0!important;font-size:28px!important;text-align:left!important}
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n) .nm,
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2) .nm{grid-area:nome!important;min-height:34px!important;margin:8px 0 0!important;font-size:16px!important;text-align:left!important}
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n) .mi,
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2) .mi{grid-area:sub!important;min-height:0!important;margin:5px 0 0!important;font-size:11px!important;text-align:left!important}
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n) .rktag,
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2) .rktag{grid-area:tag!important;justify-self:start!important;align-self:end!important;margin:0 0 7px!important}
+ html[data-tema] #out .grade.geralgrade>.cd:nth-child(n) .rk,
+ html[data-tema] #out .grade>#moldecd~.cd:nth-child(n+2) .rk{inset:auto 12px 19px auto!important;font-size:19px!important}
+}
+/* Tema claro: contraste sólido das etiquetas, inclusive nas regras de pódio. */
+html[data-tema=claro] #out .grade>.cd .rktag .tg.rn,
+html[data-tema=claro] #out .grade>.cd .tg.rn{
+ background:#15558f!important;border-color:#0d3d69!important;color:#fff!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+html[data-tema=claro] #out .grade>.cd .rktag .tg.se,
+html[data-tema=claro] #out .grade>.cd .tg.se{
+ background:#9d3025!important;border-color:#6e1d16!important;color:#fff!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+</style>
+<script id="T6_ETIQUETAS_RANKING_CLARO">
+/* Uma única rotina, restrita ao Ranking: evita que regras de cada card
+   decidam cores diferentes para Nativo e Básico no tema claro. */
+(function(){
+ function aplicarEtiquetasRanking(){
+  var claro=document.documentElement.getAttribute('data-tema')==='claro';
+  document.querySelectorAll('#out .grade .tg.rn,#out .grade .tg.se').forEach(function(el){
+   if(!claro){['background','border-color','color','box-shadow','text-shadow'].forEach(function(p){el.style.removeProperty(p)});return;}
+   var nativo=el.classList.contains('rn');
+   el.style.setProperty('background',nativo?'#15558f':'#9d3025','important');
+   el.style.setProperty('border-color',nativo?'#0d3d69':'#6e1d16','important');
+   el.style.setProperty('color','#fff','important');
+   el.style.setProperty('box-shadow','none','important');
+   el.style.setProperty('text-shadow','none','important');
+  });
+ }
+ function iniciar(){
+  aplicarEtiquetasRanking();
+  var out=document.getElementById('out');
+  if(out)new MutationObserver(aplicarEtiquetasRanking).observe(out,{childList:true,subtree:true});
+  new MutationObserver(aplicarEtiquetasRanking).observe(document.documentElement,{attributes:true,attributeFilter:['data-tema']});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar);else iniciar();
+})();
+</script>
+<style id="T6_HOME_VITRINE_CSS">
+/* Início: vitrine de produto. Ranking e Boxes ficam como portas de entrada,
+   sem entregar cards ou notas antes de a pessoa entrar nas páginas próprias. */
+#homewrap .t6home-vitrine{max-width:1280px;margin:0 auto;padding:26px 22px 42px;display:flex;flex-direction:column;gap:18px}
+#homewrap .t6home-intro{display:flex;align-items:end;justify-content:space-between;gap:24px}
+/* A casca antiga ocultava h1; na vitrine ele é o título principal. */
+#homewrap .t6home-intro h1{display:block!important;margin:5px 0 0;font-size:27px;letter-spacing:-.7px;line-height:1.08}
+#homewrap .t6home-kicker{font-size:10px;letter-spacing:1.6px;color:var(--d8);font-weight:800}
+#homewrap .t6home-intro p{margin:0;max-width:430px;color:var(--d13);font-size:13px;line-height:1.45}
+#homewrap .t6home-produtos{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.85fr);gap:15px}
+#homewrap .t6home-build,#homewrap .t6home-time{position:relative;overflow:hidden;border:1px solid var(--d20);border-radius:18px;background:linear-gradient(145deg,var(--d42),var(--d43));min-height:282px;padding:25px}
+#homewrap .t6home-build{background:radial-gradient(470px 270px at 88% 7%,rgba(240,165,49,.26),transparent 68%),radial-gradient(600px 310px at 10% 108%,var(--d19),transparent 72%),linear-gradient(145deg,var(--d42),var(--d43));border-color:rgba(240,165,49,.28)}
+#homewrap .t6home-build-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;max-width:53%;min-height:232px}
+#homewrap .t6home-label{font-size:9px;letter-spacing:1.5px;color:var(--d8);font-weight:800}
+#homewrap .t6home-build h2,#homewrap .t6home-time h2{margin:9px 0 0;font-size:26px;line-height:1.06;letter-spacing:-.6px}
+#homewrap .t6home-build p,#homewrap .t6home-time p{margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--d24)}
+#homewrap .t6home-cta{appearance:none;border:1px solid var(--d28);background:linear-gradient(180deg,var(--d25),var(--d26));color:var(--d27);font:700 13px inherit;padding:11px 15px;border-radius:10px;cursor:pointer;margin-top:auto;box-shadow:0 8px 23px var(--d28)}
+#homewrap .t6home-cta:hover{filter:brightness(1.06);transform:translateY(-1px)}
+#homewrap .t6home-build-visual{position:absolute;right:25px;bottom:24px;width:42%;min-width:260px;display:grid;grid-template-columns:108px 1fr;gap:12px;align-items:end}
+#homewrap .t6home-build-card{height:180px;border:1px solid var(--d36);border-radius:13px;background:linear-gradient(160deg,var(--d34),var(--d35)) center/cover;box-shadow:0 12px 34px var(--d2);position:relative;overflow:hidden}
+#homewrap .t6home-build-card:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 22%,rgba(27,15,4,.12) 48%,rgba(5,10,8,.9) 100%)}
+#homewrap .t6home-build-card:after{content:"BUILD";position:absolute;left:16px;bottom:18px;font-size:9px;font-weight:800;letter-spacing:1.5px;color:#ffd27a}
+#homewrap .t6home-build-data{padding:13px;border:1px solid rgba(240,165,49,.32);border-radius:13px;background:linear-gradient(150deg,rgba(77,48,14,.76),rgba(13,20,16,.9));display:flex;flex-direction:column;gap:9px;box-shadow:0 16px 38px rgba(0,0,0,.22)}
+#homewrap .t6home-build-data b{font-size:13px;color:var(--d30)}
+#homewrap .t6home-build-bar{height:7px;border-radius:99px;background:var(--d10);overflow:hidden}
+#homewrap .t6home-build-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#df861e,#ffd27a)}
+#homewrap .t6home-time{display:flex;flex-direction:column;background:radial-gradient(360px 220px at 82% 6%,var(--d41),transparent 72%),linear-gradient(145deg,var(--d42),var(--d43))}
+#homewrap .t6home-time-pitch{position:absolute;right:20px;bottom:21px;width:126px;height:166px;border-radius:13px;border:1px solid var(--d33);background:linear-gradient(160deg,var(--d40),var(--d12));opacity:.8;overflow:hidden}
+#homewrap .t6home-time-pitch:before{content:"";position:absolute;inset:9px;border:1px solid var(--d29);border-radius:9px}
+#homewrap .t6home-time-pitch:after{content:"";position:absolute;left:10px;right:10px;top:50%;border-top:1px solid var(--d29)}
+#homewrap .t6home-time-pitch i{position:absolute;width:18px;height:18px;border-radius:50%;background:var(--d13);border:2px solid var(--d30);box-shadow:0 0 0 3px rgba(0,0,0,.12)}
+#homewrap .t6home-time-pitch i:nth-child(1){left:52px;top:16px}.t6home-time-pitch i:nth-child(2){left:18px;top:49px}.t6home-time-pitch i:nth-child(3){right:18px;top:49px}.t6home-time-pitch i:nth-child(4){left:52px;top:74px}.t6home-time-pitch i:nth-child(5){left:26px;bottom:24px}.t6home-time-pitch i:nth-child(6){right:26px;bottom:24px}.t6home-time-pitch i:nth-child(7){left:53px;bottom:5px;background:var(--d25);border-color:var(--d8);box-shadow:0 0 16px var(--d28)}
+#homewrap .t6home-time-list{display:flex;flex-direction:column;gap:8px;margin:19px 0 0}
+#homewrap .t6home-time-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--d24)}
+#homewrap .t6home-time-row i{width:8px;height:8px;border-radius:50%;background:var(--d25);box-shadow:0 0 10px var(--d28)}
+#homewrap .t6home-portais{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+#homewrap .t6home-portal{display:flex;align-items:center;gap:15px;padding:18px 20px;border:1px solid var(--d20);border-radius:15px;background:linear-gradient(158deg,var(--d42),var(--d43));cursor:pointer;transition:transform .18s ease,border-color .18s ease}
+#homewrap .t6home-portal:hover{transform:translateY(-2px);border-color:var(--d23)}
+#homewrap .t6home-portal-mark{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;background:var(--d14);border:1px solid var(--d18);color:var(--d8);font-weight:800;font-size:16px}
+#homewrap .t6home-portal h3{margin:0;font-size:15px}
+#homewrap .t6home-portal p{margin:4px 0 0;font-size:11.5px;color:var(--d13)}
+#homewrap .t6home-portal b{margin-left:auto;font-size:12px;color:var(--d8);white-space:nowrap}
+/* O Ranking termina a carga em segundo plano. Enquanto a vitrine estiver
+   aberta, nenhum resíduo desse painel pode aparecer abaixo dos portais. */
+html:has(#homewrap .t6home-vitrine) #mline,
+html:has(#homewrap .t6home2) #mline,
+html:has(#homewrap .t6home-vitrine) #rkspacer,
+html:has(#homewrap .t6home2) #rkspacer,
+html:has(#homewrap .t6home-vitrine) #out,
+html:has(#homewrap .t6home2) #out,
+html:has(#homewrap .t6home-vitrine) #mtwrap,
+html:has(#homewrap .t6home2) #mtwrap{display:none!important}
+@media(max-width:1000px){
+ #homewrap .t6home-vitrine{padding:18px 14px 30px;gap:13px}
+ #homewrap .t6home-intro{display:block}.t6home-intro p{margin-top:11px!important}
+ #homewrap .t6home-produtos,#homewrap .t6home-portais{grid-template-columns:1fr}
+ #homewrap .t6home-build,#homewrap .t6home-time{min-height:0;padding:20px}
+ #homewrap .t6home-build-copy{max-width:100%;min-height:0;padding-bottom:143px}
+ #homewrap .t6home-build-visual{right:20px;bottom:18px;width:calc(100% - 40px);min-width:0;grid-template-columns:84px 1fr}
+ #homewrap .t6home-build-card{height:112px}#homewrap .t6home-build-card:before{inset:10px 9px 35px}#homewrap .t6home-build-card:after{left:10px;bottom:12px;font-size:7px}
+ #homewrap .t6home-build h2,#homewrap .t6home-time h2{font-size:23px}
+ #homewrap .t6home-time{padding-right:160px}
+ #homewrap .t6home-time-pitch{right:17px;bottom:18px;width:113px;height:150px}
+ #homewrap .t6home-portal{padding:16px}
+}
+</style>
+<script id="T6_HOME_VITRINE_2208">
+/* A vitrine entrega rotas, não conteúdo gratuito. As páginas próprias continuam
+   responsáveis por revelar Ranking e Boxes. */
+(function(){
+ function abrirHome(qual){
+ if(qual==='meutime'){
+   try{
+    /* A Home final deixa um seletor no documento. Limpa-o antes de abrir o
+       Elenco, para a regra visual da vitrine não esconder a tela de destino. */
+    var home=document.getElementById('homewrap');
+    if(home){home.innerHTML='';home.style.display='none';}
+    if(typeof homeToggle==='function') homeToggle(0);
+    var painel=document.getElementById('mtwrap');
+    if(painel&&getComputedStyle(painel).display!=='block'&&typeof mtToggle==='function') mtToggle();
+    window.scrollTo(0,0);
+   }catch(e){}
+   return;
+  }
+  if(typeof window.t6Painel==='function') window.t6Painel(qual);
+ }
+ window.t6TelaInicioLegadaVitrine=function(){
+  var total=0,boxes=0,imagem='';
+  try{ total=(typeof CONT!=='undefined'&&CONT.cards_total)||0; }catch(e){}
+  try{ boxes=(typeof BOXATIVA!=='undefined'&&BOXATIVA.length)||0; }catch(e){}
+  /* Uma carta serve apenas como linguagem visual da Build: não revela nota,
+     função vencedora nem qualquer resultado gratuito da Home. */
+  try{
+   var exemplo=(D||[]).find(function(c){return c&&c.id&&c.id!=='MOLDE';});
+   if(exemplo) imagem='background-image:url(https://efimg.com/efootballhub22/images/player_cards/'+encodeURIComponent(String(exemplo.id).split('@')[0])+'_l.png)';
+  }catch(e){}
+  return '<section class="t6home-vitrine">'
+   +'<header class="t6home-intro"><div><div class="t6home-kicker">CLUBEFOOTBALL</div><h1>Ferramentas para decidir antes de gastar.</h1></div><p>Ranking e Boxes ficam abertos para consulta. As análises de Build e Meu time mostram o que fazer depois de encontrar um card.</p></header>'
+   +'<div class="t6home-produtos">'
+    +'<article class="t6home-build"><div class="t6home-build-copy"><span class="t6home-label">BUILDS</span><h2>Analise seu card antes de investir.</h2><p>Função, distribuição de pontos, técnico e ímpeto organizados em uma leitura só.</p><button class="t6home-cta" data-t6home="meutime">Ver builds</button></div><div class="t6home-build-visual" aria-hidden="true"><div class="t6home-build-card" style="'+imagem+'"></div><div class="t6home-build-data"><b>Leitura da build</b><span class="t6home-build-bar"><i style="width:86%"></i></span><span class="t6home-build-bar"><i style="width:68%"></i></span><span class="t6home-build-bar"><i style="width:78%"></i></span></div></div></article>'
+    +'<article class="t6home-time"><span class="t6home-label">MEU TIME</span><h2>Planeje seu elenco.</h2><p>Compare quem você tem, veja onde falta opção e encontre quem melhora cada área do campo.</p><div class="t6home-time-list"><span class="t6home-time-row"><i></i>necessidades por posição</span><span class="t6home-time-row"><i></i>comparação entre opções</span><span class="t6home-time-row"><i></i>recomendação para o seu elenco</span></div><div class="t6home-time-pitch" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><button class="t6home-cta" data-t6home="meutime">Abrir meu time</button></article>'
+   +'</div>'
+   +'<div class="t6home-portais">'
+    +'<article class="t6home-portal" data-t6home="ranking"><span class="t6home-portal-mark">#</span><span><h3>Ranking</h3><p>Consulte funções, posições e jogadores.</p></span><b>Abrir ranking →</b></article>'
+    +'<article class="t6home-portal" data-t6home="boxatual"><span class="t6home-portal-mark">+</span><span><h3>Boxes atuais</h3><p>'+(boxes||'')+' lançamentos ativos para consultar.</p></span><b>Ver boxes →</b></article>'
+   +'</div>'
+  +'</section>';
+ };
+ var antigo=window.t6Cliques;
+ window.t6Cliques=function(raiz){
+  if(typeof antigo==='function') antigo(raiz);
+  raiz.querySelectorAll('[data-t6home]').forEach(function(el){el.onclick=function(ev){ev.preventDefault();ev.stopPropagation();abrirHome(el.dataset.t6home);};});
+ };
+ /* A rota antiga não é chamada aqui. A Home final abaixo abre a tela nova
+    diretamente, sem a pintura intermediária. */
+})();
+</script>
+<style id="T6_HOME_VITRINE_FINAL_CSS">
+/* Versão de avaliação da Home: produto pago em primeiro plano; conteúdo livre
+   aparece somente como amostra que leva às páginas próprias. */
+/* Blindagem: se algum resíduo legado tentar escrever a Home antiga, ele nunca
+   ganha visibilidade. A única Home permitida é .t6home2, abaixo. */
+#homewrap:has(.hbloco),#homewrap:has(.t6home-vitrine){display:none!important}
+#homewrap .t6home2{max-width:1280px;margin:0 auto;padding:24px 22px 42px;display:flex;flex-direction:column;gap:18px}
+#homewrap .t6home2 *{box-sizing:border-box}
+#homewrap .t6h-hero{min-height:318px;position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) 405px;gap:24px;align-items:center;padding:30px 32px;border-radius:19px;border:1px solid rgba(240,165,49,.34);background:radial-gradient(520px 310px at 92% 4%,rgba(240,165,49,.3),transparent 69%),radial-gradient(560px 280px at 7% 112%,var(--d19),transparent 72%),linear-gradient(135deg,var(--d42),var(--d43));box-shadow:0 18px 42px var(--d2)}
+#homewrap .t6h-kicker{font-size:9px;letter-spacing:1.8px;font-weight:800;color:#ffd27a}
+#homewrap .t6h-hero h1{display:block!important;margin:9px 0 0;font-size:34px;line-height:1.04;letter-spacing:-1px;max-width:550px}
+#homewrap .t6h-hero p{margin:13px 0 0;max-width:505px;font-size:14px;line-height:1.5;color:var(--d24)}
+#homewrap .t6h-maincta{margin-top:20px;appearance:none;cursor:pointer;border:1px solid rgba(240,165,49,.64);color:#201506;background:linear-gradient(180deg,#ffd27a,#e48b24);font:800 13px inherit;border-radius:11px;padding:12px 17px;box-shadow:0 8px 22px rgba(240,165,49,.24)}
+#homewrap .t6h-buildmock{height:252px;display:grid;grid-template-columns:144px minmax(0,1fr);gap:13px;align-items:end}
+#homewrap .t6h-cardpic{height:232px;border-radius:13px;border:2px solid #d0a438;background:#101812 58% center/cover no-repeat;box-shadow:0 18px 38px rgba(0,0,0,.42),inset 0 0 0 2px rgba(4,16,14,.9);position:relative;overflow:hidden}
+#homewrap .t6h-cardpic:before{content:"";position:absolute;inset:5px;border:1px solid rgba(255,224,139,.9);border-radius:8px;pointer-events:none;z-index:1;box-shadow:inset 0 0 22px rgba(239,173,37,.24)}
+#homewrap .t6h-cardpic:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,11,11,.58) 0%,rgba(3,12,12,0) 33%,rgba(3,10,8,.84) 100%);pointer-events:none}
+#homewrap .t6h-cardtop,#homewrap .t6h-cardbottom{position:absolute;z-index:2;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;text-shadow:0 1px 3px #000}
+#homewrap .t6h-cardtop{top:12px;justify-content:flex-end}.t6h-cardflag{display:inline-flex;align-items:center;gap:4px;padding:3px 5px;border-radius:6px;background:rgba(5,19,17,.78);border:1px solid rgba(255,218,126,.68);font-size:12px}.t6h-cardflag b{font-size:8px;letter-spacing:.8px;color:#fff}.t6h-cardovr{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(168,255,196,.8);background:rgba(6,42,27,.82);font-size:18px;line-height:1;color:#baffd1;font-weight:900;letter-spacing:-1px}.t6h-cardbottom{bottom:12px;align-items:end}.t6h-cardstars{letter-spacing:0;color:#ffe166;font-size:11px;text-shadow:0 1px 2px #000}.t6h-cardimpetos{display:flex;gap:4px}.t6h-cardimpetos i{display:grid;place-items:center;width:23px;height:23px;border-radius:7px;font-style:normal;font-size:12px;box-shadow:0 2px 7px rgba(0,0,0,.35)}.t6h-cardimpetos .azul{border:1px solid #63d9ff;background:linear-gradient(145deg,#0d618c,#12314e);color:#d5f7ff}.t6h-cardimpetos .amarelo{border:1px solid #ffd75c;background:linear-gradient(145deg,#a76d08,#53370a);color:#fff3a2}
+#homewrap .t6h-buildboard{align-self:center;display:flex;flex-direction:column;gap:9px;border-radius:14px;padding:15px;background:linear-gradient(145deg,rgba(85,52,15,.88),rgba(14,22,17,.94));border:1px solid rgba(240,165,49,.35);box-shadow:0 15px 34px rgba(0,0,0,.24)}
+#homewrap .t6h-buildboard small{font-size:9px;letter-spacing:1.1px;color:#e5ba6b}.t6h-pontos{display:flex;align-items:end;gap:8px}.t6h-pontos span{font-size:19px;color:var(--d24);font-weight:700}.t6h-pontos i{font-style:normal;color:#ffd27a;margin-bottom:2px}.t6h-pontos b{font-size:29px;line-height:1;color:#8dfab4;letter-spacing:-1px}.t6h-bars{display:flex;flex-direction:column;gap:6px}.t6h-bars i{height:7px;border-radius:50px;background:rgba(255,255,255,.1);overflow:hidden}.t6h-bars i:after{content:"";display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#e38924,#ffd27a)}.t6h-bars i:nth-child(1):after{width:86%}.t6h-bars i:nth-child(2):after{width:67%}.t6h-bars i:nth-child(3):after{width:79%}
+#homewrap .t6h-elenco{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 286px;gap:24px;min-height:225px;padding:25px 28px;border-radius:18px;border:1px solid var(--d20);background:radial-gradient(380px 210px at 87% 15%,var(--d41),transparent 70%),linear-gradient(145deg,var(--d42),var(--d43))}
+#homewrap .t6h-elenco h2{margin:8px 0 0;font-size:25px;letter-spacing:-.6px}.t6h-elenco p{margin:10px 0 0;max-width:520px;font-size:13px;line-height:1.5;color:var(--d24)}.t6h-elenco button{margin-top:16px}
+#homewrap .t6h-pitches{display:flex;align-items:center;justify-content:end;gap:11px}.t6h-pitch{width:116px;height:157px;position:relative;border-radius:14px;border:1px solid var(--d33);background:linear-gradient(150deg,var(--d40),var(--d12));overflow:hidden}.t6h-pitch:before{content:"";position:absolute;inset:9px;border:1px solid var(--d29);border-radius:9px}.t6h-pitch:after{content:"";position:absolute;left:9px;right:9px;top:50%;border-top:1px solid var(--d29)}.t6h-pitch em{position:absolute;top:11px;left:0;right:0;text-align:center;font-style:normal;font-size:8px;letter-spacing:1px;color:var(--d13)}.t6h-pitch i{position:absolute;width:13px;height:13px;border-radius:50%;background:var(--d13);border:2px solid var(--d30);box-shadow:0 0 0 3px rgba(0,0,0,.12)}.t6h-pitch.agora i:nth-of-type(1){left:15px;top:38px}.t6h-pitch.agora i:nth-of-type(2){left:51px;top:38px}.t6h-pitch.agora i:nth-of-type(3){right:15px;top:38px}.t6h-pitch.agora i:nth-of-type(4){left:39px;top:67px}.t6h-pitch.agora i:nth-of-type(5){right:34px;top:67px}.t6h-pitch.agora i:nth-of-type(6){left:13px;top:93px}.t6h-pitch.agora i:nth-of-type(7){left:33px;top:102px}.t6h-pitch.agora i:nth-of-type(8){right:17px;top:91px}.t6h-pitch.agora i:nth-of-type(9){left:53px;top:116px}.t6h-pitch.agora i:nth-of-type(10){right:32px;top:119px}.t6h-pitch.agora i:nth-of-type(11){left:19px;top:116px}.t6h-pitch.depois i:nth-of-type(1){left:51px;top:35px}.t6h-pitch.depois i:nth-of-type(2){left:19px;top:57px}.t6h-pitch.depois i:nth-of-type(3){right:19px;top:57px}.t6h-pitch.depois i:nth-of-type(4){left:39px;top:82px}.t6h-pitch.depois i:nth-of-type(5){right:39px;top:82px}.t6h-pitch.depois i:nth-of-type(6){left:14px;top:104px}.t6h-pitch.depois i:nth-of-type(7){left:51px;top:104px}.t6h-pitch.depois i:nth-of-type(8){right:14px;top:104px}.t6h-pitch.depois i:nth-of-type(9){left:51px;top:128px}.t6h-pitch.depois i:nth-of-type(10){left:26px;top:128px}.t6h-pitch.depois i:nth-of-type(11){right:26px;top:128px}.t6h-pitch.depois i{background:var(--d25);border-color:var(--d8);box-shadow:0 0 13px var(--d28)}
+#homewrap .t6h-free{display:grid;grid-template-columns:1fr 1fr;gap:15px}.t6h-freebox{min-height:205px;padding:20px;border-radius:17px;border:1px solid var(--d20);background:linear-gradient(158deg,var(--d42),var(--d43));overflow:hidden}.t6h-freehead{display:flex;align-items:baseline;gap:10px}.t6h-freehead h2{margin:0;font-size:18px}.t6h-freehead span{font-size:11px;color:var(--d13)}.t6h-freehead button{margin-left:auto;border:0;background:transparent;color:var(--d8);font:700 12px inherit;cursor:pointer}.t6h-top3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:17px}.t6h-topcard{position:relative;min-width:0;display:grid;grid-template-columns:42px minmax(0,1fr);gap:8px;align-items:center;padding:7px;border-radius:10px;background:var(--d12);border:1px solid var(--d33)}.t6h-topcard img{width:42px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--d33)}.t6h-topcard b{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.t6h-topcard small{display:block;margin-top:2px;color:var(--d13);font-size:10px}.t6h-topcard i{position:absolute;right:7px;top:5px;font-style:normal;font-size:10px;color:#ffd27a;font-weight:800}
+#homewrap .t6h-free{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)}
+#homewrap .t6h-top3{grid-template-columns:1fr;gap:8px;margin-top:15px}
+#homewrap .t6h-topcard{grid-template-columns:64px minmax(0,1fr);gap:10px;padding:8px 10px}
+#homewrap .t6h-topcard img{width:64px;height:76px}.t6h-topcard b{font-size:12px}.t6h-topcard small{font-size:11px}.t6h-topcard i{font-size:11px}
+#homewrap .t6h-boxsample{display:grid;grid-template-columns:132px minmax(0,1fr);gap:13px;margin-top:17px;align-items:center}.t6h-pack{height:122px;border-radius:12px;border:1px solid rgba(240,165,49,.38);background:radial-gradient(80px 80px at 50% 34%,rgba(240,165,49,.35),transparent 72%),linear-gradient(145deg,#342413,#151510);position:relative;overflow:hidden}.t6h-pack:before{content:"BOX";position:absolute;inset:0;display:grid;place-items:center;color:#ffd27a;font-weight:800;letter-spacing:2px;font-size:17px}.t6h-pack:after{content:"LANÇAMENTO";position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#d5b879;font-size:8px;letter-spacing:1.3px}.t6h-boxcopy b{font-size:14px}.t6h-boxcopy p{margin:6px 0 0;font-size:11.5px;color:var(--d13);line-height:1.45}.t6h-boxcopy button{margin-top:12px;border:1px solid var(--d18);border-radius:9px;padding:7px 10px;background:var(--d14);color:var(--d30);font:700 11px inherit;cursor:pointer}
+#homewrap .t6h-boxsample{grid-template-columns:100px minmax(0,1fr);gap:11px;margin-top:15px}.t6h-pack{height:138px}.t6h-pack:before{font-size:15px}.t6h-boxcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.t6h-boxcard{min-width:0;display:flex;flex-direction:column;gap:4px}.t6h-boxcard img{width:100%;height:83px;object-fit:contain;border-radius:6px;background:var(--d12);border:1px solid var(--d33)}.t6h-boxcard b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9.5px}.t6h-boxcard em{align-self:flex-start;font-style:normal;font-size:7.5px;font-weight:800;letter-spacing:.3px;padding:2px 4px;border-radius:999px;white-space:nowrap}
+#homewrap .t6h-prova{display:inline-flex;margin:13px 12px 0 0;padding:6px 9px;border-radius:999px;border:1px solid rgba(137,250,180,.46);background:rgba(19,89,55,.32);color:#a7ffca;font-size:10px;font-weight:800;letter-spacing:.15px}
+/* No claro, os selos precisam manter leitura forte e os dois campos voltam a
+   parecer gramado, sem alterar os demais blocos já aprovados. */
+html[data-tema=claro] #homewrap .t6h-prova{border-color:#087440;background:#0d6240;color:#fff!important;box-shadow:0 5px 13px rgba(10,92,57,.18)}
+html[data-tema=claro] #homewrap .t6h-pitch{border-color:#4e9d6d;background:repeating-linear-gradient(0deg,#82c992 0 20px,#74bd86 20px 40px)}
+html[data-tema=claro] #homewrap .t6h-pitch:before{border-color:rgba(255,255,255,.74)}
+html[data-tema=claro] #homewrap .t6h-pitch:after{border-color:rgba(255,255,255,.74)}
+html[data-tema=claro] #homewrap .t6h-pitch em{color:#164a2b;font-weight:800}
+html[data-tema=claro] #homewrap .t6h-hero .t6h-kicker{color:#b85b00}
+html[data-tema=claro] #homewrap .t6h-pontos span{color:#fff1ba}
+@media(min-width:1001px){
+ #homewrap .t6h-freebox:has(.t6h-top3){display:flex;flex-direction:column}
+ #homewrap .t6h-freebox:has(.t6h-top3) .t6h-top3{flex:1}
+ #homewrap .t6h-freebox:has(.t6h-top3) .t6h-topcard.t6h-podio{height:100%}
+}
+html[data-tema=claro] #homewrap .t6h-topcard.t6h-podio small strong{color:#087343}
+html[data-tema=claro] #homewrap .t6h-topcard.t6h-podio i{color:#9a5600;text-shadow:none}
+html[data-tema=claro] #homewrap .t6h-topcard.t6h-podio.p2 i{color:#4d5961}
+html[data-tema=claro] #homewrap .t6h-topcard.t6h-podio.p3 i{color:#994717}
+/* Espelhos da tela real: pódio e Box exibem os mesmos cards e a mesma hierarquia
+   da navegação, só em escala de vitrine. */
+#homewrap .t6h-top3{grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:10px;margin-top:14px}
+#homewrap .t6h-topcard.t6h-podio{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:178px;padding:10px 8px 8px;text-align:center;border-radius:12px;overflow:hidden}
+#homewrap .t6h-topcard.t6h-podio img{width:78px;height:104px;max-width:100%;object-fit:contain;border-radius:7px}
+#homewrap .t6h-topcard.t6h-podio span{min-width:0;width:100%;margin-top:5px}.t6h-topcard.t6h-podio b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.t6h-topcard.t6h-podio small{font-size:8px;letter-spacing:.55px}.t6h-topcard.t6h-podio small strong{display:block;margin-top:1px;color:#8dfab4;font-size:12px;letter-spacing:0}.t6h-topcard.t6h-podio i{right:8px;top:7px;font-size:13px}.t6h-topcard.t6h-podio.p1{border-color:rgba(240,190,61,.72);background:linear-gradient(170deg,rgba(98,72,18,.35),var(--d12))}.t6h-topcard.t6h-podio.p2{border-color:rgba(201,213,220,.62);background:linear-gradient(170deg,rgba(110,122,130,.24),var(--d12))}.t6h-topcard.t6h-podio.p3{border-color:rgba(211,128,72,.68);background:linear-gradient(170deg,rgba(107,54,22,.3),var(--d12))}
+#homewrap .t6h-boxsample{display:block;margin-top:14px}.t6h-boxcopy{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.t6h-boxcopy p{display:none}.t6h-boxcards{margin-top:10px;gap:9px}.t6h-boxcard img{height:114px}.t6h-boxcard b{font-size:10px}.t6h-boxcard em{font-size:8px;padding:3px 5px}
+#homewrap .t6h-boxcard small,#homewrap .t6h-boxcard span{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:8px;color:var(--d13)}
+#homewrap .t6h-boxcard span{font-size:7.5px;color:var(--d24)}
+@media(max-width:1000px){
+ #homewrap .t6home2{padding:17px 14px 30px;gap:13px}
+ #homewrap .t6h-hero{min-width:0;grid-template-columns:minmax(0,1fr);min-height:0;padding:22px;gap:15px}
+ #homewrap .t6h-hero>*{min-width:0}
+ #homewrap .t6h-hero h1{font-size:27px;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+ #homewrap .t6h-prova{display:flex;max-width:100%;width:100%;margin:10px 0 0;white-space:normal;line-height:1.35}
+ #homewrap .t6h-maincta{width:100%;margin-top:12px}
+ #homewrap .t6h-buildmock{width:100%;max-width:100%;min-width:0;height:203px!important;grid-template-columns:104px minmax(0,1fr)!important;gap:11px}
+ #homewrap .t6h-buildmock>*{min-width:0}
+ #homewrap .t6h-cardpic{height:198px!important}
+ #homewrap .t6h-buildboard{width:100%;min-width:0;overflow:hidden;padding:13px 12px;gap:8px}
+ #homewrap .t6h-pontos{gap:5px}
+ #homewrap .t6h-pontos b{font-size:26px}
+ #homewrap .t6h-elenco{grid-template-columns:1fr;padding:21px}
+ #homewrap .t6h-pitches{justify-content:center;margin-top:3px}
+ #homewrap .t6h-free{grid-template-columns:1fr}
+ #homewrap .t6h-top3{gap:7px}
+ #homewrap .t6h-topcard{grid-template-columns:58px minmax(0,1fr);padding:7px}
+ #homewrap .t6h-topcard img{width:58px;height:70px}
+ #homewrap .t6h-topcard b{font-size:11px}
+ #homewrap .t6h-boxsample{grid-template-columns:88px minmax(0,1fr)}
+ #homewrap .t6h-pack{height:120px}
+ #homewrap .t6h-boxcard img{height:77px}
+ #homewrap .t6h-topcard.t6h-podio{min-height:160px;padding:8px 5px}
+ #homewrap .t6h-topcard.t6h-podio img{width:67px;height:90px}
+ #homewrap .t6h-boxcard img{height:96px}
+}
+</style>
+<script id="T6_HOME_VITRINE_FINAL_2208">
+(function(){
+ function escH(v){var d=document.createElement('div');d.textContent=String(v||'');return d.innerHTML;}
+ function fotoH(c){return 'https://efimg.com/efootballhub22/images/player_cards/'+encodeURIComponent(String(c.id).split('@')[0])+'_l.png';}
+ function notaH(c){try{return Number(nota(c))||0;}catch(e){return 0;}}
+ function melhoresH(){var a=[],vistos={};try{(D||[]).forEach(function(c){if(!c||c.id==='MOLDE'||!c.id)return;var n=notaH(c);if(!n)return;a.push({c:c,n:n});});}catch(e){}a.sort(function(x,y){return y.n-x.n;});return a.filter(function(x){var k=String(x.c.nome||x.c.id);if(vistos[k])return false;vistos[k]=1;return true;}).slice(0,3);}
+ function amostraBoxH(){try{var mapa=window.t6PorBox?window.t6PorBox():{},ativas=(typeof BOXATIVA!=='undefined'?BOXATIVA:[]),nome=ativas.filter(function(n){return /chelsea\s*b\s*selection/i.test(String(n));})[0]||ativas[2]||ativas[ativas.length-1]||Object.keys(mapa)[0],lista=mapa[nome]||[],vistos={},cartas=lista.filter(function(c){var id=String(c&&c.id||'').split('@')[0];if(!id||vistos[id])return false;vistos[id]=1;return true;}).slice(0,3);return {nome:nome||'Boxes atuais',q:lista.length||0,cards:cartas};}catch(e){return {nome:'Boxes atuais',q:0,cards:[]};}}
+ function miniBoxH(c,i){try{var d=window.t6cardBox?window.t6cardBox(c,i):null,label=d&&d.v?d.v:'VER NA BOX',st=d&&d.vSt?d.vSt:'color:var(--d30);background:var(--d14);border:1px solid var(--d18)',fn=d&&d.fn?d.fn:'',pos=d&&d.pos?d.pos:'',pc=d&&d.pct?d.pct:'';return '<article class="t6h-boxcard"><img src="'+fotoH(c)+'" alt=""><b>'+escH(c.nome)+'</b><small>'+escH(fn)+' '+escH(pos)+'</small><span>Recomendação: '+escH(pc)+'%</span><em style="'+st+'">'+escH(label)+'</em></article>';}catch(e){return '';}}
+ window.t6TelaInicio=function(){
+  var lista=melhoresH(),box=amostraBoxH(),imagem='assets/castolo-card-art-v2.png';
+  var top=lista.map(function(x,i){return '<article class="t6h-topcard t6h-podio p'+(i+1)+'"><img src="'+fotoH(x.c)+'" alt=""><span><b>'+escH(x.c.nome)+'</b><small>PONTUAÇÃO <strong>'+notaH(x.c).toFixed(2)+'</strong></small></span><i>'+(i+1)+'º</i></article>';}).join('');
+  var boxCards=(box.cards||[]).map(miniBoxH).join('');
+  if(!top)top='<span style="font-size:12px;color:var(--d13)">O ranking completo está disponível na aba Ranking.</span>';
+  return '<section class="t6home2">'
+   +'<article class="t6h-hero"><div><span class="t6h-kicker">BUILDS</span><h1>Descubra até onde seu card chega.</h1><p>Vê onde ele rende mais, o que vale ajustar e para de gastar ponto no escuro. São mais de 10,6 bilhões de cenários comparados com ajuda da IA.</p><span class="t6h-prova">Método de pontuação exclusivo, mais assertivo que a nota padrão da Konami.</span><span class="t6h-prova">+10 bilhões de cenários testados com IA</span><button class="t6h-maincta" data-t6home="ranking">Ver no ranking</button></div><div class="t6h-buildmock"><div class="t6h-cardpic" style="background-image:url('+imagem+')"><div class="t6h-cardtop"><strong class="t6h-cardovr">104</strong></div><div class="t6h-cardbottom"><span class="t6h-cardstars">★★★★★</span><span class="t6h-cardimpetos"><i class="azul">⚡</i><i class="amarelo">⚡</i></span></div></div><div class="t6h-buildboard"><small>ANTES / DEPOIS</small><div class="t6h-pontos"><span>99.4</span><i>→</i><b>104.8</b></div><div class="t6h-bars"><i></i><i></i><i></i></div></div></div></article>'
+   +'<article class="t6h-elenco"><div><span class="t6h-kicker" style="color:var(--d8)">ELENCO</span><h2>Seu elenco tá redondo?</h2><p>Vê o que tá faltando, compara quem você já tem e encontra quem encaixa melhor no seu time.</p><button class="t6h-maincta" style="background:linear-gradient(180deg,var(--d25),var(--d26));border-color:var(--d28)" data-t6home="meutime">Organizar elenco</button></div><div class="t6h-pitches" aria-hidden="true"><div class="t6h-pitch agora"><em>AGORA</em><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="t6h-pitch depois"><em>DEPOIS</em><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></article>'
+   +'<div class="t6h-free"><section class="t6h-freebox"><div class="t6h-freehead"><h2>Quem tá no topo?</h2><button data-t6home="ranking">Ver ranking →</button></div><div class="t6h-top3">'+top+'</div></section>'
+   +'<section class="t6h-freebox"><div class="t6h-freehead"><h2>Boxes atuais</h2><button data-t6home="boxatual">Ver todas →</button></div><div class="t6h-boxsample"><div><div class="t6h-boxcopy"><b>'+escH(box.nome)+'</b><p>Uma amostra. As indicações e todos os cards estão dentro da Box.</p></div><div class="t6h-boxcards">'+boxCards+'</div></div></div></section></div>'
+  +'</section>';
+ };
+ /* A primeira pintura fica invisível até a Home final estar montada no mesmo
+    painel usado por Ranking, Boxes e Elenco. Assim o F5 não cria uma segunda
+    rota nem expõe nenhum desenho legado antes da tela atual. */
+ window.T6HOME_FINAL_PRONTA=true;
+ window._t6aba='inicio';
+ var home=document.getElementById('homewrap');
+ if(home){
+  home.style.display='block';
+  home.innerHTML='<div class="t6tela">'+window.t6TelaInicio()+'</div>';
+  try{if(typeof window.t6Cliques==='function')window.t6Cliques(home);}catch(e){}
+ }
+ document.documentElement.removeAttribute('data-t6boot');
+})();
+</script>
+<style id="T6_BUSCA_GLOBAL_FINAL_CSS">
+#t6GlobalSuggest{position:fixed;z-index:50000;max-height:min(480px,62vh);overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surf);box-shadow:0 16px 38px rgba(0,0,0,.28);padding:5px}
+#t6GlobalSuggest[hidden]{display:none!important}
+.t6gs-item{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:9px;align-items:center;width:100%;padding:6px;border:0;border-radius:8px;background:transparent;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.t6gs-item:hover,.t6gs-item:focus{background:var(--accbg);outline:none}
+.t6gs-item img{width:28px;height:38px;object-fit:cover;border-radius:5px;border:1px solid var(--line);background:var(--surf2)}
+.t6gs-item b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.t6gs-item small{display:block;margin-top:2px;color:var(--txt3);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.t6gs-item em{font-style:normal;color:var(--acc);font-size:11px;font-weight:800}
+.t6gs-empty{padding:10px;color:var(--txt3);font-size:12px}
+.t6-resultados{max-width:1280px;margin:0 auto;padding:26px 20px 42px}.t6-resultados h1{margin:0;font-size:25px}.t6-resultados>p{margin:6px 0 20px;color:var(--txt2);font-size:13px}.t6-result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px}.t6-result-card{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surf);cursor:pointer}.t6-result-card:hover{border-color:var(--acc);transform:translateY(-1px)}.t6-result-card img{width:58px;height:77px;object-fit:cover;border-radius:8px;background:var(--surf2);border:1px solid var(--line)}.t6-result-card b{font-size:13px}.t6-result-card small{display:block;margin-top:4px;color:var(--txt3);font-size:10.5px;line-height:1.35}.t6-result-card strong{display:block;margin-top:5px;color:var(--acc);font-size:15px}
+/* Home, busca e Boxes usam #homewrap. Enquanto esse painel está aberto, a
+   faixa do Ranking não pode reaparecer por causa da carga progressiva. */
+html:has(#homewrap .t6tela) #mline,html:has(#homewrap .t6tela) #rkspacer,html:has(#homewrap .t6tela) #out{display:none!important}
+@media(max-width:620px){#t6GlobalSuggest{max-height:52vh}.t6-resultados{padding:18px 10px}.t6-result-grid{grid-template-columns:1fr}.t6-resultados h1{font-size:21px}}
+</style>
+<script id="T6_BUSCA_GLOBAL_FINAL">
+/* Busca global do cabeçalho: sugestões de versões enquanto digita e página
+   completa ao confirmar. É independente da busca contextual do Ranking. */
+(function(){
+ function esc(v){var d=document.createElement('div');d.textContent=String(v||'');return d.innerHTML;}
+ function normal(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
+ function imagem(c){return 'https://efimg.com/efootballhub22/images/player_cards/'+encodeURIComponent(String(c.id).split('@')[0])+'_l.png';}
+ function notaBusca(c){try{return Number(nota(c))||0;}catch(e){return 0;}}
+ function estiloBusca(c){
+   var e=String(c&&c.modelo||'');
+   var nomes={'Jog. de infiltração':'Jogador de infiltração','Jog. de Infiltração':'Jogador de infiltração','Especialista em cruz.':'Especialista em cruzamento'};
+   return nomes[e]||e||'Sem estilo';
+ }
+ function encontra(texto){
+   var termo=normal(texto).trim(), vistos={}, saida=[];
+   if(termo.length<2)return saida;
+   try{(D||[]).forEach(function(c){
+     if(!c||c.id==='MOLDE'||!c.id||!normal(c.nome).includes(termo))return;
+     var id=String(c.id).split('@')[0], atual=vistos[id], valor=notaBusca(c);
+     if(!atual||valor>atual.n)vistos[id]={c:c,n:valor};
+   });}catch(e){}
+   Object.keys(vistos).forEach(function(k){saida.push(vistos[k]);});
+   return saida.sort(function(a,b){return b.n-a.n;});
+ }
+ function fecha(){var s=document.getElementById('t6GlobalSuggest');if(s)s.hidden=true;}
+ function abreFicha(c){fecha();try{if(typeof reabrir==='function')return reabrir(String(c.id)+'|'+c.tipo);}catch(e){}try{if(typeof abrir==='function')abrir(String(c.id)+'|'+c.tipo);}catch(e){}}
+ function posiciona(s,q){var r=q.getBoundingClientRect();s.style.left=Math.max(8,r.left)+'px';s.style.top=(r.bottom+7)+'px';s.style.width=Math.min(r.width,Math.max(280,window.innerWidth-16))+'px';}
+ function sugestoes(q){
+   var s=document.getElementById('t6GlobalSuggest');if(!s)return;var lista=encontra(q.value);posiciona(s,q);
+   if(!q.value.trim()){fecha();return;}
+   if(q.value.trim().length<2){s.innerHTML='<div class="t6gs-empty">Digite pelo menos duas letras.</div>';s.hidden=false;return;}
+   if(!lista.length){s.innerHTML='<div class="t6gs-empty">Nenhum card encontrado.</div>';s.hidden=false;return;}
+   s.innerHTML=lista.map(function(x){var c=x.c, estilo=estiloBusca(c), pos=(typeof SIGJ!=='undefined'&&SIGJ[c.np])||c.np||'';return '<button type="button" class="t6gs-item" data-t6gs="'+esc(c.id)+'|'+esc(c.tipo)+'"><img src="'+imagem(c)+'" alt=""><span><b>'+esc(c.nome)+'</b><small>'+esc(estilo)+' · '+esc(pos)+'</small></span><em>'+x.n.toFixed(2)+'</em></button>';}).join('');
+   s.hidden=false;s.querySelectorAll('[data-t6gs]').forEach(function(b){b.onclick=function(){var p=b.getAttribute('data-t6gs').split('|'),x=lista.filter(function(z){return String(z.c.id)===p[0]&&z.c.tipo===p[1];})[0];if(x)abreFicha(x.c);};});
+ }
+ window.t6TelaBusca=function(){
+   var termo=window._t6BuscaGlobal||'', lista=encontra(termo);
+   var cards=lista.map(function(x){var c=x.c,estilo=estiloBusca(c),pos=(typeof SIGJ!=='undefined'&&SIGJ[c.np])||c.np||'';return '<article class="t6-result-card" data-k="'+esc(c.id)+'|'+esc(c.tipo)+'"><img src="'+imagem(c)+'" alt=""><div><b>'+esc(c.nome)+'</b><small>'+esc(estilo)+' · '+esc(pos)+'</small><strong>'+x.n.toFixed(2)+'</strong></div></article>';}).join('');
+   return '<section class="t6-resultados"><h1>Resultados para “'+esc(termo)+'”</h1><p>'+lista.length+' '+(lista.length===1?'versão encontrada.':'versões encontradas.')+' Clique em uma carta para abrir os detalhes.</p>'+(cards?'<div class="t6-result-grid">'+cards+'</div>':'<p>Nenhum card encontrado.</p>')+'</section>';
+ };
+ function monta(){
+   var q=document.getElementById('q');if(!q||q.dataset.t6BuscaGlobal)return false;
+   q.dataset.t6BuscaGlobal='1';q.setAttribute('autocomplete','off');
+   var s=document.createElement('div');s.id='t6GlobalSuggest';s.hidden=true;document.body.appendChild(s);
+   q.addEventListener('input',function(){sugestoes(q);});
+   q.addEventListener('keydown',function(ev){if(ev.key==='Escape'){fecha();return;}if(ev.key!=='Enter')return;ev.preventDefault();var termo=q.value.trim();if(termo.length<2)return;window._t6BuscaGlobal=termo;fecha();window._t6aba='busca';try{window.t6Painel('busca');window.scrollTo(0,0);}catch(e){}});
+   document.addEventListener('pointerdown',function(ev){if(ev.target!==q&&!s.contains(ev.target))fecha();});
+   window.addEventListener('resize',function(){if(!s.hidden)posiciona(s,q);});
+   return true;
+ }
+ if(!monta())setTimeout(monta,450);
+})();
+</script>
+<style id="T6_ELENCO_RETORNO">
+#mtwrap:not(:has(.t6elenco)){max-width:1320px;margin:0 auto;padding:26px 22px 46px}
+#mtwrap:not(:has(.t6elenco)) .mthd{padding:18px 20px;margin:0 0 14px;border:1px solid var(--line);border-radius:16px;background:radial-gradient(480px 190px at 100% 0,rgba(42,210,124,.12),transparent 70%),var(--surf)}
+#mtwrap:not(:has(.t6elenco)) .mtacts{margin:0 0 14px;padding:10px 12px;border:1px solid var(--line);border-radius:13px;background:var(--surf2)}
+#mtwrap:not(:has(.t6elenco)) .mtbt{border-radius:10px;padding:9px 13px;box-shadow:0 5px 14px rgba(20,130,76,.12)}
+#mtwrap:not(:has(.t6elenco)) .mtcampo{max-width:590px;border-radius:17px;box-shadow:0 18px 34px rgba(0,0,0,.2)}
+#mtwrap:not(:has(.t6elenco)) .mtbanco,#mtwrap:not(:has(.t6elenco)) .mtres{border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.12)}
+@media(max-width:760px){#mtwrap:not(:has(.t6elenco)){padding:17px 12px 32px}#mtwrap:not(:has(.t6elenco)) .mthd{padding:15px 14px}}
+#mtwrap .t6elenco{max-width:1280px;margin:0 auto;padding:28px 22px 46px;display:grid;gap:18px}
+.t6elenco-hero{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:22px;align-items:center;padding:28px 30px;border:1px solid var(--line);border-radius:20px;background:radial-gradient(440px 260px at 91% 20%,rgba(42,210,124,.15),transparent 74%),linear-gradient(145deg,var(--surf),var(--surf2));overflow:hidden}
+.t6elenco-kicker{font-size:10px;font-weight:800;letter-spacing:1.7px;color:var(--acc)}.t6elenco-hero h1{margin:9px 0 0;font-size:32px;letter-spacing:-1px}.t6elenco-hero p{max-width:580px;margin:12px 0 0;color:var(--txt2);line-height:1.55}.t6elenco-hero button,.t6elenco-card button{margin-top:16px;padding:11px 15px;border:1px solid var(--acc);border-radius:10px;background:var(--acc);color:#08120c;font:800 12px inherit;cursor:pointer}
+.t6elenco-pitch{position:relative;min-height:218px;border:1px solid rgba(83,203,125,.38);border-radius:16px;background:repeating-linear-gradient(0deg,rgba(22,112,64,.52) 0 31px,rgba(18,93,53,.52) 31px 62px);overflow:hidden}.t6elenco-pitch:before{content:"";position:absolute;inset:15px;border:1px solid rgba(225,255,233,.38);border-radius:10px}.t6elenco-pitch:after{content:"";position:absolute;left:15px;right:15px;top:50%;border-top:1px solid rgba(225,255,233,.38)}.t6elenco-pitch b{position:absolute;left:50%;top:50%;width:48px;height:48px;border:1px solid rgba(225,255,233,.38);border-radius:50%;transform:translate(-50%,-50%)}.t6elenco-pitch i{position:absolute;width:22px;height:22px;border-radius:50%;background:#d9f7e4;border:4px solid rgba(12,80,44,.9);box-shadow:0 0 0 3px rgba(255,255,255,.12)}.t6elenco-pitch i:nth-of-type(1){left:48%;top:14px}.t6elenco-pitch i:nth-of-type(2){left:20%;top:56px}.t6elenco-pitch i:nth-of-type(3){left:39%;top:48px}.t6elenco-pitch i:nth-of-type(4){right:20%;top:56px}.t6elenco-pitch i:nth-of-type(5){left:28%;top:101px}.t6elenco-pitch i:nth-of-type(6){left:48%;top:91px}.t6elenco-pitch i:nth-of-type(7){right:28%;top:101px}.t6elenco-pitch i:nth-of-type(8){left:23%;bottom:28px}.t6elenco-pitch i:nth-of-type(9){left:48%;bottom:20px}.t6elenco-pitch i:nth-of-type(10){right:23%;bottom:28px}.t6elenco-pitch i:nth-of-type(11){left:48%;bottom:3px}
+.t6elenco-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.t6elenco-card{min-height:154px;padding:18px;border:1px solid var(--line);border-radius:15px;background:var(--surf)}.t6elenco-card strong{display:block;font-size:15px}.t6elenco-card p{margin:7px 0 0;color:var(--txt2);font-size:12px;line-height:1.45}.t6elenco-card button{margin-top:13px;background:transparent;color:var(--acc)}
+@media(max-width:760px){#mtwrap .t6elenco{padding:18px 14px 34px}.t6elenco-hero{grid-template-columns:1fr;padding:22px}.t6elenco-hero h1{font-size:26px}.t6elenco-grid{grid-template-columns:1fr}.t6elenco-pitch{min-height:202px}}
+</style>
+<script id="T6_ELENCO_RETORNO">
+(function(){
+ function fallback(){return '<section class="t6elenco"><article class="t6elenco-hero"><div><span class="t6elenco-kicker">ELENCO</span><h1>Monte seu time do seu jeito.</h1><p>Adicione os cards que você já tem, organize o campo e veja onde ainda falta opção.</p><button type="button" data-t6elenco-add>Adicionar primeiro card</button></div><div class="t6elenco-pitch" aria-hidden="true"><b></b><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article><div class="t6elenco-grid"><article class="t6elenco-card"><strong>Seu campo</strong><p>Escolha uma formação e distribua os jogadores nas posições certas.</p><button type="button" data-t6elenco-add>Montar escalação</button></article><article class="t6elenco-card"><strong>Banco e opções</strong><p>Guarde quem pode entrar e compare alternativas por posição.</p><button type="button" data-t6elenco-add>Adicionar ao elenco</button></article><article class="t6elenco-card"><strong>Onde melhorar</strong><p>Depois de preencher o time, encontre os encaixes que mais ajudam sua equipe.</p><button type="button" data-t6elenco-add>Ver recomendações</button></article></div></section>';}
+ function garantir(){
+  var w=document.getElementById('mtwrap');if(!w)return;
+  try{if(!w.innerHTML.trim()&&typeof mtRender==='function')mtRender();}catch(e){}
+  if(!w.innerHTML.trim())w.innerHTML=fallback();
+  w.querySelectorAll('[data-t6elenco-add]').forEach(function(b){b.onclick=function(){try{if(typeof mtAddElenco==='function')mtAddElenco();}catch(e){}};});
+ }
+ function agenda(){setTimeout(garantir,80);}
+ document.addEventListener('click',function(e){if(e.target.closest('.t6tab[data-aba="MeuTime"],[data-t6home="meutime"]'))agenda();},true);
+ function rotula(){var tab=document.querySelector('.t6tab[data-aba="MeuTime"]');if(tab){tab.textContent='Elenco';return true;}return false;}
+ if(!rotula()){var o=new MutationObserver(function(){if(rotula())o.disconnect();});o.observe(document.documentElement,{childList:true,subtree:true});setTimeout(function(){o.disconnect();rotula();},4000);}
+ window.t6GarantirElenco=garantir;
 })();
 </script>
 </body></html>
