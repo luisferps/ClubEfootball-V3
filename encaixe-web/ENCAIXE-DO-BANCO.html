@@ -9876,9 +9876,9 @@ html[data-tema=claro] header,html[data-tema=escuro] header{
 html[data-tema=claro] header h1,html[data-tema=escuro] header h1{color:var(--txt2)!important}
 #t6bar{display:flex;align-items:center;gap:16px;height:56px;padding:0 18px;width:100%;
  border-bottom:1px solid var(--line);flex-wrap:nowrap;overflow:visible}
-#t6logo{display:inline-flex;align-items:baseline;font-size:14px;font-weight:850;letter-spacing:.3px;white-space:nowrap;cursor:pointer;line-height:1}
+#t6logo{display:inline-flex;align-items:baseline;font-size:17px;font-weight:850;letter-spacing:.15px;white-space:nowrap;cursor:pointer;line-height:1}
 #t6logo .t6logo-base{color:var(--txt)}
-#t6logo .t6logo-elo{display:inline-block;margin:0 1px;color:var(--acc);font-size:16px;font-weight:900;line-height:.8}
+#t6logo .t6logo-elo{display:inline-block;margin:0 1px;color:var(--acc);font-size:19px;font-weight:900;line-height:.8}
 #t6tabs{display:flex;gap:3px;background:var(--line2);padding:3px;border-radius:10px;
  border:1px solid var(--line)}
 .t6tab{font-size:12.5px;padding:6px 13px;border-radius:8px;color:var(--txt2);cursor:pointer;
@@ -9887,7 +9887,7 @@ html[data-tema=claro] header h1,html[data-tema=escuro] header h1{color:var(--txt
 .t6tab.on{color:var(--txt);font-weight:600;background:var(--surf);
  box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 1px 6px var(--sombra)}
 #t6bar #q{flex:0 1 300px;max-width:320px;height:34px;border-radius:10px;border:1px solid var(--line);
- background:var(--line2);color:var(--txt);padding:0 12px;font-size:12.5px;font-family:inherit;
+ background-color:var(--line2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%2322c58b' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6'/%3E%3Cpath d='m16 16 4 4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:11px 50%;color:var(--txt);padding:0 12px 0 33px;font-size:12.5px;font-family:inherit;
  outline:none;min-width:150px}
 #t6bar #q::placeholder{color:var(--txt3)}
 #t6dir{margin-left:auto;display:flex;align-items:center;gap:12px;flex:0 0 auto;
@@ -9925,19 +9925,20 @@ html[data-tema] header .fbt:hover{color:var(--txt)!important;border-color:var(--
    e o que a foto 14 mostra. Sem isto a pagina inteira ficava com 1295px de
    largura num aparelho de 390. */
 @media(max-width:820px){
- html[data-tema] header{padding:0!important}
- html[data-tema] header #t6bar{flex-wrap:wrap!important;gap:8px!important;
+ html[data-tema] header{position:sticky!important;top:0;z-index:4500;padding:0!important;box-shadow:0 8px 18px rgba(0,0,0,.16)}
+ html[data-tema] header #t6bar{display:grid!important;grid-template-columns:minmax(0,1fr);gap:8px!important;
   padding:10px 12px!important;height:auto!important;align-items:center!important}
- html[data-tema] header #t6logo{flex:none!important}
+ html[data-tema] header #t6logo{grid-column:1;grid-row:1;justify-self:start;flex:none!important;font-size:15px!important}
+ html[data-tema] header #t6logo .t6logo-elo{font-size:17px!important}
  /* No celular, todas as abas precisam ficar visíveis — sem cortar a última
     e sem obrigar a pessoa a descobrir rolagem horizontal no cabeçalho. */
- html[data-tema] header #t6tabs{order:9;width:100%!important;display:grid!important;
+ html[data-tema] header #t6tabs{grid-column:1;grid-row:4;width:100%!important;display:grid!important;
   grid-template-columns:repeat(3,minmax(0,1fr));gap:3px!important;overflow:visible!important;
   flex-wrap:wrap!important;margin:0!important}
  html[data-tema] header #t6tabs>*{min-width:0!important;white-space:normal!important;text-align:center!important;padding:7px 5px!important;line-height:1.15!important}
- html[data-tema] header #q{order:8;width:100%!important;min-width:0!important;
-  flex:none!important;margin:0!important}
- html[data-tema] header #t6dir{order:7;width:100%!important;flex-wrap:wrap!important;
+ html[data-tema] header #q{grid-column:1;grid-row:2;width:100%!important;max-width:none!important;min-width:0!important;
+  position:static!important;flex:none!important;margin:0!important}
+ html[data-tema] header #t6dir{grid-column:1;grid-row:3;width:100%!important;flex-wrap:wrap!important;
   gap:8px!important;margin:0!important;justify-content:flex-start!important}
  html[data-tema] header #t6contas,html[data-tema] header #contbar{font-size:10.5px!important}
  html,body{overflow-x:hidden!important;max-width:100%!important}
@@ -11106,8 +11107,11 @@ html[data-tema=claro]{
       nav.appendChild(d); a.el=d;
     });
     var dir=document.createElement('div'); dir.id='t6dir';
-    bar.appendChild(lg); bar.appendChild(nav);
+    /* A busca entra logo depois da marca. Assim a estrutura natural também
+       fica certa quando o celular reorganiza o cabeçalho em duas colunas. */
+    bar.appendChild(lg);
     var q=document.getElementById('q'); if(q) bar.appendChild(q);
+    bar.appendChild(nav);
     bar.appendChild(dir);
     h.insertBefore(bar,h.firstChild);
     recolhe();
@@ -11158,6 +11162,7 @@ html[data-tema=claro]{
     var filtros=document.getElementById('filtros');
     if(filtros) filtros.style.display=rankingLigado?'':'none';
     document.documentElement.classList.toggle('t6semlat', !rankingLigado);
+    document.documentElement.classList.toggle('t6ranking', rankingLigado);
   }
   function liga(){ monta(); pinta(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',liga);
@@ -15511,9 +15516,11 @@ html[data-tema=claro] #out .grade .tg.se{background:#a62c20!important;border-col
  html[data-tema] #rklineq{width:100%!important;min-width:0!important}
  html[data-tema] #rkbandfilters{flex:none!important}
 }
-/* No Ranking mobile, a única busca visível é a busca contextual da própria tela. */
+/* No Ranking mobile, a única busca visível é a busca contextual da própria tela.
+   A classe t6ranking é aplicada pela própria navegação, então uma faixa antiga
+   de Ranking não consegue esconder a busca das demais páginas. */
 @media(max-width:1000px){
- html:has(#mline:not(:empty)) header #t6bar #q{display:none!important}
+ html.t6ranking header #t6bar #q{display:none!important}
 }
 /* No celular, pódio e lista usam exatamente a mesma caixa. Só as medalhas mudam cor. */
 @media(max-width:1000px){
@@ -15810,6 +15817,7 @@ html[data-tema=claro] #homewrap .t6h-topcard.t6h-podio.p3 i{color:#994717}
     rota nem expõe nenhum desenho legado antes da tela atual. */
  window.T6HOME_FINAL_PRONTA=true;
  window._t6aba='inicio';
+ document.documentElement.classList.remove('t6ranking');
  var home=document.getElementById('homewrap');
  if(home){
   home.style.display='block';
@@ -15886,6 +15894,33 @@ html:has(#homewrap .t6tela) #mline,html:has(#homewrap .t6tela) #rkspacer,html:ha
  if(!monta())setTimeout(monta,450);
 })();
 </script>
+<style id="T6_MOBILE_HEADER_AND_HERO_GUARD">
+@media(max-width:820px){
+  #homewrap .t6h-buildmock{
+    height:202px!important;
+    min-height:202px!important;
+    grid-template-columns:116px minmax(0,1fr)!important;
+    align-items:center!important;
+    overflow:hidden!important;
+  }
+  #homewrap .t6h-cardpic{
+    width:100%!important;
+    height:190px!important;
+    max-height:190px!important;
+    align-self:center!important;
+    box-sizing:border-box!important;
+    background-position:center!important;
+    background-size:contain!important;
+    background-repeat:no-repeat!important;
+    overflow:hidden!important;
+  }
+  #homewrap .t6h-cardtop{top:11px!important;right:11px!important}
+  #homewrap .t6h-cardbottom{right:11px!important;bottom:11px!important;left:11px!important;gap:2px!important}
+  #homewrap .t6h-cardstars{font-size:9px!important}
+  #homewrap .t6h-cardimpetos{gap:3px!important}
+  #homewrap .t6h-cardimpetos i{width:19px!important;height:19px!important;font-size:10px!important}
+}
+</style>
 <style id="T6_ELENCO_RETORNO">
 #mtwrap:not(:has(.t6elenco)){max-width:1320px;margin:0 auto;padding:26px 22px 46px}
 #mtwrap:not(:has(.t6elenco)) .mthd{padding:18px 20px;margin:0 0 14px;border:1px solid var(--line);border-radius:16px;background:radial-gradient(480px 190px at 100% 0,rgba(42,210,124,.12),transparent 70%),var(--surf)}
