@@ -9876,9 +9876,9 @@ html[data-tema=claro] header,html[data-tema=escuro] header{
 html[data-tema=claro] header h1,html[data-tema=escuro] header h1{color:var(--txt2)!important}
 #t6bar{display:flex;align-items:center;gap:16px;height:56px;padding:0 18px;width:100%;
  border-bottom:1px solid var(--line);flex-wrap:nowrap;overflow:visible}
-#t6logo{font-weight:700;font-size:14.5px;letter-spacing:.4px;white-space:nowrap;
- background:linear-gradient(96deg,var(--txt),var(--acc));-webkit-background-clip:text;
- background-clip:text;color:transparent;cursor:pointer}
+#t6logo{display:inline-flex;align-items:baseline;font-size:14px;font-weight:850;letter-spacing:.3px;white-space:nowrap;cursor:pointer;line-height:1}
+#t6logo .t6logo-base{color:var(--txt)}
+#t6logo .t6logo-elo{display:inline-block;margin:0 1px;color:var(--acc);font-size:16px;font-weight:900;line-height:.8}
 #t6tabs{display:flex;gap:3px;background:var(--line2);padding:3px;border-radius:10px;
  border:1px solid var(--line)}
 .t6tab{font-size:12.5px;padding:6px 13px;border-radius:8px;color:var(--txt2);cursor:pointer;
@@ -11092,7 +11092,7 @@ html[data-tema=claro]{
     var h=document.querySelector('header');
     if(!h || document.getElementById('t6bar')) return;
     var bar=document.createElement('div'); bar.id='t6bar';
-    var lg=document.createElement('div'); lg.id='t6logo'; lg.textContent='ClubEfootball';
+    var lg=document.createElement('div'); lg.id='t6logo'; lg.setAttribute('aria-label','ClubEfootball'); lg.innerHTML='<span class="t6logo-base">CLUB</span><span class="t6logo-elo">e</span><span class="t6logo-base">FOOTBALL</span>';
     lg.onclick=function(){ ABAS[0].f(); };
     var nav=document.createElement('div'); nav.id='t6tabs';
     ABAS.forEach(function(a){
