@@ -72,6 +72,7 @@ _sys.path.insert(0, _MEU_LUGAR)          # `programas` vem PRIMEIRO
 # --------------------------------------------------------------------------
 import json, math
 import numpy as np
+import motor_db_bridge as _db
 
 # ---------------------------------------------------------------- os 26 atributos
 ATTRS_EF = ["offensiveAwareness","ballControl","dribbling","tightPossession","lowPass",
@@ -110,7 +111,8 @@ AM = ["offensiveAwareness","ballControl","tightPossession","dribbling","lowPass"
 # a proficiencia 54 (o jogo da 0,960) e 0,9125 para 65 (o jogo da 1,000 EXATO).
 # =========================================================================
 TABM = {int(k): float(v) for k, v in
-        json.load(open('tabm_medido.json', encoding='utf-8')).items()}
+        (_db.tabm_model() if _db.enabled() else
+         json.load(open('tabm_medido.json', encoding='utf-8'))).items()}
 TABM_MIN, TABM_MAX = min(TABM), max(TABM)
 
 def mult_de(v):
@@ -180,7 +182,8 @@ def carrega_tecnicos(path='tecnicos.json', tatica=None):
 
     ⚠️ O clamp min(90, max(70, v)) FOI REMOVIDO: a tabela medida cobre 0 a 99.
        Era ele que fazia tecnico ruim virar neutro."""
-    CO = json.load(open(path, encoding='utf-8')); out = []
+    CO = (_db.technicians_model() if _db.enabled() else
+          json.load(open(path, encoding='utf-8'))); out = []
     for c in CO.values():
         if not c.get('hasBoost'): continue
         sk = c['skills']
@@ -198,7 +201,8 @@ def carrega_tecnicos(path='tecnicos.json', tatica=None):
 # morto, o `patch_conta_do_motor` do gera_encaixe.py caia fora calado e a
 # tela ficava SEM o CONTA-DO-MOTOR.js inteiro — a equacao de 15/08 toda.
 # ⛔ Nao mudei conta nenhuma: so a forma de ler o arquivo.
-HAB = json.load(open('HAB_EFEITOS_FINAL.json', encoding='utf-8'))
+HAB = (_db.skills_model() if _db.enabled() else
+       json.load(open('HAB_EFEITOS_FINAL.json', encoding='utf-8')))
 POR_NOME = {v['arquivo']: {'tipo': v['tipo'], 'efeito': v['efeito']} for v in HAB.values()}
 TEM_EFEITO = {n for n, v in POR_NOME.items() if v['efeito']}
 

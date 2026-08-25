@@ -1,0 +1,11 @@
+# Copie para um arquivo LOCAL e nunca faça commit da cópia preenchida.
+SUPABASE_URL=https://SEU-PROJETO.supabase.co
+SUPABASE_ENGINE_READ_KEY=COLE_LOCALMENTE
+SUPABASE_ENGINE_WRITE_KEY=COLE_LOCALMENTE
+MOTOR_DB_SCHEMA=clubef_read_v2
+MOTOR_RESULT_SCHEMA=clubef_read_v2
+MOTOR_INPUT_SOURCE=db_snapshot
+MOTOR_DB_SNAPSHOT=snapshots/motores-699.json
+MOTOR_OUTPUT_WRITE_ENABLED=0
+MOTOR_EXECUTION_ID=defina-um-id-unico-por-rodada
+
