@@ -80,6 +80,7 @@ if _MEU_LUGAR in _sys.path:
 _sys.path.insert(0, _MEU_LUGAR)          # `programas` vem PRIMEIRO
 # --------------------------------------------------------------------------
 import json, os, sys, io, re, time, urllib.request, urllib.error, urllib.parse
+import motor_db_bridge as _db
 
 try:
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8',
@@ -199,6 +200,11 @@ def pausa(msg='Enter para fechar...'):
 
 
 def le(p, padrao=None):
+    if _db.enabled():
+        if p == INSUMOS:
+            return _db.bonus_model()
+        if p == BASE:
+            return list(_db.bonus_cards().values())
     try:
         with open(p, encoding='utf-8') as f:
             return json.load(f)
@@ -238,10 +244,14 @@ class Molde(object):
         self.porte = c['bloco_porte']
         self.proporcao = c['bloco_proporcao']
         self.ombros = c['bloco_ombros']
+        self.cortes_por_funcao = c.get('cortes_por_funcao') or {}
+        self.pesos = c.get('pesos') or {}
         self.peso_altura = c.get('peso_altura', 5)
         self.peso_demais = c.get('peso_demais', 1)
 
     def peso(self, medida):
+        if medida in self.pesos:
+            return self.pesos[medida]
         return self.peso_altura if medida == 'Altura' else self.peso_demais
 
     def dir(self, medida, funcao):
@@ -263,6 +273,8 @@ class Molde(object):
         return self.ombros.get(medida, 0)
 
     def corte(self, medida, funcao):
+        if funcao in self.cortes_por_funcao:
+            return self.cortes_por_funcao[funcao][medida]
         t = self.tipo.get(funcao)
         if t and t[0] == 'GK' and medida == 'Altura':
             return self.cortes_gk
@@ -426,6 +438,7 @@ for _velho, _oq in ((CORPO_JS_LEGADO, 'o corpo'), (PERUIM_LEGADO, 'o pe ruim')):
 
 # os pares card x funcao que o motor dos atributos rodou
 pares = []
+OPTIMIZATION_RESULT_IDS = {}
 vistos = set()
 try:
     with open(LINHAS, encoding='utf-8') as f:
@@ -446,6 +459,8 @@ try:
                 continue
             vistos.add(k)
             pares.append((cid, fun, d.get('estilo')))
+            if d.get('optimization_result_id') is not None:
+                OPTIMIZATION_RESULT_IDS[k] = int(d['optimization_result_id'])
 except Exception as e:
     print('   NAO ACHEI o %s (%s)' % (LINHAS, e))
 print('   pares card x funcao ................ %d' % len(pares))
@@ -499,6 +514,7 @@ for cid, fun, est_linha in pares:
     if b_ia:
         soma['ia'] += b_ia; conta['ia'] += 1
 
+    _meta = _db.bonus_metadata(cid, fun) if _db.enabled() else None
     saida.append({
         'card_id': cid, 'funcao': fun,
         'b_corpo': b_corpo, 'b_pe_ruim': b_pe, 'b_estilo': b_est, 'b_ia': b_ia,
@@ -510,7 +526,11 @@ for cid, fun, est_linha in pares:
                                   ('estilo da IA', b_ia))
                    if not isinstance(v, (int, float))],
         'corpo_soma': c_soma, 'corpo_pct': c_pct,
-        'detalhe': detalhe, 'motor_bonus': MOTOR_BONUS})
+        'detalhe': detalhe, 'motor_bonus': MOTOR_BONUS,
+        'input_version': _meta.get('input_version') if _meta else None,
+        'input_hash': _meta.get('input_hash') if _meta else None,
+        'input_hash_algorithm': _meta.get('input_hash_algorithm') if _meta else None,
+        'funcao_codigo': _meta.get('funcao_codigo') if _meta else None})
 print('   %d pares calculados' % len(saida))
 
 # --------------------------------------- 2b) A LISTA DOS "NAO SEI"
@@ -688,7 +708,18 @@ if os.path.exists('config.txt'):
 URL = cfg.get('SUPABASE_URL', '').rstrip('/')
 KEY = cfg.get('SUPABASE_KEY', '')
 
-if not URL or not KEY or 'COLE_AQUI' in KEY:
+if _db.enabled():
+    import motor_db_results as _dbout
+    if _dbout.configured():
+        for x in saida:
+            key = (x['card_id'], x['funcao'])
+            if key not in OPTIMIZATION_RESULT_IDS:
+                raise SystemExit('PARE: %s|%s sem optimization_result_id' % key)
+            _dbout.write_bonus(x, OPTIMIZATION_RESULT_IDS[key])
+        resumo.append(('motor_bonus_results_v2', len(saida), 0))
+    else:
+        print('   writer v2 desligado — somente arquivo local foi gravado.')
+elif not URL or not KEY or 'COLE_AQUI' in KEY:
     print('   sem config.txt com a chave do Supabase — pulei o banco.')
     print('   A maquina ja tem tudo: o encaixe funciona do mesmo jeito.')
 else:

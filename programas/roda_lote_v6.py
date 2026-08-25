@@ -56,6 +56,7 @@ if _MEU_LUGAR in _sys.path:
 _sys.path.insert(0, _MEU_LUGAR)          # `programas` vem PRIMEIRO
 # --------------------------------------------------------------------------
 import json, os, re, sys, time, collections, datetime
+import motor_db_bridge as _db
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 os.chdir(_CASA or os.path.dirname(os.path.abspath(__file__)))
@@ -81,7 +82,8 @@ def _atributos_do_impeto(nome):
     if _CAT_ATS is None:
         _CAT_ATS = {}
         try:
-            for x in json.load(open('CAT_dom.json', encoding='utf-8')):
+            for x in (_db.impulses_model() if _db.enabled() else
+                      json.load(open('CAT_dom.json', encoding='utf-8'))):
                 if not (isinstance(x, list) and len(x) == 3):
                     continue
                 base = re.sub(r'\s*\+\d+\s*$', '', str(x[0])).strip().lower()
@@ -192,9 +194,13 @@ ARQUIVOS_DE_REGRA = [
 
 def _carimbo_das_regras():
     c = {'v': VERSAO_REGRAS, 'pool': POOL,
-         'fonte': 'base_unica' if FONTE_UNICA else 'cards.json+efhub',
+         'fonte': ('motor_input_v2_snapshot' if _db.enabled() else
+                   ('base_unica' if FONTE_UNICA else 'cards.json+efhub')),
          'corte10': bool(CORTE10), 'corte11': bool(CORTE11_LIGADO),
          'corte9': bool(CORTE9_LIGADO), 'margem': 'sem corte (1e18)'}
+    if _db.enabled():
+        c['snapshot_sha256'] = _db.snapshot()['snapshot_sha256']
+        return c
     for p_ in ARQUIVOS_DE_REGRA:
         try:    c[os.path.basename(p_)] = int(os.path.getmtime(p_))
         except Exception: c[os.path.basename(p_)] = None
@@ -202,6 +208,8 @@ def _carimbo_das_regras():
 
 
 def _carimbo_dos_insumos():
+    if _db.enabled():
+        return {'snapshot_sha256': _db.snapshot()['snapshot_sha256']}
     c = {}
     for p in CONGELADOS:
         try:    c[os.path.basename(p)] = int(os.path.getmtime(p))
@@ -235,6 +243,8 @@ except Exception:
 
 def _mtime_das_fontes():
     """O carimbo que diz 'a fonte mudou, recarrega'."""
+    if _db.enabled():
+        return (os.path.getmtime(_db.SNAPSHOT_PATH), 0)
     if FONTE_UNICA:
         import fonte_unica as _fu
         return (_fu.carimbo() or 0, 0)
@@ -278,6 +288,10 @@ def _recarrega_cards():
     novo daria 'nao esta no cards.json' e cada filho vive a rodada inteira.
 
     NAO rele falta_por_card nem raras_por_card: sao congelados (ver o bloco acima)."""
+    if _db.enabled():
+        _W['BASE'] = _db.cards()
+        _W['mtime'] = _mtime_das_fontes()
+        return
     if FONTE_UNICA:
         return _recarrega_cards_da_base()
     base = {}
@@ -321,7 +335,12 @@ def _carrega_no_processo():
     M.CORTE9 = CORTE9_LIGADO
     M.CORTE11 = CORTE11_LIGADO
     MOLDE = collections.defaultdict(list)
-    if FONTE_UNICA:
+    if _db.enabled():
+        for r in _db.mold_model():
+            MOLDE[r['funcao']].append([r['attr'], r['peso'], r['alvo'], 0, 0, 0])
+        _W['INSUMOS_BASE'] = {'habilidades': _db.skills_model(),
+                              'bloqueio': _db.blocking_model()}
+    elif FONTE_UNICA:
         _b = _insumos_da_base()
         for r in _b['molde']:
             MOLDE[r['funcao']].append([r['attr'], r['peso'], r['alvo'], 0, 0, 0])
@@ -332,8 +351,13 @@ def _carrega_no_processo():
     _W['M'] = M
     _W['MOLDE'] = MOLDE
     _W['TECS'] = carrega_tecnicos('tecnicos.json')
-    _W['RARAS'] = json.load(open(D + 'raras_por_card.json', encoding='utf-8'))
-    _W['FALTA'] = json.load(open(D + 'falta_por_card.json', encoding='utf-8'))
+    if _db.enabled():
+        _cards = _db.cards()
+        _W['RARAS'] = {k: list(v.get('raras') or []) for k, v in _cards.items()}
+        _W['FALTA'] = {k: list(v.get('falta') or []) for k, v in _cards.items()}
+    else:
+        _W['RARAS'] = json.load(open(D + 'raras_por_card.json', encoding='utf-8'))
+        _W['FALTA'] = json.load(open(D + 'falta_por_card.json', encoding='utf-8'))
     _W['INSUMOS'] = _carimbo_dos_insumos()
     _W['REGRAS'] = _carimbo_das_regras()
     _recarrega_cards()
@@ -369,7 +393,7 @@ def _comuns_do_jogo(base):
     e nao precisa de excecao nenhuma aqui."""
     try:
         H = (_W.get('INSUMOS_BASE') or {}).get('habilidades') \
-            if FONTE_UNICA else None
+            if (FONTE_UNICA or _db.enabled()) else None
         if not H:
             H = json.load(open('HAB_EFEITOS_FINAL.json', encoding='utf-8'))
         c = {v['arquivo'] for v in H.values() if v.get('tipo') == 'comum'}
@@ -390,7 +414,8 @@ def _comuns_do_jogo(base):
 # habilidade que o jogo nao deixa por num jogador de linha.
 def _habs_de_goleiro():
     try:
-        H = json.load(open('HAB_EFEITOS_FINAL.json', encoding='utf-8'))
+        H = (_db.skills_model() if _db.enabled() else
+             json.load(open('HAB_EFEITOS_FINAL.json', encoding='utf-8')))
         return {v['arquivo'] for k, v in H.items() if k.lower().startswith('gk')}
     except Exception:
         return set()
@@ -421,7 +446,8 @@ def _habs_so_de_linha(base):
 def _bloqueio_por_funcao():
     """{funcao: set(habilidades proibidas)}"""
     try:
-        J = (_W.get('INSUMOS_BASE') or {}).get('bloqueio') if FONTE_UNICA else None
+        J = ((_W.get('INSUMOS_BASE') or {}).get('bloqueio')
+             if (FONTE_UNICA or _db.enabled()) else None)
         if not J:
             J = json.load(open('habilidades_por_posicao.json', encoding='utf-8'))
     except Exception as e:
@@ -458,6 +484,9 @@ def _pool_de(c, bid, funcao=None):
 
 def _fila_incid():
     """a tabela FILA (incidencia por funcao) da casca do encaixe — o DESEMPATE."""
+    if _db.enabled():
+        F = _db.incidence_model()
+        return {k: {h: v for h, v in (F.get(k) or [])} for k in F}
     for p in ('encaixe/encaixe_B_v171_datas_tela.html',
               'encaixe_B_v171_datas_tela.html'):
         if os.path.exists(p):
@@ -476,7 +505,13 @@ def trabalha(r):
     if not _W: _carrega_no_processo()
     M = _W['M']
     bid = str(r['card_id']).split('@')[0]
-    c0 = _W['BASE'].get(bid)
+    _meta = None
+    if _db.enabled():
+        _row = _db.optimization_input(bid, r['funcao'])
+        c0 = _db.to_legacy_card(_row)
+        _meta = _db.optimization_metadata(bid, r['funcao'])
+    else:
+        c0 = _W['BASE'].get(bid)
     if not c0:
         # pode ser card que o alimentador acrescentou depois deste processo nascer
         try:
@@ -839,6 +874,10 @@ def trabalha(r):
         'segundos': round(time.time() - t0, 2), 'quando': agora(),
         'insumos': _W['INSUMOS'],
         'regras': _W['REGRAS'],        # o carimbo — ver REVISAR-FILA.bat
+        'input_version': _meta.get('input_version') if _meta else None,
+        'input_hash': _meta.get('input_hash') if _meta else None,
+        'input_hash_algorithm': _meta.get('input_hash_algorithm') if _meta else None,
+        'funcao_codigo': _meta.get('funcao_codigo') if _meta else None,
     }
 
 # ------------------------------------------------------------------ feitos
@@ -916,10 +955,15 @@ def apaga_o_vivo():
 
 def main():
     import multiprocessing as mp
+    import motor_db_results as _dbout
+    if _db.enabled() and getattr(_gd, 'LIGADO', False):
+        raise SystemExit('PARE: GRAVA-DIRETO legado nao pode coexistir com o modo DB v2')
     os.makedirs(SAIDA, exist_ok=True)
     if os.path.exists(PARAR): os.remove(PARAR)
 
     fila = json.load(open(FILA, encoding='utf-8'))
+    if _db.enabled():
+        _db.validate_runtime_queue(fila)
     feitos = carrega_feitos()
     n_proc = NUCLEOS
 
@@ -955,8 +999,9 @@ def main():
     print('entrada quente .... jogue card novo em %s a qualquer hora' % EXTRA)
     print('para fechar ....... feche a janela, ou crie o arquivo PARAR.txt')
     print('SUPABASE .......... %s'
-          % ('GRAVA DIRETO na tabela builds' if getattr(_gd, 'LIGADO', False)
-             else 'NAO TOCA. So grava em ' + SAIDA))
+          % ('RESULTADOS v2 pendentes de validacao' if _dbout.configured() else
+             ('GRAVA DIRETO na tabela builds' if getattr(_gd, 'LIGADO', False)
+              else 'NAO TOCA. So grava em ' + SAIDA)))
     print('=' * 70, flush=True)
 
     pool = mp.Pool(processes=n_proc) if n_proc > 1 else None
@@ -985,16 +1030,21 @@ def main():
                 print('   ' + msg, flush=True); log.write(msg + '\n'); log.flush()
                 continue
 
+            if _dbout.configured():
+                saved = _dbout.write_optimization(x)
+                x['optimization_result_id'] = int(saved['result_id'])
+                x['motor_execution_id'] = _dbout.EXECUTION_ID
             out.write(json.dumps(x, ensure_ascii=False) + '\n'); out.flush()
             # ⛔ 14/08 — O MOTOR GRAVA DIRETO NA TABELA `builds`.
             # Ordem do Luis: "o motor gerar OUTRA TABELA com as otimizacoes".
             # O arquivo continua sendo escrito de proposito: o carrega_feitos()
             # le dele, e ele e a rede de seguranca se a internet cair.
             # Sem o GRAVA-DIRETO.txt na pasta, esta chamada nao faz nada.
-            try:
-                _gd.junta(x, 6, 'v6')   # motor_versao=6 (NOT NULL na builds) · versao='v6'
-            except Exception as _e:
-                print('   [grava_direto] %s' % _e, flush=True)
+            if not _db.enabled():
+                try:
+                    _gd.junta(x, 6, 'v6')   # caminho legado, preservado para rollback
+                except Exception as _e:
+                    print('   [grava_direto] %s' % _e, flush=True)
             fh.write('%s|%s\n' % (x['card_id'], x['funcao'])); fh.flush()
             feitos.add('%s|%s' % (x['card_id'], x['funcao']))
             cont['ok'] += 1

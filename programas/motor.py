@@ -55,6 +55,7 @@ _sys.path.insert(0, _MEU_LUGAR)          # `programas` vem PRIMEIRO
 # --------------------------------------------------------------------------
 import json, math, itertools
 import numpy as np
+import motor_db_bridge as _db
 
 from equacao import (MB, MBK, ACCU, ATTRS_EF, POS, AM, TABM, mult_de, _mult, _multv,
                      carrega_tecnicos, HAB, POR_NOME, TEM_EFEITO, buff_de, aplica_buff,
@@ -92,7 +93,8 @@ CORTE8 = True                       # False desliga a dedup por efeito (so para 
 # e um 'a' com til) — da UnicodeDecodeError e o motor NAO RODA. Mesmo defeito que
 # derrubou o import do equacao.py e escondeu a conta do motor da tela por dias.
 # ⛔ NAO MUDA A CONTA: o dado lido e byte por byte o mesmo.
-CAT = json.load(open('CAT_dom.json', encoding='utf-8'))   # catalogo de impetos fabricaveis
+CAT = (_db.impulses_model() if _db.enabled() else
+       json.load(open('CAT_dom.json', encoding='utf-8')))  # catalogo de impetos fabricaveis
 
 
 def expand(pairs):
